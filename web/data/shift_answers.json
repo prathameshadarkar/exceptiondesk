@@ -1,0 +1,124 @@
+{
+  "vendor_price_file_late": {
+    "true_root": "vendor_px_equity",
+    "findings": {
+      "file_landed": "No equity price file in the vendor drop for today. Yesterday's is still the newest. Expected 05:10, now 05:15.",
+      "loader_logs": "Loader started on schedule, found no input file, exited non-zero at 05:11. No parse errors \u2014 it never had anything to parse.",
+      "pnl_detail": "The spike is entirely in instruments whose last mark is yesterday's close. It is an artefact of stale pricing, not a real move.",
+      "vendor_status": "Vendor acknowledges a delayed publication affecting all clients in the region. Their ETA is 05:55 \u2014 forty minutes before our cut-off.",
+      "risk_breach": "Limit evaluated against stale marks. The breach is not real, but risk will keep re-firing it every cycle until pricing is current.",
+      "fallback_source": "Secondary source has today's closes for 94% of the book. Coverage gap is in small-cap names held by one strategy."
+    },
+    "decisive": [
+      "file_landed"
+    ],
+    "red_herrings": [
+      "pnl_detail",
+      "risk_breach"
+    ],
+    "handover_must_cover": [
+      "the vendor file was late and whether it has landed by end of shift",
+      "that the risk breach and P&L spike were artefacts, not real",
+      "the vendor's ETA and the pre-open cut-off it has to beat",
+      "whether the secondary source was used and which names it does not cover"
+    ],
+    "debrief": "The loudest alerts \u2014 the risk breach and the P&L spike \u2014 were three hops downstream of the cause and were both false. The decisive check was the cheapest one on the board: look at whether the file arrived."
+  },
+  "db_pool_exhaustion": {
+    "true_root": "db_primary",
+    "findings": {
+      "conn_pool": "Pool at 200/200, saturated since 09:07:51. Queue depth climbing. A reporting job opened 140 connections and has not released them.",
+      "timeline": "All eight land within 3.8 seconds. Ordering is inside the noise \u2014 you cannot tell cause from effect this way.",
+      "common_dep": "All eight depend on db_primary. Nothing else is shared by more than four of them.",
+      "restart_oms": "OMS comes back and immediately fails again on the same database timeout. You have spent eight minutes and learned what you already knew.",
+      "slow_query": "One analytics query against the trade table has been running 11 minutes without a limit clause. It is holding the connections.",
+      "fix_capacity": "Connections released, pool drains to 40/200, services recover in sequence over ninety seconds."
+    },
+    "decisive": [
+      "conn_pool"
+    ],
+    "red_herrings": [
+      "timeline",
+      "restart_oms"
+    ],
+    "handover_must_cover": [
+      "that a single database saturation caused all eight failures",
+      "what was killed or restarted, and when services recovered",
+      "which trades captured late and need reconciling against the broker",
+      "that the unbounded reporting query will recur unless someone fixes it"
+    ],
+    "debrief": "This is the scenario that punishes timeline-first thinking. Eight failures inside four seconds carry no ordering signal at all; the only thing that separates cause from symptom is what they share underneath."
+  },
+  "fix_session_drop": {
+    "true_root": "fix_gw_broker_a",
+    "findings": {
+      "session_state": "Session logged out at 10:19:40. Our outbound sequence is 84,112; last acknowledged by the broker is 84,067. Forty-five messages unconfirmed.",
+      "dropcopy": "Drop copy stops at 10:19:38. Three executions are in the OMS with no corresponding drop-copy confirmation.",
+      "broker_call": "They confirm a gateway failover on their side at 10:19. They are up on the secondary and can resend from sequence 84,067.",
+      "venue_status": "Exchange links are healthy. Every other broker session is fine. The problem is specific to this counterparty.",
+      "reroute": "Broker B has capacity and the strategy is approved for it. The in-flight order has to be cancelled and re-entered, not transferred.",
+      "position_check": "Three fills totalling 41,200 shares are confirmed executed but not captured. The PM's blotter understates his position."
+    },
+    "decisive": [
+      "session_state"
+    ],
+    "red_herrings": [
+      "venue_status"
+    ],
+    "handover_must_cover": [
+      "the session dropped, when, and at what sequence number",
+      "the three fills that executed but were not captured, and whether they are booked",
+      "whether the programme was rerouted and to whom",
+      "that the recon against broker A will break tonight and why"
+    ],
+    "debrief": "The severity was obvious and the root was narrow \u2014 the risk here is not misdiagnosis, it is being slow to give the PM a number he can act on. A position he cannot trust is more dangerous than an outage he knows about."
+  },
+  "stale_fx_feed": {
+    "true_root": "vendor_fx",
+    "findings": {
+      "fx_timestamps": "Every non-USD rate carries yesterday's 17:00 timestamp. The FX feed has not updated since.",
+      "pnl_attrib": "The entire move is in non-USD instruments. USD-denominated positions show nothing unusual.",
+      "positions": "Positions reconcile cleanly against yesterday's close plus overnight fills. The position keeping is fine.",
+      "fx_vendor": "Connection is up and the vendor believes it is publishing. Our consumer has not committed a new message since 17:00 yesterday.",
+      "consumer_lag": "Consumer is stuck on a message it cannot parse \u2014 a new currency pair was added to the feed and the schema rejects it. Everything behind it is queued.",
+      "equity_marks": "Equity pricing is current. This is confined to FX."
+    },
+    "decisive": [
+      "fx_timestamps"
+    ],
+    "red_herrings": [
+      "positions",
+      "equity_marks"
+    ],
+    "handover_must_cover": [
+      "the FX feed was stale and the P&L move was not real",
+      "the cause was a schema rejection on a newly added pair",
+      "whether rates were backfilled and from when",
+      "that the EOD P&L run must not go out on stale rates"
+    ],
+    "debrief": "The root alerted after its own symptoms \u2014 the P&L check is faster than the vendor's own staleness check. Anyone who worked this by following the loudest or earliest alert spent the window in the wrong place."
+  },
+  "two_independent": {
+    "true_root": "vendor_borrow",
+    "findings": {
+      "locate_file": "No locate file from two of three prime brokers. The third delivered on time and covers 60% of the intended short list.",
+      "broker_b_rejects": "Rejects carry 'invalid account mapping' \u2014 a reference data problem on their side, unrelated to locates. Separate incident.",
+      "shared_path": "They share nothing. Locates come through the borrow loader; broker B rejects originate at their gateway. No common upstream.",
+      "coverage": "Forty per cent of intended shorts are uncovered, concentrated in two hard-to-borrow names.",
+      "pb_call": "One is re-sending now, ETA 15 minutes. The other had a batch failure and cannot deliver before the open.",
+      "single_locates": "Both hard-to-borrow names are available at elevated rates from the third PB. Needs sign-off on the borrow cost."
+    },
+    "decisive": [
+      "locate_file",
+      "broker_b_rejects"
+    ],
+    "red_herrings": [],
+    "handover_must_cover": [
+      "that these were two unrelated incidents, not one",
+      "which shorts ended up uncovered and what was sourced",
+      "the borrow cost sign-off if single-name locates were taken",
+      "that broker B's account mapping is still broken and who owns it"
+    ],
+    "debrief": "Two incidents overlapping in time and disjoint in topology. The failure mode here is not misdiagnosis, it is tunnel vision: working the louder problem and letting the quieter one run unattended for the whole shift."
+  }
+}

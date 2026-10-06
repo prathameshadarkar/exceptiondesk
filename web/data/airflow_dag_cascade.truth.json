@@ -1,0 +1,309 @@
+{
+  "scenario": "airflow_dag_cascade",
+  "teaches": "Tests whether the engine prefers an infra root over several plausible data roots.",
+  "incidents": [
+    {
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "label": "Airflow scheduler not dispatching",
+      "kind": "scheduler",
+      "start_minute": 268,
+      "member_alert_ids": [
+        "airflow_dag_cascade-A0000",
+        "airflow_dag_cascade-A0001",
+        "airflow_dag_cascade-A0002",
+        "airflow_dag_cascade-A0003",
+        "airflow_dag_cascade-A0004",
+        "airflow_dag_cascade-A0005",
+        "airflow_dag_cascade-A0006",
+        "airflow_dag_cascade-A0007",
+        "airflow_dag_cascade-A0008",
+        "airflow_dag_cascade-A0009",
+        "airflow_dag_cascade-A0010",
+        "airflow_dag_cascade-A0011",
+        "airflow_dag_cascade-A0012",
+        "airflow_dag_cascade-A0013",
+        "airflow_dag_cascade-A0014",
+        "airflow_dag_cascade-A0015",
+        "airflow_dag_cascade-A0016",
+        "airflow_dag_cascade-A0017",
+        "airflow_dag_cascade-A0018",
+        "airflow_dag_cascade-A0019",
+        "airflow_dag_cascade-A0020",
+        "airflow_dag_cascade-A0021",
+        "airflow_dag_cascade-A0022",
+        "airflow_dag_cascade-A0023",
+        "airflow_dag_cascade-A0024",
+        "airflow_dag_cascade-A0025",
+        "airflow_dag_cascade-A0026",
+        "airflow_dag_cascade-A0027",
+        "airflow_dag_cascade-A0028",
+        "airflow_dag_cascade-A0029",
+        "airflow_dag_cascade-A0030"
+      ],
+      "affected_services": [
+        "scheduler_airflow",
+        "ingest_px_loader",
+        "ingest_fx_loader",
+        "ingest_corpaction_proc",
+        "ingest_refdata_loader",
+        "ingest_borrow_loader",
+        "svc_recon",
+        "svc_reporting",
+        "svc_pricing",
+        "svc_security_master",
+        "svc_locate",
+        "svc_risk",
+        "svc_blotter",
+        "svc_position"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "airflow_dag_cascade-A0000",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0001",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0012",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0002",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0006",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0010",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0011",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0003",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0013",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0005",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0009",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0014",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0004",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0007",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0008",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0016",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0018",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0020",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0019",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0017",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0015",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0021",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0022",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0029",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0027",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0030",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0023",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0028",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0024",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0025",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0026",
+      "incident_id": "airflow_dag_cascade-INC1",
+      "true_root": "scheduler_airflow",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0031",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0034",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0032",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "airflow_dag_cascade-A0033",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

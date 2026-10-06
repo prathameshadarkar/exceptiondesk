@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exception Desk</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="intro.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div><h1>Exception Desk</h1></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="board.html" class="chip" id="boardLink" style="text-decoration:none">Board</a>
+      <button class="chip" id="help" style="cursor:pointer" title="Replay the tutorial">Help</button>
+      <button class="chip" id="replay" style="cursor:pointer" title="Replay the arrival">Intro</button>
+      <span class="chip is-static" title="All data on this page is generated, not real">Synthetic</span>
+      <button id="theme" title="Light / dark">◑</button>
+    </div>
+  </header>
+  <p class="tagline">Take the shift. Something breaks, the clock runs, and every move
+    costs minutes.</p>
+
+  <div id="err" class="err"></div>
+
+  <!-- ==================== PICK ==================== -->
+  <section id="view-pick">
+    <div class="hero" id="shiftCards"></div>
+    <p class="tagline-sm" style="margin-top:18px">
+      Checks are deterministic — the same check always returns the same finding.
+      Agents are real model calls when a key is configured. Nothing here touches a real
+      market, broker or system.
+    </p>
+  </section>
+
+  <!-- ==================== THE DESK ==================== -->
+  <section id="view-shift" class="hidden">
+    <div class="room desk-root">
+      <div class="wall">
+        <div class="ceilplane"><i></i><i></i><i></i><i></i></div>
+        <div class="column"></div>
+
+        <div class="glassroom">
+          <div class="sil" style="left:18%"></div>
+          <div class="sil" style="left:40%"></div>
+          <div class="sil" style="left:66%"></div>
+        </div>
+        <div class="sign">Ops — Floor 31</div>
+
+        <div class="window">
+          <div class="sky" id="sky"></div>
+          <svg viewBox="0 0 620 120" preserveAspectRatio="none" id="skyline"></svg>
+          <div class="sun"></div>
+          <div class="mullion-v"></div><div class="mullion-h"></div>
+          <div class="glare"></div>
+        </div>
+
+        <div class="clocks" id="clocks"></div>
+        <div class="floorline" id="floorline"></div>
+        <div class="roomshafts"></div>
+        <div class="sunpatch"></div>
+        <div class="roomlight"></div>
+      </div>
+
+      <div class="workstation" style="padding:0 18px">
+      <div class="monitors">
+        <div class="monitor">
+          <div class="bezel"><div class="glass">
+            <div class="titlebar"><span>Alert monitor</span><span class="cnt" id="alertCount">0</span></div>
+            <div class="screen" id="scrAlerts"></div>
+          </div></div>
+          <div class="stand"></div><div class="foot"></div>
+        </div>
+
+        <div class="monitor tall">
+          <div class="bezel"><div class="glass">
+            <div class="titlebar"><span id="centreTitle">Incident</span><span class="cnt" id="centreTag"></span></div>
+            <div class="screen" id="scrCentre"></div>
+          </div></div>
+          <div class="stand"></div><div class="foot"></div>
+        </div>
+
+        <div class="monitor">
+          <div class="bezel"><div class="glass">
+            <div class="titlebar"><span>Shift log</span><span class="cnt" id="logCount">0</span></div>
+            <div class="screen" id="scrLog"></div>
+          </div></div>
+          <div class="stand"></div><div class="foot"></div>
+        </div>
+      </div>
+
+      <div class="deskhint" id="deskhint"></div>
+
+      <div class="desk locked" id="desk">
+        <div>
+          <div class="deskplate" id="plate">Ops — New York</div>
+          <div class="keys" id="keys"></div>
+        </div>
+
+        <div class="gadgets">
+          <div class="deskclock">
+            <div class="lbl">Elapsed</div>
+            <div class="big" id="clockBig">0<span style="font-size:1rem;color:#7f8a89">/0m</span></div>
+            <div class="sub" id="clockSub">shift running</div>
+          </div>
+
+          <div id="phones"></div>
+
+          <div class="dial">
+            <div class="lbl">Root cause</div>
+            <select id="rootPick"></select>
+            <button id="declare">Declare</button>
+          </div>
+
+          <div class="notepad" id="notepad">
+            <strong>Handover pad</strong>
+            End the shift and write the note for the next region.
+          </div>
+        </div>
+
+        <div class="deskobjects" aria-hidden="true">
+          <div class="obj-keyboard"></div>
+          <div class="obj-mouse"></div>
+          <div class="obj-headset"></div>
+          <div class="obj-cup"></div>
+          <div class="obj-bottle"></div>
+          <div class="obj-plant"></div>
+          <div class="obj-cables"></div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HANDOVER ==================== -->
+  <section id="view-handover" class="hidden">
+    <div class="panel">
+      <div class="panelhead">
+        <div>
+          <h2>End of shift</h2>
+          <p class="hint">Write the handover for the next region. Four sections: resolved,
+            watch items, for the next region, reminders. Someone with no context has to act
+            on this within five minutes.</p>
+        </div>
+        <button id="backToDesk" class="chip" type="button">← Back to the desk</button>
+      </div>
+      <p class="hint" id="handoverClock"></p>
+      <textarea id="note" placeholder="RESOLVED&#10;- &#10;&#10;WATCH ITEMS&#10;- &#10;&#10;FOR THE NEXT REGION&#10;- &#10;&#10;REMINDERS&#10;- "></textarea>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button id="draftNote">Have the handover agent draft it</button>
+        <button id="submitNote" style="border-color:var(--series-1);color:var(--series-1)">
+          Send to the next region</button>
+        <button id="skipJudge" title="Score the shift without sending the note to an agent">
+          Finish without sending</button>
+      </div>
+      <div id="noteOut"></div>
+    </div>
+  </section>
+
+  <!-- ==================== DEBRIEF ==================== -->
+  <section id="view-debrief" class="hidden">
+    <div class="panel">
+      <div class="panelhead">
+        <h2>Debrief</h2>
+        <span class="chip is-static" id="debriefShift"></span>
+      </div>
+      <div class="grade" id="grade"></div>
+      <p class="hint" id="gradeSub"></p>
+      <div id="scoreRows" style="margin-top:14px"></div>
+      <div id="truthBox"></div>
+      <p style="margin-top:18px;font-size:14px;color:var(--ink-2)" id="debriefText"></p>
+      <div id="judgeOut"></div>
+      <div style="margin-top:18px;display:flex;gap:8px">
+        <button id="again">Another shift</button>
+        <a href="board.html"><button>Look at the data</button></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    All data synthetic. Topology, failure modes and propagation are modelled on how
+    systematic trading operations break; no real market data, broker relationship or
+    firm system is involved.
+  </footer>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const AGENT_COST = 4;
+
+/** Application state events. Emitted at the point the state actually changes,
+ *  not from a click handler — anything that wants to observe the app (the
+ *  tutorial today, analytics or tests tomorrow) listens to these. */
+const emit = (name, detail) =>
+  dispatchEvent(new CustomEvent('ed:' + name, { detail }));
+const D = { shifts: null, answers: null, agents: null };
+let S = null;
+
+const getJSON = async (p) => {
+  const r = await fetch(p, { cache: 'no-store' });
+  if (!r.ok) throw new Error(p + ' → HTTP ' + r.status);
+  return r.json();
+};
+const clock = (m) => `${String(Math.floor(m/60)%24).padStart(2,'0')}:${String(Math.floor(m%60)).padStart(2,'0')}`;
+const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+
+/** Alert messages are written as "service: what happened", and the row already
+ *  shows the service in its own column. Printing both gives every line the
+ *  shape "svc_oms — svc_oms: queue depth 38000", which reads as a rendering
+ *  bug and costs a third of the row's width. */
+const msgOf = (a) => {
+  const m = String(a.message || '');
+  const prefix = a.service + ': ';
+  return m.startsWith(prefix) ? m.slice(prefix.length) : m;
+};
+
+/* ------------------------------------------------------------------ boot */
+(async function boot() {
+  try {
+    [D.shifts, D.answers, D.agents] = await Promise.all([
+      getJSON('data/shifts.json'), getJSON('data/shift_answers.json'), getJSON('data/agents.json'),
+    ]);
+  } catch (e) {
+    $('#err').textContent = 'Could not load data — ' + e.message +
+      '  •  run `make site`, then `make serve` (http, not file://)';
+    return;
+  }
+  $('#shiftCards').innerHTML = D.shifts.map((s, i) => `
+    <button class="card" data-i="${i}">
+      <span class="when">${esc(s.opens_at)}</span>
+      <h3>${esc(s.title)}</h3>
+      <p>${esc(s.brief.slice(0, 145))}…</p>
+      <span class="meta">${s.budget_minutes} min · ${s.checks.length} checks</span>
+    </button>`).join('');
+  document.querySelectorAll('.card').forEach((c) =>
+    c.addEventListener('click', () => start(D.shifts[+c.dataset.i])));
+
+  // The tour waits for the arrival sequence rather than competing with it.
+  // `introPending` is set the moment intro.js is parsed; #intro itself is not
+  // built until DOMContentLoaded, and this function has already awaited a fetch
+  // by the time it looks — so asking for the element raced the film and could
+  // put the welcome card on top of it.
+  const forced = new URLSearchParams(location.search).has('tutorial');
+  if (window.introPending) {
+    addEventListener('intro:done', () => Tour.start(forced), { once: true });
+  } else {
+    setTimeout(() => Tour.start(forced), 400);
+  }
+})();
+
+const show = (id) => {
+  ['pick','shift','handover','debrief'].forEach((v) =>
+    $('#view-' + v).classList.toggle('hidden', v !== id));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+/* ------------------------------------------------------------------ run */
+async function start(shift) {
+  let alerts = [];
+  try {
+    const p = await getJSON(`data/${shift.key}.alerts.json`);
+    // Time alerts from the minute the shift opens, not from the scenario window.
+    // You are picking up an incident already in progress: anything that fired
+    // before you sat down (rel < 0) is on the board when you accept.
+    const open = shiftHour(shift) * 60;
+    alerts = p.alerts.map((a) => ({ ...a, rel: a.ts_minute - open })).sort((x, y) => x.rel - y.rel);
+  } catch { /* the board is a bonus, not a dependency */ }
+
+  S = { shift, alerts, elapsed: 0, log: [], findings: [], checksRun: [], actionsTaken: [],
+        impactsReached: [], declaredRoot: null, declaredAt: null, agentsUsed: [],
+        busy: false, centre: { mode: 'brief' }, lastSeen: 12, phase: 'off', powered: false };
+
+  emit('scenario-picked', { key: shift.key });
+  // opens_at already carries the region ("05:12 New York"), so concatenating the
+  // desk name gave "Ops — New York · 05:12 New York". Keep the desk, take the clock.
+  $('#plate').textContent = 'Ops — New York  ·  ' + String(shift.opens_at || '').replace(/\s*New York\s*$/i, '');
+  $('#rootPick').innerHTML = '<option value="">— select —</option>' +
+    shift.candidates.map((c) => `<option value="${c}">${c}</option>`).join('');
+  $('#note').value = ''; $('#noteOut').innerHTML = ''; $('#judgeOut').innerHTML = '';
+
+  paintWindow(shiftHour(shift));
+  paintFloor();
+  paintClocks();
+  show('shift');
+  render();
+}
+
+/* --------------------------------------------------------- the room */
+
+const shiftHour = (shift) => {
+  const m = /(\d{1,2}):(\d{2})/.exec(shift.opens_at || '');
+  return m ? +m[1] + (+m[2]) / 60 : 6;
+};
+
+/** Daylight sky. The desk is always shown as a working floor during business
+ *  hours — the shift's own clock still says 05:12, but the ROOM reads as a lit
+ *  modern office, which is the contrast the scene is built on. Earlier hours
+ *  get a marginally cooler sky, never a dark one. */
+function skyFor(h) {
+  if (h < 7)  return ['#5f9fd8', '#95c3e6', '#cfe3f2'];   // early, still bright
+  if (h < 9)  return ['#559ad9', '#8fc0e8', '#d6e8f5'];
+  return ['#4a93d6', '#84b9e6', '#dceaf4'];               // mid-morning
+}
+
+function paintWindow(hour) {
+  const [a, b, c] = skyFor(hour);
+  $('#sky').style.background = `linear-gradient(180deg, ${a} 0%, ${b} 58%, ${c} 100%)`;
+
+  // Deterministic skyline: same city every time, so the scene is stable across
+  // runs and screenshots. Daytime, so the towers are lit surfaces rather than
+  // silhouettes and almost no interior lights show.
+  let seed = 20260924;
+  const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+  const dark = false;
+  const lit = 0.04;
+  let out = '', x = -8;
+  while (x < 628) {
+    const w = 22 + Math.round(rnd() * 34);
+    const h = 26 + Math.round(rnd() * 78);
+    const shade = dark ? '#05070c' : '#2c3f52';
+    out += `<rect x="${x}" y="${120 - h}" width="${w}" height="${h}" fill="${shade}"/>`;
+    for (let wy = 120 - h + 7; wy < 114; wy += 9) {
+      for (let wx = x + 5; wx < x + w - 5; wx += 8) {
+        if (rnd() < lit) {
+          const warm = '#e8f2fa';
+          out += `<rect x="${wx}" y="${wy}" width="3" height="4" fill="${warm}" opacity="${0.5 + rnd() * 0.5}"/>`;
+        }
+      }
+    }
+    x += w + 3 + Math.round(rnd() * 5);
+  }
+  $('#skyline').innerHTML = out;
+}
+
+/** Other workstations on the floor: receding rows of desks, chairs and seated
+ *  silhouettes. Deterministic, so the office is the same one every time. */
+function paintFloor() {
+  const el = $('#floorline');
+  if (!el || el.dataset.done) return;
+  let seed = 7731;
+  const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+  let out = '';
+  for (let row = 0; row < 2; row++) {
+    const scale = row === 0 ? 1 : 0.72;
+    const n = row === 0 ? 5 : 6;
+    for (let i = 0; i < n; i++) {
+      const left = (row ? 2 : 6) + i * (row ? 16.4 : 19);
+      const w = 13 * scale;
+      const occupied = rnd() > 0.35;
+      out += `<div class="fdesk" style="left:${left}%;width:${w}%;
+                bottom:${row ? 44 : 2}px;opacity:${row ? .62 : .9};
+                filter:blur(${row ? 1 : 0}px)">
+                ${occupied ? '<div class="fperson"></div>' : ''}
+                <div class="fmon" style="width:74%;height:${22 * scale}px"></div>
+                <div class="ftop"></div>
+                <div class="fchair"></div>
+              </div>`;
+    }
+  }
+  el.innerHTML = out;
+  el.dataset.done = '1';
+}
+
+/** Wall clocks for the major centres, hands set from the shift's own hour. */
+function paintClocks() {
+  const el = $('#clocks');
+  if (!el || !S) return;
+  const base = shiftHour(S.shift);
+  const zones = [['NYC', 0], ['LDN', 5], ['HKG', 12]];
+  el.innerHTML = zones.map(([name, off]) => {
+    const h = (base + off) % 24, m = (base % 1) * 60;
+    const hDeg = (h % 12) * 30 + m * 0.5, mDeg = m * 6;
+    return `<div class="clk"><div class="face">
+        <i style="transform:rotate(${hDeg}deg)"></i>
+        <b style="transform:rotate(${mDeg}deg)"></b>
+      </div><span>${name}</span></div>`;
+  }).join('');
+}
+
+/* --------------------------------------------------------- power on */
+
+const BOOT = [
+  'EG OPS WORKSTATION  ·  ny-ops-04',
+  'mounting /alerts ................ ok',
+  'mounting /runbooks .............. ok',
+  'attaching alert bus ............. ok',
+  'attaching drop copy feed ........ ok',
+  'agent gateway ................... ok',
+  '',
+];
+
+async function powerOn() {
+  if (S.phase !== 'off') return;
+  S.phase = 'boot';
+  S.powered = true;
+  // Announced from the state transition, not the click, so the tutorial advances
+  // on what the machine actually did. Fired at the start of boot rather than the
+  // end: the next tutorial step describes the screens, and they are waking now.
+  emit('workstation-powered', { host: 'ny-ops-04' });
+  render();
+  const scr = $('#scrCentre');
+  scr.innerHTML = '<div class="boot"></div>';
+  const box = scr.firstChild;
+  for (const line of BOOT) {
+    box.innerHTML += (line.endsWith('ok')
+      ? line.replace(/ok$/, '<span class="ok">ok</span>')
+      : line) + '\n';
+    await sleep(line ? 190 : 90);
+  }
+  box.innerHTML += '<span class="cur">incident queue</span>\n';
+  await sleep(520);
+  S.phase = 'brief';
+  S.centre = { mode: 'brief' };
+  render();
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** Put the workstation on screen: the daylight band, the screens, and as much of
+ *  the desk as the viewport allows.
+ *
+ *  Scrolling to the DESK (block:'end') overshoots — it pins the desk's bottom to
+ *  the viewport bottom and throws the room and the top of the monitors off the
+ *  top, which reads as the page having jumped somewhere else. Aligning the scene
+ *  itself to the top keeps the room, the screens and the first two rows of
+ *  controls together, which is the frame the shift is actually played in.
+ *
+ *  Nothing moves if the desk controls are already reachable. */
+function bringDeskIntoView() {
+  const scene = document.querySelector('.room');
+  const keys = $('#keys');
+  if (!scene) return;
+  requestAnimationFrame(() => {
+    const k = keys && keys.getBoundingClientRect();
+    if (k && k.top >= 0 && k.bottom <= innerHeight) return;   // already usable
+    const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    scene.scrollIntoView({ block: 'start', behavior: smooth ? 'smooth' : 'auto' });
+  });
+}
+
+function acknowledge() {
+  if (S.phase !== 'brief') return;
+  setTimeout(() => Tour.hint('shift-live', '#clockBig',
+    'The clock only moves when you act. Every check, call and agent dispatch costs minutes, and the damage below accrues while they pass.'), 700);
+  S.phase = 'live';
+  S.log.push({ at: 0, what: 'Shift accepted — clock running' });
+  emit('shift-accepted', { key: S.shift.key });
+  render();
+  // The room has done its job. Compress it and put the working surface on
+  // screen: at 1440x900 the desk — every control in the game — was entirely
+  // below the fold at the exact moment the user was told to start working.
+  document.querySelector('.room').classList.add('compact');
+  bringDeskIntoView();
+}
+
+/** Turn-based: the clock moves only when you act. The decision is which minutes
+ *  to spend, not how fast you can read. Returns the caller's own log entry,
+ *  because impact entries may be appended after it. */
+function spend(minutes, what) {
+  const before = S.elapsed;
+  S.elapsed += minutes;
+  const entry = { at: before, what };
+  S.log.push(entry);
+  for (const imp of S.shift.impacts) {
+    if (imp.at_minute > before && imp.at_minute <= S.elapsed &&
+        !S.impactsReached.some((i) => i.at_minute === imp.at_minute)) {
+      S.impactsReached.push(imp);
+      S.log.push({ at: imp.at_minute, impact: imp });
+    }
+  }
+  return entry;
+}
+
+function runCheck(check) {
+  if (S.phase !== 'live' || S.checksRun.includes(check.id) || S.busy || over()) return;
+  const finding = D.answers[S.shift.key].findings[check.id];
+  const entry = spend(check.cost_minutes, check.label);
+  S.checksRun.push(check.id);
+  S.findings.push({ id: check.id, label: check.label, finding, minute: S.elapsed });
+  entry.found = finding;
+  S.centre = { mode: 'finding', check, finding };
+  emit('check-run', { id: check.id });
+  render();
+  Tour.hint('first-finding', '#scrCentre',
+    'Findings are deterministic — the same check always returns this. Read it against the alert board and decide what it rules out.');
+}
+
+function takeAction(req) {
+  if (S.phase !== 'live' || S.actionsTaken.some((a) => a.id === req.id) || S.busy || over()) return;
+  spend(2, req.label);
+  S.actionsTaken.push({ id: req.id, minute: S.elapsed });
+  render();
+}
+
+const over = () => !!S && S.elapsed >= S.shift.budget_minutes;
+
+/* ------------------------------------------------------------------ agents */
+async function callAgent(agentId, { question = '', note = '' } = {}) {
+  const a = D.agents.find((x) => x.id === agentId);
+  const ctx = agentId === 'judge' ? judgeContext() : simContext();
+  const user = a.mode === 'note'
+      ? `${a.prefix}${note}\n\nWHAT THIS SHIFT NEEDED TO PASS ON, AND WHAT HAPPENED:\n${ctx}`
+    : a.mode === 'question' ? `${a.prefix}${question}\n\nBRIEF:\n${ctx}`
+    : `${a.prefix}${ctx}`;
+  try {
+    const r = await fetch('/api/agent', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      // The page names a tier, never a model: which model serves which tier is
+      // a server concern, so swapping it needs no change here.
+      body: JSON.stringify({ system: a.system, user, tier: a.tier || 'fast' }),
+    });
+    const data = await r.json();
+    if (!r.ok) return { error: data.message || data.error || ('HTTP ' + r.status) };
+    return { text: data.text, model: data.model, usage: data.usage };
+  } catch (e) { return { error: e.message }; }
+}
+
+/** What the analyst has established — deliberately not the answer key. */
+function simContext() {
+  const recent = S.alerts.filter((a) => a.rel <= S.elapsed + 12).slice(-18).reverse();
+  const L = [`SHIFT: ${S.shift.title} — opened ${S.shift.opens_at}`,
+             `SITUATION AS BRIEFED: ${S.shift.brief}`,
+             `ELAPSED: ${S.elapsed} minutes of a ${S.shift.budget_minutes} minute window`, ''];
+  if (S.findings.length) {
+    L.push('CHECKS RUN AND WHAT THEY RETURNED:');
+    S.findings.forEach((f) => L.push(`  [${f.minute}m] ${f.label}`, `      → ${f.finding}`));
+  } else L.push('CHECKS RUN: none yet. Nothing established beyond the brief.');
+  L.push('');
+  if (S.impactsReached.length) {
+    L.push('IMPACT SO FAR:');
+    S.impactsReached.forEach((i) => L.push(`  [${i.at_minute}m] ${i.headline} — ${i.detail}`));
+    L.push('');
+  }
+  L.push(`ANALYST'S WORKING ROOT CAUSE: ${S.declaredRoot || 'not yet declared.'}`, '');
+  if (recent.length) {
+    L.push(`ALERT BOARD (${recent.length} most recent):`);
+    recent.forEach((a) => L.push(`  ${clock(a.ts_minute)} ${a.severity} ${a.service}: ${a.message}`));
+  }
+  return L.join('\n');
+}
+
+function judgeContext() {
+  const ans = D.answers[S.shift.key];
+  const L = [`SHIFT: ${S.shift.title}`, '', 'WHAT THE NEXT REGION NEEDS FROM THIS NOTE:'];
+  ans.handover_must_cover.forEach((i) => L.push(`  - ${i}`));
+  L.push('', `WHAT ACTUALLY HAPPENED: the root cause was ${ans.true_root}.`);
+  if (S.findings.length) {
+    L.push('Established during the shift:');
+    S.findings.forEach((f) => L.push(`  - ${f.finding}`));
+  } else L.push('The outgoing analyst established nothing beyond the initial brief.');
+  return L.join('\n');
+}
+
+
+/* ------------------------------------------------------------------ agent briefing
+   Clicking an agent explains it before anything runs. Two reasons this exists:
+   a first-time viewer needs to understand why there are several specialised
+   agents rather than one chat box, and nobody should spend a model call — or
+   four simulated minutes — without being told that is what the button does. */
+function openAgentSheet(agentId, opts = {}) {
+  const a = D.agents.find((x) => x.id === agentId);
+  if (!a) return;
+  closeSheet();
+
+  const cost = opts.costMinutes === undefined ? AGENT_COST : opts.costMinutes;
+  const wrap = document.createElement('div');
+  wrap.className = 'sheetwrap';
+  wrap.innerHTML = `
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(a.name)} agent">
+      <header>
+        <div>
+          <div class="eyebrow">Live agent</div>
+          <h3>${esc(a.name)}</h3>
+          <p class="role">${esc(a.role || a.blurb)}</p>
+        </div>
+        <span class="tierbadge ${a.tier === 'reason' ? 'reason' : ''}">${a.tier === 'reason' ? 'Reasoning' : 'Fast'}</span>
+      </header>
+      <div class="body">
+        <h4>What it can help you investigate</h4>
+        <ul>${(a.can_do || []).map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+
+        ${(a.understands || []).length ? `
+          <h4>What it reads</h4>
+          <div class="reads">${a.understands.map((u) => `<span>${esc(u)}</span>`).join('')}</div>` : ''}
+
+        ${(a.examples || []).length ? `
+          <h4>For example</h4>
+          <div class="examples">${a.examples.map((x) => `<p>&ldquo;${esc(x)}&rdquo;</p>`).join('')}</div>` : ''}
+
+        ${a.wont_do ? `<h4>What it will not do</h4><p class="limit">${esc(a.wont_do)}</p>` : ''}
+
+        <div class="meta"><span>${esc(a.on_activate || 'One API call.')}</span></div>
+      </div>
+      <footer>
+        <button type="button" data-close>Cancel</button>
+        <button type="button" class="go" data-go>${esc(a.cta || 'Run agent')}</button>
+      </footer>
+    </div>`;
+
+  document.body.appendChild(wrap);
+  requestAnimationFrame(() => wrap.classList.add('in'));
+  emit('agent-opened', { agent: agentId });
+  Tour.hint('agent-open', '.sheet',
+    'Agents investigate different parts of the incident. Nothing runs until you choose to activate one — you stay in control of when the model is used.');
+
+  const go = () => { closeSheet(); (opts.onConfirm || (() => dispatch(agentId)))(); };
+  wrap.querySelector('[data-go]').onclick = go;
+  wrap.querySelectorAll('[data-close]').forEach((b) => (b.onclick = closeSheet));
+  wrap.addEventListener('click', (e) => { if (e.target === wrap) closeSheet(); });
+  document.addEventListener('keydown', sheetKeys);
+  wrap.querySelector('[data-go]').focus();
+  openSheet = wrap;
+}
+
+let openSheet = null;
+function closeSheet() {
+  if (!openSheet) return;
+  const el = openSheet; openSheet = null;
+  el.classList.remove('in');
+  document.removeEventListener('keydown', sheetKeys);
+  setTimeout(() => el.remove(), 200);
+}
+function sheetKeys(e) {
+  if (e.key === 'Escape') { e.preventDefault(); closeSheet(); }
+}
+
+async function dispatch(agentId) {
+  if (S.phase !== 'live' || S.busy || over()) return;
+  S.busy = true;
+  const a = D.agents.find((x) => x.id === agentId);
+  spend(AGENT_COST, `Dispatched ${a.name}`);
+  S.agentsUsed.push(agentId);
+  S.centre = { mode: 'agent', agent: a, text: null, working: true };
+  render();
+  const res = await callAgent(agentId);
+  S.busy = false;
+  S.centre = { mode: 'agent', agent: a, text: res.text, error: res.error,
+               model: res.model, usage: res.usage, working: false };
+  render();
+}
+
+/** What the operator sees when an agent cannot be reached.
+ *
+ *  The raw failure is usually "Unexpected token '<', \"<!DOCTYPE\"... is not
+ *  valid JSON" — the page asked for an agent, got an HTML 404 back and tried to
+ *  parse it. True, and meaningless to anyone who is not holding the source. The
+ *  first line says what it means for the shift; the detail is kept, but last. */
+function agentError(msg) {
+  const raw = String(msg || '');
+  const noEndpoint = /Unexpected token|not valid JSON|Failed to fetch|NetworkError|501|404/i.test(raw);
+  const noKey = /no_key|not set on the server/i.test(raw);
+
+  const why = noKey
+    ? 'The agent endpoint is running but has no model key configured.'
+    : noEndpoint
+      ? 'No agent endpoint is answering — this page is being served without one.'
+      : 'The agent endpoint returned an error.';
+
+  return 'AGENTS ARE OFFLINE\n\n' + why +
+    '\n\nEverything else on the desk is unaffected: checks, the phones, the clock,' +
+    '\nroot-cause scoring and the debrief are all deterministic and need no model.' +
+    '\n\nTo turn agents on, set OPENAI_API_KEY (or ANTHROPIC_API_KEY) and serve with' +
+    '\n`make serve` locally, or as an environment variable on Vercel.' +
+    (raw ? '\n\ndetail: ' + raw : '');
+}
+
+/* ------------------------------------------------------------------ render */
+function render() {
+  const sh = S.shift, done = over();
+  const worst = S.impactsReached[S.impactsReached.length - 1];
+  const live = S.phase === 'live';
+
+  // Screens are physically off until the machine is powered on.
+  const dark = S.phase === 'off';
+  document.querySelectorAll('.monitor .glass').forEach((g) => g.classList.toggle('off', dark));
+  document.querySelectorAll('.monitor .bezel').forEach((b) => b.classList.toggle('off', dark));
+  const desk = $('#desk');
+  desk.classList.toggle('locked', !live);
+  // Say WHY the desk cannot be used, on the desk, in the same words as the hint
+  // above it. "Silently disabled" is the failure mode we are designing out.
+  const reason = dark ? 'Power on the workstation to use the desk'
+    : S.phase === 'boot' ? 'Starting up…'
+    : S.phase === 'brief' ? 'Accept the shift to unlock the desk'
+    : '';
+  desk.setAttribute('data-locked-reason', reason);
+  desk.setAttribute('aria-disabled', String(!live));
+  // The controls themselves carry `disabled` while the desk is locked (set
+  // where they are built, in renderDesk) — that keeps them out of the tab order
+  // natively. Doing it here instead was a no-op: renderDesk rebuilds the
+  // buttons afterwards on every render.
+  $('#notepad').setAttribute('tabindex', live ? '0' : '-1');
+  $('#deskhint').textContent = dark ? 'the machine is off'
+    : S.phase === 'boot' ? 'starting up…'
+    : S.phase === 'brief' ? 'read the incident, then accept the shift'
+    : '';
+
+  if (dark) {
+    $('#alertCount').textContent = '';
+    $('#logCount').textContent = '';
+    $('#centreTitle').textContent = '';
+    $('#centreTag').textContent = '';
+    ['#scrAlerts', '#scrLog'].forEach((id) => $(id).innerHTML = '<div class="offglass"></div>');
+    $('#scrCentre').innerHTML =
+      `<div class="offglass"><button class="powerbtn" id="power">
+         <span class="ring"></span>Power on</button></div>`;
+    $('#power').onclick = powerOn;
+    renderDesk(sh, done, live, worst);
+    return;
+  }
+  if (S.phase === 'boot') {
+    $('#centreTitle').textContent = 'boot'; $('#centreTag').textContent = '';
+    $('#alertCount').textContent = ''; $('#logCount').textContent = '';
+    ['#scrAlerts', '#scrLog'].forEach((id) => $(id).innerHTML = '<div class="scr-dim">…</div>');
+    renderDesk(sh, done, live, worst);
+    return;
+  }
+
+  // ---- left screen: the alert board
+  const cutoff = live ? S.elapsed + 12 : -1;
+  const visible = S.alerts.filter((a) => a.rel <= cutoff);
+  $('#alertCount').textContent = visible.length;
+  $('#scrAlerts').innerHTML = visible.slice().reverse().slice(0, 60).map((a) => `
+    <div class="srow sev-${a.severity} ${a.rel > S.lastSeen ? 'new' : ''}">
+      <span class="s-t">${clock(a.ts_minute)}</span>
+      <span class="s-${a.severity}">${a.severity}</span>
+      <span class="s-m"><b>${esc(a.service)}</b> ${esc(msgOf(a))}</span>
+    </div>`).join('') || '<div class="scr-dim">board quiet</div>';
+  S.lastSeen = cutoff;
+
+  // ---- centre screen
+  renderCentre();
+
+  // ---- right screen: the log
+  $('#logCount').textContent = S.log.length;
+  $('#scrLog').innerHTML = S.log.slice().reverse().map((e) => e.impact
+    ? `<div style="margin-bottom:9px"><span class="scr-dim">${e.at}m</span>
+         <div class="impactline"><span class="scr-bad">${esc(e.impact.headline)}</span><br>
+         <span class="scr-dim">${esc(e.impact.detail)}</span></div></div>`
+    : `<div style="margin-bottom:9px"><span class="scr-dim">${e.at}m</span> ${esc(e.what)}
+         ${e.found ? `<div class="finding">${esc(e.found)}</div>` : ''}</div>`).join('')
+    || '<div class="scr-dim">nothing logged</div>';
+
+  renderDesk(sh, done, live, worst);
+}
+
+function renderDesk(sh, done, live, worst) {
+  // ---- desk: diagnostic keys
+  $('#keys').innerHTML = sh.checks.map((c, i) => {
+    const ran = S.checksRun.includes(c.id);
+    return `<button class="key ${ran ? 'done' : ''}" data-check="${c.id}"
+      ${ran || done || S.busy || !live ? 'disabled' : ''}>
+      <span>${esc(c.label)}</span><span class="c">${ran ? '✓' : c.cost_minutes + 'm'}</span></button>`;
+  }).join('') + D.agents.filter((a) => ['triage','broker','pm'].includes(a.id)).map((a) => `
+      <button class="key" data-agent="${a.id}" ${done || S.busy || !live ? 'disabled' : ''}>
+        <span>▸ ${esc(a.name)} agent</span><span class="c">${AGENT_COST}m</span></button>`).join('');
+  document.querySelectorAll('[data-check]').forEach((b) =>
+    b.onclick = () => runCheck(sh.checks.find((c) => c.id === b.dataset.check)));
+  document.querySelectorAll('[data-agent]').forEach((b) =>
+    b.onclick = () => openAgentSheet(b.dataset.agent));
+
+  // ---- desk: the phone. Rings when a required action is due and unanswered.
+  $('#phones').innerHTML = sh.required.map((r) => {
+    const t = S.actionsTaken.find((a) => a.id === r.id);
+    const overdue = !t && r.by_minute && S.elapsed >= r.by_minute * 0.5;
+    const cls = t ? 'answered' : overdue ? 'ringing' : '';
+    const st = t ? (r.by_minute && t.minute > r.by_minute ? `answered late (${t.minute}m)` : `answered ${t.minute}m`)
+                 : overdue ? 'holding' : 'idle';
+    return `<button class="phone ${cls}" data-act="${r.id}" ${t || done || S.busy || !live ? 'disabled' : ''}>
+      <div class="lbl">${esc(r.label)}</div>
+      <div class="st"><span class="bulb"></span>${st}${t ? '' : ' · 2m'}</div></button>`;
+  }).join('');
+  document.querySelectorAll('[data-act]').forEach((b) =>
+    b.onclick = () => takeAction(sh.required.find((r) => r.id === b.dataset.act)));
+
+  // ---- desk clock
+  const cl = $('#clockBig');
+  cl.className = 'big' + (done ? ' bad' : S.elapsed > sh.budget_minutes * 0.7 ? ' warn' : '');
+  cl.innerHTML = `${S.elapsed}<span style="font-size:1rem;color:#7f8a89">/${sh.budget_minutes}m</span>`;
+  $('#clockSub').textContent = done ? 'shift over — write the handover'
+    : worst ? worst.headline : 'contained';
+  $('#clockSub').style.color = done || (worst && worst.severity === 'critical') ? '#ff6b6b'
+    : worst ? '#ffd166' : '#7f8a89';
+
+  $('#declare').disabled = !!S.declaredRoot || done || S.busy || !live;
+  $('#rootPick').disabled = !!S.declaredRoot || done || !live;
+  if (S.declaredRoot) $('#rootPick').value = S.declaredRoot;
+
+  // Say so on the dial, not only in the log: a state change the operator
+  // cannot see on the control they just used reads as a dead button.
+  const dial = $('#declare').parentElement;
+  let mark = dial.querySelector('.declared');
+  if (S.declaredRoot && !mark) {
+    mark = document.createElement('div');
+    mark.className = 'declared';
+    dial.appendChild(mark);
+  }
+  if (mark) {
+    mark.innerHTML = S.declaredRoot
+      ? `✓ declared at ${S.declaredAt}m` : '';
+    mark.style.display = S.declaredRoot ? 'flex' : 'none';
+  }
+  $('#declare').textContent = S.declaredRoot ? 'Declared' : 'Declare';
+
+  // Every render path ends here, and it runs after the screens and the desk have
+  // been written — so the tutorial is re-aligned in the off and brief phases too,
+  // which is where the power button and the accept button live. Gating this on
+  // `live` was why a tour step could never pick up a control on a dark desk.
+  if (window.Tour) Tour.resume();
+}
+
+function renderCentre() {
+  const c = S.centre, t = $('#centreTitle'), tag = $('#centreTag'), scr = $('#scrCentre');
+  if (c.mode === 'finding') {
+    t.textContent = 'Diagnostic'; tag.textContent = c.check.cost_minutes + 'm';
+    scr.innerHTML = `<div class="scr-dim">${esc(c.check.label)}</div>
+      <div class="finding" style="margin-top:8px">${esc(c.finding)}</div>
+      <div class="scr-dim" style="margin-top:14px">${S.checksRun.length}/${S.shift.checks.length} checks run</div>`;
+  } else if (c.mode === 'agent') {
+    t.textContent = c.agent.name + ' agent';
+    tag.textContent = c.working ? 'working'
+      : c.text ? (c.model || 'live') + (c.usage ? ` · ${c.usage.input}+${c.usage.output} tok` : '')
+      : 'error';
+    scr.innerHTML = c.working
+      ? `<span class="spin"></span> <span class="scr-dim">dispatched — waiting on the model…</span>`
+      : `<div style="white-space:pre-wrap">${esc(c.text || agentError(c.error))}</div>`;
+  } else {
+    t.textContent = 'Incident'; tag.textContent = S.shift.opens_at;
+    const accepted = S.phase === 'live';
+    scr.innerHTML = `<div style="font-size:13px;color:#fff;margin-bottom:8px">${esc(S.shift.title)}</div>
+      <div style="white-space:pre-wrap;line-height:1.6">${esc(S.shift.brief)}</div>
+      ${accepted
+        ? `<div class="scr-dim" style="margin-top:16px">Run a check from the desk. Findings appear here.</div>`
+        : `<div style="margin-top:18px"><button class="powerbtn" id="accept" style="margin:0">
+             <span class="ring"></span>Accept the shift</button></div>
+           <div class="scr-dim" style="margin-top:10px">The clock starts when you accept.</div>`}`;
+    if (!accepted) { const el = $('#accept'); if (el) el.onclick = acknowledge; }
+  }
+}
+
+/* ------------------------------------------------------------------ desk controls */
+$('#declare').onclick = () => {
+  const v = $('#rootPick').value;
+  if (!v) return;
+  spend(1, `Declared root cause: ${v}`);
+  S.declaredRoot = v; S.declaredAt = S.elapsed;
+  emit('root-declared', { root: v });
+  S.centre = { mode: 'brief' };
+  render();
+};
+$('#notepad').onclick = () => {
+  show('handover');
+  // Say where the shift stands, so the pad is not a context-free text box.
+  $('#handoverClock').textContent = over()
+    ? `Shift over at ${S.elapsed} of ${S.shift.budget_minutes} minutes.`
+    : `${S.elapsed} of ${S.shift.budget_minutes} minutes used · `
+      + `${S.checksRun.length} checks run · `
+      + (S.declaredRoot ? `root declared: ${S.declaredRoot}` : 'no root cause declared yet');
+};
+
+$('#draftNote').onclick = () => openAgentSheet('handover', {
+  costMinutes: 0,
+  onConfirm: draftHandover,
+});
+
+async function draftHandover() {
+  $('#noteOut').innerHTML = `<div class="agentout"><h4><span>Handover agent</span><span class="spin"></span></h4>drafting…</div>`;
+  const res = await callAgent('handover');
+  if (res.text) { $('#note').value = res.text; $('#noteOut').innerHTML = ''; }
+  else $('#noteOut').innerHTML = `<div class="agentout"><h4><span>Handover agent</span><span class="src">unavailable</span></h4>${esc(agentError(res.error))}</div>`;
+}
+
+$('#submitNote').onclick = () => openAgentSheet('judge', {
+  costMinutes: 0,
+  onConfirm: sendHandover,
+});
+
+async function sendHandover() {
+  const note = $('#note').value.trim();
+  showDebrief();
+  if (!note) {
+    $('#judgeOut').innerHTML = `<div class="agentout"><h4><span>Next region</span><span class="src">not sent</span></h4>No handover was written. The incoming analyst starts from nothing.</div>`;
+    return;
+  }
+  $('#judgeOut').innerHTML = `<div class="agentout"><h4><span>Next region</span><span class="spin"></span></h4>reading your note…</div>`;
+  const res = await callAgent('judge', { note });
+  $('#judgeOut').innerHTML = res.text
+    ? `<div class="agentout"><h4><span>Next region</span><span class="src live">live</span></h4>${esc(res.text)}</div>`
+    : `<div class="agentout"><h4><span>Next region</span><span class="src">unavailable</span></h4>${esc(agentError(res.error))}</div>`;
+}
+
+/* ------------------------------------------------------------------ scoring
+   Mirrors exception_desk/sim.py::score_run. The Python version is the reference
+   and is unit-tested; this one runs offline so the debrief works on a static
+   deploy with no backend. */
+function scoreRun() {
+  const sh = S.shift, ans = D.answers[sh.key], lines = [];
+  let points = 0;
+
+  if (S.declaredRoot === ans.true_root && S.declaredAt != null) {
+    const p = Math.round(20 + 20 * Math.max(0, 1 - S.declaredAt / sh.budget_minutes));
+    lines.push({ label: 'Root cause', points: p, of: 40,
+      note: `Correct (${ans.true_root}) at minute ${S.declaredAt} of ${sh.budget_minutes}.` });
+  } else if (S.declaredRoot) {
+    lines.push({ label: 'Root cause', points: 0, of: 40,
+      note: `Declared ${S.declaredRoot}; the cause was ${ans.true_root}. That was a symptom.` });
+  } else lines.push({ label: 'Root cause', points: 0, of: 40, note: 'No root cause declared.' });
+  points += lines[0].points;
+
+  const per = 35 / Math.max(1, sh.required.length);
+  let got = 0; const notes = [];
+  for (const r of sh.required) {
+    const t = S.actionsTaken.find((a) => a.id === r.id);
+    if (!t) notes.push(`missed: ${r.label}`);
+    else if (r.by_minute && t.minute > r.by_minute) {
+      got += per * 0.4; notes.push(`late (${t.minute}m, needed by ${r.by_minute}m): ${r.label}`);
+    } else got += per;
+  }
+  lines.push({ label: 'Required actions', points: Math.round(got), of: 35,
+    note: notes.join('; ') || 'All taken in time.' });
+  points += Math.round(got);
+
+  const ran = new Set(S.checksRun);
+  const found = ans.decisive.filter((d) => ran.has(d));
+  const wasted = ans.red_herrings.filter((h) => ran.has(h));
+  const eff = Math.max(0, Math.min(25, 25 * (found.length / Math.max(1, ans.decisive.length)) - 4 * wasted.length));
+  lines.push({ label: 'Diagnostic efficiency', points: Math.round(eff), of: 25,
+    note: `${found.length}/${ans.decisive.length} decisive checks run` +
+          (wasted.length ? `, ${wasted.length} dead end${wasted.length > 1 ? 's' : ''}` : '') });
+  points += Math.round(eff);
+
+  return { points, lines, debrief: ans.debrief,
+    grade: points >= 85 ? 'Clean shift' : points >= 70 ? 'Solid'
+         : points >= 50 ? 'Survivable' : 'The desk noticed' };
+}
+
+function showDebrief() {
+  const r = scoreRun();
+  const ans = D.answers[S.shift.key] || {};
+  $('#debriefShift').textContent = S.shift.title;
+  $('#grade').textContent = r.grade;
+  $('#gradeSub').textContent = `${r.points} / 100 · ${S.elapsed} minutes · ${S.checksRun.length} checks · ${S.agentsUsed.length} agent dispatches`;
+  $('#scoreRows').innerHTML = r.lines.map((l) => `
+    <div class="scorerow">
+      <div><strong>${esc(l.label)}</strong><div class="note">${esc(l.note)}</div></div>
+      <div class="n">${l.points}/${l.of}</div></div>`).join('');
+
+  // Always show the answer. A debrief that scores you 0/40 for the root cause
+  // and then declines to say what it was teaches nothing — and the whole point
+  // of these scenarios is the thing you were supposed to notice.
+  const right = S.declaredRoot && S.declaredRoot === ans.true_root;
+  $('#truthBox').innerHTML = `
+    <div class="truth ${right ? 'right' : 'wrong'}">
+      <div class="lbl">The actual cause</div>
+      <div class="val">${esc(ans.true_root || 'unknown')}</div>
+      <div class="said">${S.declaredRoot
+        ? (right ? 'You declared this at ' + S.declaredAt + 'm.'
+                 : 'You declared ' + esc(S.declaredRoot) + ' at ' + S.declaredAt + 'm.')
+        : 'You did not declare a root cause.'}</div>
+    </div>`;
+
+  $('#debriefText').textContent = r.debrief;
+  show('debrief');
+}
+
+$('#skipJudge').onclick = () => {
+  showDebrief();
+  $('#judgeOut').innerHTML =
+    `<div class="agentout"><h4><span>Next region</span><span class="src">not sent</span></h4>`
+    + `Handover was not sent for review. Your score above is unaffected — it is computed `
+    + `locally from what you did during the shift.</div>`;
+};
+
+/** The handover pad is reachable mid-shift from the notepad, and every button on
+ *  it ended the shift. Someone who clicked it to look was trapped. */
+$('#backToDesk').onclick = () => { show('shift'); bringDeskIntoView(); };
+
+/** Leaving the page mid-shift throws the shift away — there is no persistence,
+ *  and the browser Back button brings you to a reset app. Rather than build
+ *  persistence for a five-minute game, open the Board beside the shift so both
+ *  survive, and say so. */
+$('#boardLink').addEventListener('click', (e) => {
+  if (S && S.phase === 'live' && !over()) {
+    e.preventDefault();
+    window.open('board.html', '_blank', 'noopener');
+  }
+});
+
+$('#again').onclick = () => { S = null; show('pick'); };
+$('#theme').onclick = () => {
+  const el = document.documentElement;
+  el.setAttribute('data-theme', el.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+};
+$('#replay').onclick = () => window.replayIntro && window.replayIntro();
+$('#help').onclick = () => Tour.start(true);
+</script>
+<script src="tour.js"></script>
+<script src="intro.js"></script>
+</body>
+</html>

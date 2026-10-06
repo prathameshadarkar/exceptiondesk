@@ -1,0 +1,142 @@
+{
+  "scenario": "stale_fx_feed",
+  "teaches": "The root alerts *after* several of its symptoms. Kills any 'earliest alert is the root' heuristic.",
+  "incidents": [
+    {
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "label": "FX rates stale",
+      "kind": "data_wrong",
+      "start_minute": 302,
+      "member_alert_ids": [
+        "stale_fx_feed-A0000",
+        "stale_fx_feed-A0001",
+        "stale_fx_feed-A0002",
+        "stale_fx_feed-A0003",
+        "stale_fx_feed-A0004",
+        "stale_fx_feed-A0005",
+        "stale_fx_feed-A0006",
+        "stale_fx_feed-A0007",
+        "stale_fx_feed-A0008",
+        "stale_fx_feed-A0009",
+        "stale_fx_feed-A0010",
+        "stale_fx_feed-A0011",
+        "stale_fx_feed-A0012"
+      ],
+      "affected_services": [
+        "vendor_fx",
+        "ingest_fx_loader",
+        "svc_pricing",
+        "svc_blotter",
+        "svc_reporting"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "stale_fx_feed-A0006",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0007",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0008",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0011",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0010",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0012",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0009",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0005",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0002",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0001",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0003",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0004",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0000",
+      "incident_id": "stale_fx_feed-INC1",
+      "true_root": "vendor_fx",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "stale_fx_feed-A0013",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "stale_fx_feed-A0014",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exception Desk — Board</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+<script src="tour.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>Exception Desk</h1>
+      <p class="tagline" style="margin:4px 0 0">The data behind the shift — alerts, topology and measured accuracy.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="/" class="chip navchip" style="text-decoration:none">← Desk</a>
+      <button class="chip navchip" id="help" style="cursor:pointer"
+              title="Replay the tutorial on the desk">Help</button>
+      <span class="chip is-static">Synthetic data</span>
+      <button id="theme" title="Toggle light/dark">◑</button>
+    </div>
+  </header>
+  <p class="tagline">Alert correlation and first-line triage for a systematic trading operation.</p>
+
+  <div class="controls">
+    <label for="scenario" class="chip">Scenario</label>
+    <select id="scenario"></select>
+    <div class="spacer"></div>
+    <button id="viewToggle" aria-pressed="false">Table view</button>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true"  data-tab="board">Board</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="topology">Topology</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="scorecard">Scorecard</button>
+  </div>
+
+  <div id="err" class="err"></div>
+
+  <!-- ================= BOARD ================= -->
+  <section id="tab-board">
+    <p class="tagline" id="scenarioSummary" style="margin-bottom:16px"></p>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="panel">
+      <h2>Alert volume</h2>
+      <p class="hint" id="volHint">Alerts per minute across the window. The burst is the incident.</p>
+      <svg id="volume" height="130" role="img" aria-label="Alert volume per minute"></svg>
+    </div>
+
+    <div class="panel">
+      <h2>The storm</h2>
+      <p class="hint">One mark per alert, one lane per service. Lanes are ordered by
+        dependency depth — upstream at the top — so a cascade reads downward.</p>
+      <svg id="timeline" role="img" aria-label="Alerts by service over time"></svg>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--series-1)"></i> P2–P4 alert</span>
+        <span><i class="dot" style="background:var(--critical)"></i> P1 — pages someone</span>
+        <span style="color:var(--muted)">hover a mark for detail</span>
+      </div>
+      <div class="scrub">
+        <button id="play">▶ Replay</button>
+        <input type="range" id="time" min="0" max="100" value="100" step="0.25" aria-label="Time">
+        <span class="clock" id="clock">—</span>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <h2>Alert feed</h2>
+        <p class="hint" id="feedHint"></p>
+        <div class="scrolly">
+          <table>
+            <thead><tr><th>Time</th><th>Sev</th><th>Service</th><th>Message</th></tr></thead>
+            <tbody id="feed"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Incidents</h2>
+        <p class="hint">What the desk actually works: one cause, many symptoms.</p>
+        <div id="incidents"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TOPOLOGY ================= -->
+  <section id="tab-topology" class="hidden">
+    <div class="panel">
+      <h2>Service dependency graph</h2>
+      <p class="hint">An edge <code>A → B</code> means <em>A depends on B</em>, so B is upstream.
+        Blast radius is how many services sit downstream of each node — the prior that
+        makes root-cause ranking possible.</p>
+      <div class="scrolly" style="max-height:520px">
+        <table>
+          <thead><tr><th>Service</th><th>Tier</th><th>Depends on</th><th style="text-align:right">Blast radius</th></tr></thead>
+          <tbody id="topo"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SCORECARD ================= -->
+  <section id="tab-scorecard" class="hidden">
+    <div class="panel">
+      <h2>Measured, not asserted</h2>
+      <p class="hint">Accuracy against seeded ground truth. Because the faults are injected,
+        the true root and true incident membership of every alert is known.</p>
+      <div id="scorecard"></div>
+    </div>
+  </section>
+
+  <footer>
+    All data on this page is synthetic. The topology, failure modes and propagation are
+    modelled on how systematic trading operations break; no real market data, broker
+    relationship or firm system is involved.
+  </footer>
+</div>
+
+<div id="tip" role="status"></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+
+/** Alert messages are written "service: what happened" and every surface here
+ *  already shows the service in its own column. Printing both gave each row the
+ *  shape "svc_oms | svc_oms: queue depth 38000". */
+const msgOf = (a) => {
+  const m = String(a.message || '');
+  const prefix = a.service + ': ';
+  return m.startsWith(prefix) ? m.slice(prefix.length) : m;
+};
+const state = { manifest: null, topology: null, scenario: null, alerts: [], groups: [],
+                incidents: null, lanes: [], t: 1, playing: false, tableView: false };
+
+const fmtClock = (m) => {
+  const h = Math.floor(m / 60) % 24, mm = Math.floor(m % 60);
+  return String(h).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+};
+
+async function getJSON(path) {
+  const r = await fetch(path, { cache: 'no-store' });
+  if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
+  return r.json();
+}
+
+/* ---------------------------------------------------------------- boot */
+async function boot() {
+  try {
+    state.manifest = await getJSON('data/manifest.json');
+    state.topology = await getJSON('data/topology.json');
+  } catch (e) {
+    $('#err').textContent =
+      'Could not load data — ' + e.message +
+      '  •  run `make site`, and serve over http (`make serve`), not file://';
+    return;
+  }
+
+  const sel = $('#scenario');
+  state.manifest.scenarios.forEach((s) => {
+    const o = document.createElement('option');
+    o.value = s.key; o.textContent = s.title;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', () => loadScenario(sel.value));
+
+  renderTopology();
+  await renderScorecard();
+  await loadScenario(state.manifest.scenarios[0].key);
+}
+
+async function loadScenario(key) {
+  const meta = state.manifest.scenarios.find((s) => s.key === key);
+  state.scenario = meta;
+  const payload = await getJSON(meta.alerts_file);
+  state.alerts = payload.alerts;
+  try {
+    const inc = await getJSON('data/' + key + '.incidents.json');
+    state.incidents = inc;
+    state.groups = inc.groups || [];
+  } catch { state.incidents = null; state.groups = []; }
+
+  // Lanes ordered by dependency depth: upstream first, so a cascade reads down.
+  const depth = depthMap();
+  const seen = [...new Set(state.alerts.map((a) => a.service))];
+  state.lanes = seen.sort((a, b) => (depth[a] ?? 99) - (depth[b] ?? 99) || a.localeCompare(b));
+
+  $('#scenarioSummary').textContent = payload.summary || '';
+  state.t = 1;
+  $('#time').value = 100;
+  renderAll();
+}
+
+/** Rough upstream-ness: services with a bigger blast radius sit higher. */
+function depthMap() {
+  const m = {};
+  for (const s of state.topology.services) m[s.name] = -s.blast_radius;
+  return m;
+}
+
+/* ---------------------------------------------------------------- render */
+function windowBounds() {
+  const w = state.scenario.window;
+  if (w && w.length === 2) return w;
+  const ms = state.alerts.map((a) => a.ts_minute);
+  return [Math.min(...ms), Math.max(...ms)];
+}
+function cutoff() {
+  const [s, e] = windowBounds();
+  return s + (e - s) * state.t;
+}
+function visibleAlerts() {
+  const c = cutoff();
+  return state.alerts.filter((a) => a.ts_minute <= c);
+}
+
+function renderAll() { renderKpis(); renderVolume(); renderTimeline(); renderFeed(); renderIncidents(); }
+
+function renderKpis() {
+  const vis = visibleAlerts();
+  const p1 = vis.filter((a) => a.severity === 'P1').length;
+  const ready = state.incidents && state.incidents.engine_ready;
+  const nInc = ready ? state.incidents.incidents.length : null;
+  const [ws, we] = windowBounds();
+
+  const tiles = [
+    { label: 'Alerts', value: vis.length, sub: `${state.alerts.length} in full window` },
+    { label: 'Signals', value: state.groups.length || '—',
+      sub: !state.groups.length ? 'step 1 not run'
+           : state.groups.length === state.alerts.length
+             ? 'grouping: no repeats here'
+             : `grouping: −${state.alerts.length - state.groups.length} repeats collapsed` },
+    { label: 'Incidents', value: nInc === null ? '—' : nInc,
+      sub: nInc === null ? 'awaiting root-cause ranking' : 'after correlation',
+      pending: nInc === null },
+    { label: 'P1 alerts', value: p1, sub: 'pages someone' },
+    { label: 'Window', value: fmtClock(ws) + '–' + fmtClock(we), sub: `${Math.round(we - ws)} minutes` },
+  ];
+
+  $('#kpis').innerHTML = tiles.map((t) => `
+    <div class="kpi">
+      <div class="label">${t.label}</div>
+      <div class="value${t.pending ? ' pending' : ''}">${t.value}</div>
+      <div class="sub">${t.sub}</div>
+    </div>`).join('');
+}
+
+function renderVolume() {
+  const svg = $('#volume');
+  const W = svg.clientWidth || 800, H = 130, padL = 34, padR = 8, padT = 8, padB = 22;
+  const [ws, we] = windowBounds();
+  const nBins = Math.min(90, Math.max(24, Math.round(we - ws)));
+  const binW = (we - ws) / nBins;
+  const bins = new Array(nBins).fill(0);
+  for (const a of state.alerts) {
+    const i = Math.min(nBins - 1, Math.max(0, Math.floor((a.ts_minute - ws) / binW)));
+    bins[i]++;
+  }
+  const maxV = Math.max(1, ...bins);
+  const x = (i) => padL + (i / nBins) * (W - padL - padR);
+  const y = (v) => padT + (1 - v / maxV) * (H - padT - padB);
+  const cutIdx = ((cutoff() - ws) / (we - ws)) * nBins;
+
+  let g = '';
+  for (const frac of [0, 0.5, 1]) {
+    const v = Math.round(maxV * frac);
+    g += `<line class="gridline" x1="${padL}" x2="${W - padR}" y1="${y(v)}" y2="${y(v)}"/>
+          <text class="axistext" x="${padL - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  }
+  const bw = Math.max(1.5, (W - padL - padR) / nBins - 2);
+  let bars = '';
+  bins.forEach((v, i) => {
+    if (!v) return;
+    const h = (H - padT - padB) - (y(v) - padT);
+    const dim = i > cutIdx ? ' opacity="0.22"' : '';
+    bars += `<rect class="bar" x="${x(i)}" y="${y(v)}" width="${bw}" height="${Math.max(2, h)}" rx="2"${dim}/>`;
+  });
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => {
+    const m = ws + (we - ws) * f;
+    return `<text class="axistext" x="${padL + f * (W - padL - padR)}" y="${H - 6}" text-anchor="${f === 0 ? 'start' : f === 1 ? 'end' : 'middle'}">${fmtClock(m)}</text>`;
+  }).join('');
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = g + bars +
+    `<line class="axisline" x1="${padL}" x2="${W - padR}" y1="${H - padB}" y2="${H - padB}"/>` + ticks;
+}
+
+function renderTimeline() {
+  const svg = $('#timeline');
+  const lanes = state.lanes;
+  const laneH = 17, padL = 168, padR = 10, padT = 6, padB = 24;
+  const H = padT + lanes.length * laneH + padB;
+  const W = svg.clientWidth || 800;
+  const [ws, we] = windowBounds();
+  const x = (m) => padL + ((m - ws) / (we - ws)) * (W - padL - padR);
+  const yOf = (s) => padT + lanes.indexOf(s) * laneH + laneH / 2;
+
+  let rows = '';
+  lanes.forEach((s, i) => {
+    const yy = padT + i * laneH + laneH / 2;
+    rows += `<line class="gridline" x1="${padL}" x2="${W - padR}" y1="${yy}" y2="${yy}" opacity="0.5"/>
+             <text class="lanetext" x="${padL - 8}" y="${yy + 3.5}" text-anchor="end">${s}</text>`;
+  });
+
+  const c = cutoff();
+  let marks = '';
+  for (const a of state.alerts) {
+    const past = a.ts_minute <= c;
+    const p1 = a.severity === 'P1';
+    marks += `<circle class="mark${p1 ? ' p1' : ''}" cx="${x(a.ts_minute).toFixed(1)}" cy="${yOf(a.service)}"
+      r="${p1 ? 4.5 : 3.5}" opacity="${past ? (p1 ? 0.95 : 0.72) : 0.1}"
+      stroke="var(--surface)" stroke-width="1.5"
+      data-id="${a.alert_id}" tabindex="0"><title>${a.severity} · ${a.service}</title></circle>`;
+  }
+
+  const cx = x(c);
+  const cursor = `<line x1="${cx}" x2="${cx}" y1="${padT - 2}" y2="${H - padB + 2}"
+                   stroke="var(--axis)" stroke-width="1" stroke-dasharray="3 3"/>`;
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => {
+    const m = ws + (we - ws) * f;
+    return `<text class="axistext" x="${padL + f * (W - padL - padR)}" y="${H - 7}" text-anchor="${f === 0 ? 'start' : f === 1 ? 'end' : 'middle'}">${fmtClock(m)}</text>`;
+  }).join('');
+
+  svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = rows + cursor + marks +
+    `<line class="axisline" x1="${padL}" x2="${W - padR}" y1="${H - padB}" y2="${H - padB}"/>` + ticks;
+
+  svg.querySelectorAll('circle').forEach((el) => {
+    el.addEventListener('mouseenter', (e) => showTip(e, el.dataset.id));
+    el.addEventListener('focus', (e) => showTip(e, el.dataset.id));
+    el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('blur', hideTip);
+  });
+  $('#clock').textContent = fmtClock(c);
+}
+
+function showTip(e, id) {
+  const a = state.alerts.find((x) => x.alert_id === id);
+  if (!a) return;
+  const tip = $('#tip');
+  tip.innerHTML = `<div class="t">${fmtClock(a.ts_minute)} · ${a.alert_id}</div>
+    <div style="margin:4px 0"><span class="sev sev-${a.severity}"><i class="dot"></i>${a.severity}</span>
+    &nbsp;<strong>${a.service}</strong></div>
+    <div class="t">${a.alert_type}</div>
+    <div style="margin-top:4px">${msgOf(a)}</div>`;
+  const r = e.target.getBoundingClientRect();
+  tip.style.left = Math.min(window.innerWidth - 320, r.left + 14) + 'px';
+  tip.style.top = Math.max(8, r.top - 8) + 'px';
+  tip.style.opacity = 1;
+}
+function hideTip() { $('#tip').style.opacity = 0; }
+
+function renderFeed() {
+  const vis = visibleAlerts().slice().reverse();
+  $('#feedHint').textContent = `${vis.length} alerts up to ${fmtClock(cutoff())}, newest first.`;
+  $('#feed').innerHTML = vis.slice(0, 250).map((a) => `
+    <tr>
+      <td class="mono">${fmtClock(a.ts_minute)}</td>
+      <td><span class="sev sev-${a.severity}"><i class="dot"></i>${a.severity}</span></td>
+      <td class="mono">${a.service}</td>
+      <td>${msgOf(a)}</td>
+    </tr>`).join('');
+
+  if (window.Tour && vis.length) {
+    Tour.hint('board-alerts', '#feed',
+      'Each row is one alert. Read them for what they have in common rather than what fired '
+      + 'first — in most of these scenarios the loudest alert is a symptom several hops '
+      + 'downstream of the cause.');
+  }
+}
+
+function renderIncidents() {
+  const box = $('#incidents');
+  if (state.incidents && state.incidents.engine_ready) {
+    const list = state.incidents.incidents;
+    if (!list.length) { box.innerHTML = `<div class="empty">No incidents surfaced for this scenario.</div>`; return; }
+    box.innerHTML = list.map((i) => `
+      <div style="border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline">
+          <strong style="font-family:var(--mono);font-size:13px">${i.root}</strong>
+          <span class="sev sev-${i.severity}"><i class="dot"></i>${i.severity}</span>
+        </div>
+        <div class="hint" style="margin:6px 0">
+          ${i.alert_ids.length} alerts · ${i.affected_services.length} services ·
+          ${fmtClock(i.start_minute)}–${fmtClock(i.end_minute)} ·
+          confidence ${(i.confidence * 100).toFixed(0)}%
+        </div>
+        <ul style="margin:8px 0 0 16px;padding:0;font-size:13px;color:var(--ink-2)">
+          ${i.evidence.map((e) => `<li>${e}</li>`).join('')}
+        </ul>
+      </div>`).join('');
+    return;
+  }
+
+  // The empty state a visitor sees. It used to be addressed to whoever was
+  // building the repo — "implement assemble_incidents in correlate.py, then
+  // re-run make site" — which reads to everyone else as unfinished homework
+  // left on screen. Say what the panel is for, show the part that does run, and
+  // be plain about what is outstanding. No file paths, no build commands.
+  const nGroups = state.groups.length;
+  const collapsed = state.alerts.length - nGroups;
+  box.innerHTML = `
+    <div class="empty">
+      <strong>Incident view — in progress</strong>
+      <p style="margin:8px 0">This panel collapses the storm on the left into one row per
+      <em>cause</em>, each carrying its symptoms, a ranked root candidate and the evidence
+      behind that ranking.</p>
+      <div class="stepline">
+        <div class="on"><span>✓</span> Signature grouping
+          <b>${state.alerts.length} alerts → ${nGroups || '—'} signals</b>
+          ${collapsed > 0 ? `<i>${collapsed} repeat firings collapsed</i>`
+                          : '<i>no repeat firings in this scenario</i>'}</div>
+        <div class="on"><span>✓</span> Burst segmentation &amp; topological split
+          <b>running</b><i>separates problems that overlap in time</i></div>
+        <div class="on"><span>✓</span> Incident assembly, evidence, confidence
+          <b>running</b><i>scored by the harness on the Scorecard tab</i></div>
+        <div class="off"><span>•</span> Root-cause ranking
+          <b>outstanding</b><i>the heuristic that names the cause</i></div>
+      </div>
+      <p style="margin:12px 0 0;font-size:13px;color:var(--ink-2)">The pipeline around the
+      ranking is built and measured; the rootness heuristic itself is the piece still being
+      written, and it is deliberately the last one — it is the part worth getting right.</p>
+    </div>`;
+}
+
+function renderTopology() {
+  const deps = {};
+  for (const e of state.topology.edges) (deps[e.from] ||= []).push(e.to);
+  const rows = state.topology.services
+    .slice().sort((a, b) => b.blast_radius - a.blast_radius)
+    .map((s) => `<tr>
+        <td class="mono">${s.name}</td>
+        <td style="color:var(--muted)">${s.tier}</td>
+        <td class="mono" style="color:var(--ink-2)">${(deps[s.name] || []).join(', ') || '—'}</td>
+        <td class="num">${s.blast_radius}</td>
+      </tr>`).join('');
+  $('#topo').innerHTML = rows;
+}
+
+async function renderScorecard() {
+  const box = $('#scorecard');
+  if (!state.manifest.has_scorecard) {
+    box.innerHTML = `<div class="empty">
+      <strong>Scorecard — pending the ranking heuristic</strong>
+      <p style="margin:8px 0">This tab scores the engine against known ground truth across all
+      eight scenarios: pairwise F1, over-merge and over-split rates, root accuracy, noise
+      rejection and alert reduction. Because the faults are injected, the right answer is known
+      for every alert, which is what makes the numbers real rather than decorative.</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--ink-2)">The metrics and the scoring
+      harness are written and tested. The numbers appear here once the root-cause ranking lands —
+      publishing a scorecard before then would be scoring a pipeline against itself.</p>
+    </div>`;
+    return;
+  }
+  const card = await getJSON('data/scorecard.json');
+  box.innerHTML = `<div class="scrolly"><table>
+    <thead><tr><th>Scenario</th><th class="num">F1</th><th class="num">Root top-1</th>
+    <th class="num">Over-merge</th><th class="num">Over-split</th><th class="num">Noise rej.</th></tr></thead>
+    <tbody>${card.scenarios.map((s) => `<tr>
+      <td class="mono">${s.scenario}</td>
+      <td class="num">${s.pairwise_f1.toFixed(2)}</td>
+      <td class="num">${s.root_top1.toFixed(2)}</td>
+      <td class="num">${s.over_merge_rate.toFixed(2)}</td>
+      <td class="num">${s.over_split_rate.toFixed(2)}</td>
+      <td class="num">${s.noise_rejection.toFixed(2)}</td>
+    </tr>`).join('')}</tbody></table></div>`;
+}
+
+/* ---------------------------------------------------------------- controls */
+$('#time').addEventListener('input', (e) => {
+  state.t = +e.target.value / 100;
+  state.playing = false; $('#play').textContent = '▶ Replay';
+  renderAll();
+});
+
+$('#play').addEventListener('click', () => {
+  if (state.playing) { state.playing = false; $('#play').textContent = '▶ Replay'; return; }
+  state.playing = true; $('#play').textContent = '❚❚ Pause';
+  state.t = 0;
+  const step = () => {
+    if (!state.playing) return;
+    state.t = Math.min(1, state.t + 0.006);
+    $('#time').value = state.t * 100;
+    renderAll();
+    if (state.t >= 1) { state.playing = false; $('#play').textContent = '▶ Replay'; return; }
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+});
+
+$('#viewToggle').addEventListener('click', (e) => {
+  state.tableView = !state.tableView;
+  e.target.setAttribute('aria-pressed', String(state.tableView));
+  document.querySelectorAll('#volume, #timeline').forEach((el) =>
+    el.closest('.panel').classList.toggle('hidden', state.tableView));
+});
+
+document.querySelectorAll('.tab').forEach((t) => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+    ['board', 'topology', 'scorecard'].forEach((n) =>
+      $('#tab-' + n).classList.toggle('hidden', n !== t.dataset.tab));
+    if (t.dataset.tab === 'board') renderAll();
+
+    // First-visit explanations, shown once per session and never repeated.
+    if (window.Tour) setTimeout(() => {
+      if (t.dataset.tab === 'topology') {
+        Tour.hint('topology', '#topo',
+          'An edge means the left service depends on the right one, so the right one is '
+          + 'upstream. Follow dependencies upstream to find where a failure originated — '
+          + 'blast radius is how many services sit below each node.');
+      }
+      if (t.dataset.tab === 'scorecard') {
+        Tour.hint('scorecard', '#scorecard',
+          'These are measured against known ground truth, not asserted. Over-merge means two '
+          + 'problems were shown as one — the dangerous failure. Over-split means one problem '
+          + 'was shown as several — the annoying one.');
+      }
+    }, 320);
+  });
+});
+
+const helpBtn = $('#help');
+if (helpBtn) helpBtn.onclick = () => { location.href = '/?tutorial=1'; };
+
+$('#theme').addEventListener('click', () => {
+  const el = document.documentElement;
+  el.setAttribute('data-theme', el.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  renderAll();
+});
+
+let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(renderAll, 120); });
+
+boot();
+</script>
+</body>
+</html>

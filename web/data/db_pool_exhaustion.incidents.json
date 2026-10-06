@@ -1,0 +1,424 @@
+{
+  "scenario": "db_pool_exhaustion",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "svc_oms",
+      "alert_type": "QUEUE_DEPTH",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.109,
+      "last_minute": 548.109,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0016"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.117,
+      "last_minute": 548.117,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0013"
+      ]
+    },
+    {
+      "service": "svc_trade_capture",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.131,
+      "last_minute": 548.131,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0019"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "GBPUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.141,
+      "last_minute": 548.141,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0015"
+      ]
+    },
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.142,
+      "last_minute": 548.142,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0003"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.219,
+      "last_minute": 548.219,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0027"
+      ]
+    },
+    {
+      "service": "svc_security_master",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.221,
+      "last_minute": 548.221,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0007"
+      ]
+    },
+    {
+      "service": "svc_trade_capture",
+      "alert_type": "QUEUE_DEPTH",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.246,
+      "last_minute": 548.246,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0020"
+      ]
+    },
+    {
+      "service": "db_primary",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.247,
+      "last_minute": 548.247,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0002"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.262,
+      "last_minute": 548.262,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0011"
+      ]
+    },
+    {
+      "service": "db_replica",
+      "alert_type": "DISK_PRESSURE",
+      "entity": null,
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 548.266,
+      "last_minute": 548.266,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0023"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.279,
+      "last_minute": 548.279,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0026"
+      ]
+    },
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.287,
+      "last_minute": 548.287,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0004"
+      ]
+    },
+    {
+      "service": "svc_pricing",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.287,
+      "last_minute": 548.287,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0009"
+      ]
+    },
+    {
+      "service": "ingest_refdata_loader",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 548.293,
+      "last_minute": 548.293,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0005"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.293,
+      "last_minute": 548.293,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0021"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 548.293,
+      "last_minute": 548.293,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0028"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.336,
+      "last_minute": 548.336,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0012"
+      ]
+    },
+    {
+      "service": "svc_locate",
+      "alert_type": "STALE_DATA",
+      "entity": "USDJPY",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 548.355,
+      "last_minute": 548.355,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0024"
+      ]
+    },
+    {
+      "service": "db_primary",
+      "alert_type": "QUEUE_DEPTH",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.36,
+      "last_minute": 548.36,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0001"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.364,
+      "last_minute": 548.364,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0010"
+      ]
+    },
+    {
+      "service": "db_primary",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.366,
+      "last_minute": 548.366,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0000"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.386,
+      "last_minute": 548.386,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0017"
+      ]
+    },
+    {
+      "service": "svc_locate",
+      "alert_type": "STALE_DATA",
+      "entity": "TSLA.O",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 548.392,
+      "last_minute": 548.392,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0025"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "EURUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.394,
+      "last_minute": 548.394,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0014"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.445,
+      "last_minute": 548.445,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0022"
+      ]
+    },
+    {
+      "service": "svc_pricing",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.447,
+      "last_minute": 548.447,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0008"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 548.452,
+      "last_minute": 548.452,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0018"
+      ]
+    },
+    {
+      "service": "ingest_refdata_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 548.481,
+      "last_minute": 548.481,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0006"
+      ]
+    },
+    {
+      "service": "svc_ems",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 568.021,
+      "last_minute": 568.021,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0031"
+      ]
+    },
+    {
+      "service": "fix_gw_broker_b",
+      "alert_type": "SEQ_GAP",
+      "entity": null,
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 569.732,
+      "last_minute": 569.732,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0029"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "STALE_DATA",
+      "entity": "ESZ6",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 593.599,
+      "last_minute": 593.599,
+      "flapping": false,
+      "alert_ids": [
+        "db_pool_exhaustion-A0030"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

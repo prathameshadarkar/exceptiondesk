@@ -1,0 +1,463 @@
+{
+  "scenario": "airflow_dag_cascade",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "scheduler_airflow",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 268.063,
+      "last_minute": 268.063,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0000"
+      ]
+    },
+    {
+      "service": "scheduler_airflow",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 268.245,
+      "last_minute": 268.245,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0001"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 268.967,
+      "last_minute": 268.967,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0012"
+      ]
+    },
+    {
+      "service": "ingest_px_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 268.996,
+      "last_minute": 268.996,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0002"
+      ]
+    },
+    {
+      "service": "ingest_corpaction_proc",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 269.037,
+      "last_minute": 269.037,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0006"
+      ]
+    },
+    {
+      "service": "ingest_borrow_loader",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 269.074,
+      "last_minute": 269.074,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0010"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 269.142,
+      "last_minute": 269.142,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0011"
+      ]
+    },
+    {
+      "service": "ingest_px_loader",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 269.145,
+      "last_minute": 269.145,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0003"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 269.146,
+      "last_minute": 269.146,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0013"
+      ]
+    },
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 269.225,
+      "last_minute": 269.225,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0005"
+      ]
+    },
+    {
+      "service": "ingest_borrow_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 269.237,
+      "last_minute": 269.237,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0009"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 269.286,
+      "last_minute": 269.286,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0014"
+      ]
+    },
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 269.369,
+      "last_minute": 269.369,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0004"
+      ]
+    },
+    {
+      "service": "ingest_refdata_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 269.387,
+      "last_minute": 269.387,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0007"
+      ]
+    },
+    {
+      "service": "ingest_refdata_loader",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 269.561,
+      "last_minute": 269.561,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0008"
+      ]
+    },
+    {
+      "service": "svc_pricing",
+      "alert_type": "STALE_DATA",
+      "entity": "AAPL.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 269.894,
+      "last_minute": 269.894,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0016"
+      ]
+    },
+    {
+      "service": "svc_security_master",
+      "alert_type": "STALE_DATA",
+      "entity": "TSLA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 269.974,
+      "last_minute": 269.974,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0018"
+      ]
+    },
+    {
+      "service": "svc_security_master",
+      "alert_type": "STALE_DATA",
+      "entity": "JPM.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 269.981,
+      "last_minute": 269.981,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0020"
+      ]
+    },
+    {
+      "service": "svc_security_master",
+      "alert_type": "STALE_DATA",
+      "entity": "BRKb.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 270.045,
+      "last_minute": 270.045,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0019"
+      ]
+    },
+    {
+      "service": "svc_pricing",
+      "alert_type": "STALE_DATA",
+      "entity": "EURUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 270.118,
+      "last_minute": 270.118,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0017"
+      ]
+    },
+    {
+      "service": "svc_pricing",
+      "alert_type": "STALE_DATA",
+      "entity": "UNH.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 270.207,
+      "last_minute": 270.207,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0015"
+      ]
+    },
+    {
+      "service": "svc_locate",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 270.287,
+      "last_minute": 270.287,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0021"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "NQZ6",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.011,
+      "last_minute": 271.011,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0022"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "BRKb.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.022,
+      "last_minute": 271.022,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0029"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "GCG7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.131,
+      "last_minute": 271.131,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0027"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "MSFT.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.131,
+      "last_minute": 271.131,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0030"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "UNH.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.139,
+      "last_minute": 271.139,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0023"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "TSLA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.148,
+      "last_minute": 271.148,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0028"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "EURUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.155,
+      "last_minute": 271.155,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0024"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.179,
+      "last_minute": 271.179,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0025"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "STALE_DATA",
+      "entity": "TSLA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 271.194,
+      "last_minute": 271.194,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0026"
+      ]
+    },
+    {
+      "service": "vendor_refdata",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 298.567,
+      "last_minute": 298.567,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0031"
+      ]
+    },
+    {
+      "service": "vendor_px_equity",
+      "alert_type": "STALE_DATA",
+      "entity": "UNH.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 322.769,
+      "last_minute": 322.769,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0034"
+      ]
+    },
+    {
+      "service": "vendor_refdata",
+      "alert_type": "STALE_DATA",
+      "entity": "USDJPY",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 338.458,
+      "last_minute": 338.458,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0032"
+      ]
+    },
+    {
+      "service": "db_replica",
+      "alert_type": "DISK_PRESSURE",
+      "entity": null,
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 363.976,
+      "last_minute": 363.976,
+      "flapping": false,
+      "alert_ids": [
+        "airflow_dag_cascade-A0033"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

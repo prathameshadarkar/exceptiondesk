@@ -1,0 +1,151 @@
+{
+  "scenario": "fix_session_drop",
+  "teaches": "Narrow blast radius, high severity. Tests that severity is not confused with rootness.",
+  "incidents": [
+    {
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "label": "Broker A FIX session down",
+      "kind": "connectivity",
+      "start_minute": 622,
+      "member_alert_ids": [
+        "fix_session_drop-A0000",
+        "fix_session_drop-A0001",
+        "fix_session_drop-A0002",
+        "fix_session_drop-A0003",
+        "fix_session_drop-A0004",
+        "fix_session_drop-A0005",
+        "fix_session_drop-A0006",
+        "fix_session_drop-A0007",
+        "fix_session_drop-A0008",
+        "fix_session_drop-A0009",
+        "fix_session_drop-A0010",
+        "fix_session_drop-A0011",
+        "fix_session_drop-A0012",
+        "fix_session_drop-A0013"
+      ],
+      "affected_services": [
+        "fix_gw_broker_a",
+        "svc_ems",
+        "svc_dropcopy",
+        "svc_trade_capture",
+        "svc_position",
+        "svc_blotter"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "fix_session_drop-A0000",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0002",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0001",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0003",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0004",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0005",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0007",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0006",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0008",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0010",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0012",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0013",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0009",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0011",
+      "incident_id": "fix_session_drop-INC1",
+      "true_root": "fix_gw_broker_a",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "fix_session_drop-A0015",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "fix_session_drop-A0014",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

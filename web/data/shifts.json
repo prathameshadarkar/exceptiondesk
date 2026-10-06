@@ -1,0 +1,418 @@
+[
+  {
+    "key": "vendor_price_file_late",
+    "title": "Equity price file misses its window",
+    "opens_at": "05:12 New York",
+    "brief": "You picked up the shift twelve minutes ago. Pricing is flagging stale marks, risk has thrown a limit breach on EQ_STAT_ARB, and P&L is showing a 6-sigma move that nobody on the desk believes. The open is in two hours and eighteen minutes.",
+    "budget_minutes": 45,
+    "checks": [
+      {
+        "id": "file_landed",
+        "label": "Check whether the vendor price file landed",
+        "cost_minutes": 3,
+        "available_after": 0
+      },
+      {
+        "id": "loader_logs",
+        "label": "Read the price loader logs",
+        "cost_minutes": 4,
+        "available_after": 0
+      },
+      {
+        "id": "pnl_detail",
+        "label": "Drill into the P&L spike",
+        "cost_minutes": 6,
+        "available_after": 0
+      },
+      {
+        "id": "vendor_status",
+        "label": "Check the vendor's status page and open a ticket",
+        "cost_minutes": 5,
+        "available_after": 0
+      },
+      {
+        "id": "risk_breach",
+        "label": "Investigate the risk limit breach",
+        "cost_minutes": 5,
+        "available_after": 0
+      },
+      {
+        "id": "fallback_source",
+        "label": "Check whether the secondary price source is usable",
+        "cost_minutes": 4,
+        "available_after": 0
+      }
+    ],
+    "impacts": [
+      {
+        "at_minute": 12,
+        "headline": "Risk is re-firing",
+        "detail": "The false breach re-fires every cycle and is training the desk to ignore risk alerts.",
+        "severity": "warning"
+      },
+      {
+        "at_minute": 25,
+        "headline": "PMs are looking at bad marks",
+        "detail": "Two portfolio managers have opened the blotter. Nobody has told them the marks are yesterday's.",
+        "severity": "serious"
+      },
+      {
+        "at_minute": 40,
+        "headline": "Pre-open checks will fail",
+        "detail": "Without current marks the pre-open risk run cannot complete, and the desk opens blind.",
+        "severity": "critical"
+      }
+    ],
+    "required": [
+      {
+        "id": "notify_pm",
+        "label": "Tell the PMs the marks are stale",
+        "by_minute": 25
+      },
+      {
+        "id": "vendor_ticket",
+        "label": "Open a ticket with the vendor",
+        "by_minute": null
+      }
+    ],
+    "candidates": [
+      "svc_pnl",
+      "svc_pricing",
+      "svc_risk",
+      "vendor_px_equity"
+    ]
+  },
+  {
+    "key": "db_pool_exhaustion",
+    "title": "Everything fails at once",
+    "opens_at": "09:08 New York",
+    "brief": "Eight services went red inside four seconds. Trade capture, positions, pricing, risk, the blotter, recon, the OMS and reporting are all erroring. Three portfolio managers are already asking what is going on. The market is open and they are trading.",
+    "budget_minutes": 30,
+    "checks": [
+      {
+        "id": "conn_pool",
+        "label": "Check database connection pool utilisation",
+        "cost_minutes": 3,
+        "available_after": 0
+      },
+      {
+        "id": "timeline",
+        "label": "Order the failures by first error timestamp",
+        "cost_minutes": 4,
+        "available_after": 0
+      },
+      {
+        "id": "common_dep",
+        "label": "Look at what the failing services have in common",
+        "cost_minutes": 3,
+        "available_after": 0
+      },
+      {
+        "id": "restart_oms",
+        "label": "Restart the OMS",
+        "cost_minutes": 8,
+        "available_after": 0
+      },
+      {
+        "id": "slow_query",
+        "label": "Pull the slow query log",
+        "cost_minutes": 5,
+        "available_after": 0
+      },
+      {
+        "id": "fix_capacity",
+        "label": "Kill the offending session",
+        "cost_minutes": 4,
+        "available_after": 0
+      }
+    ],
+    "impacts": [
+      {
+        "at_minute": 4,
+        "headline": "Blotter is diverging",
+        "detail": "Fills are arriving but not being captured. What PMs see is already wrong.",
+        "severity": "serious"
+      },
+      {
+        "at_minute": 10,
+        "headline": "PMs are trading on a stale book",
+        "detail": "Position keeping is behind. Anyone sizing off the blotter is sizing off a book that is minutes old and getting older.",
+        "severity": "critical"
+      },
+      {
+        "at_minute": 20,
+        "headline": "Risk is not evaluating",
+        "detail": "Pre-trade risk checks are failing open or failing closed depending on the strategy. Neither is acceptable during the session.",
+        "severity": "critical"
+      }
+    ],
+    "required": [
+      {
+        "id": "notify_pm",
+        "label": "Tell the PMs the book is unreliable",
+        "by_minute": 10
+      },
+      {
+        "id": "escalate_eng",
+        "label": "Escalate to engineering",
+        "by_minute": 15
+      }
+    ],
+    "candidates": [
+      "db_primary",
+      "svc_oms",
+      "svc_position",
+      "svc_recon",
+      "svc_trade_capture"
+    ]
+  },
+  {
+    "key": "fix_session_drop",
+    "title": "Broker A goes quiet",
+    "opens_at": "10:22 New York",
+    "brief": "The FIX session to executing broker A has stopped acknowledging. Orders are rejecting, the drop copy has gone silent, and one portfolio manager says a fill he watched execute is not on his blotter. He is mid-programme and wants to know whether to keep going.",
+    "budget_minutes": 25,
+    "checks": [
+      {
+        "id": "session_state",
+        "label": "Check the FIX session state and sequence numbers",
+        "cost_minutes": 2,
+        "available_after": 0
+      },
+      {
+        "id": "dropcopy",
+        "label": "Compare the drop copy against the OMS",
+        "cost_minutes": 4,
+        "available_after": 0
+      },
+      {
+        "id": "broker_call",
+        "label": "Call the broker's trading desk",
+        "cost_minutes": 5,
+        "available_after": 0
+      },
+      {
+        "id": "venue_status",
+        "label": "Check exchange connectivity",
+        "cost_minutes": 3,
+        "available_after": 0
+      },
+      {
+        "id": "reroute",
+        "label": "Reroute the working programme to broker B",
+        "cost_minutes": 6,
+        "available_after": 0
+      },
+      {
+        "id": "position_check",
+        "label": "Reconstruct true position from execution reports",
+        "cost_minutes": 5,
+        "available_after": 0
+      }
+    ],
+    "impacts": [
+      {
+        "at_minute": 5,
+        "headline": "The PM is flying blind",
+        "detail": "He is watching a blotter that is missing fills and deciding whether to keep working the order.",
+        "severity": "serious"
+      },
+      {
+        "at_minute": 12,
+        "headline": "Unconfirmed messages are ageing",
+        "detail": "Forty-five unacknowledged messages. Every minute makes the resend and the reconciliation messier.",
+        "severity": "serious"
+      },
+      {
+        "at_minute": 20,
+        "headline": "Risk of double execution",
+        "detail": "If the PM re-enters what he thinks is missing and the original fills confirm, the position doubles.",
+        "severity": "critical"
+      }
+    ],
+    "required": [
+      {
+        "id": "notify_pm",
+        "label": "Give the PM his true position",
+        "by_minute": 8
+      },
+      {
+        "id": "broker_escalate",
+        "label": "Escalate to the broker for a resend",
+        "by_minute": 12
+      }
+    ],
+    "candidates": [
+      "fix_gw_broker_a",
+      "svc_dropcopy",
+      "svc_oms",
+      "svc_trade_capture"
+    ]
+  },
+  {
+    "key": "stale_fx_feed",
+    "title": "A P&L spike that is not real",
+    "opens_at": "05:48 New York",
+    "brief": "P&L is showing an 8-sigma move on FX_CARRY and a 4-sigma on MULTI_ASSET. Nothing in the overnight news supports it. The head of the FX strategy has already messaged asking whether he lost money overnight.",
+    "budget_minutes": 35,
+    "checks": [
+      {
+        "id": "fx_timestamps",
+        "label": "Check the age of the FX rates in use",
+        "cost_minutes": 3,
+        "available_after": 0
+      },
+      {
+        "id": "pnl_attrib",
+        "label": "Attribute the P&L move",
+        "cost_minutes": 5,
+        "available_after": 0
+      },
+      {
+        "id": "positions",
+        "label": "Verify positions are correct",
+        "cost_minutes": 4,
+        "available_after": 0
+      },
+      {
+        "id": "fx_vendor",
+        "label": "Check the FX vendor connection",
+        "cost_minutes": 4,
+        "available_after": 0
+      },
+      {
+        "id": "consumer_lag",
+        "label": "Check the FX consumer's offset",
+        "cost_minutes": 4,
+        "available_after": 0
+      },
+      {
+        "id": "equity_marks",
+        "label": "Check whether equity marks are also stale",
+        "cost_minutes": 3,
+        "available_after": 0
+      }
+    ],
+    "impacts": [
+      {
+        "at_minute": 10,
+        "headline": "A PM believes he lost money",
+        "detail": "The FX strategy head is acting on a number that is an artefact.",
+        "severity": "serious"
+      },
+      {
+        "at_minute": 22,
+        "headline": "Risk is sizing off bad rates",
+        "detail": "Overnight risk limits for non-USD books are evaluated against yesterday's rates.",
+        "severity": "serious"
+      },
+      {
+        "at_minute": 30,
+        "headline": "The official P&L run will use the bad rates",
+        "detail": "If this is not fixed before the EOD run, a wrong P&L goes out to investors and has to be restated.",
+        "severity": "critical"
+      }
+    ],
+    "required": [
+      {
+        "id": "notify_pm",
+        "label": "Tell the FX PM the move is an artefact",
+        "by_minute": 12
+      },
+      {
+        "id": "escalate_eng",
+        "label": "Escalate the parse failure to engineering",
+        "by_minute": 20
+      }
+    ],
+    "candidates": [
+      "ingest_fx_loader",
+      "svc_pnl",
+      "svc_pricing",
+      "vendor_fx"
+    ]
+  },
+  {
+    "key": "two_independent",
+    "title": "Two problems, one window",
+    "opens_at": "05:40 New York",
+    "brief": "The locate file from the prime brokers has not loaded, and in the same twenty minutes broker B has started rejecting orders. It is tempting to assume these are related. The short book needs locates before the open.",
+    "budget_minutes": 40,
+    "checks": [
+      {
+        "id": "locate_file",
+        "label": "Check the locate file load",
+        "cost_minutes": 3,
+        "available_after": 0
+      },
+      {
+        "id": "broker_b_rejects",
+        "label": "Check the broker B reject reason",
+        "cost_minutes": 3,
+        "available_after": 0
+      },
+      {
+        "id": "shared_path",
+        "label": "Check whether the two share any dependency",
+        "cost_minutes": 4,
+        "available_after": 0
+      },
+      {
+        "id": "coverage",
+        "label": "Work out short coverage against the intended book",
+        "cost_minutes": 5,
+        "available_after": 0
+      },
+      {
+        "id": "pb_call",
+        "label": "Call the prime brokers for the missing files",
+        "cost_minutes": 6,
+        "available_after": 0
+      },
+      {
+        "id": "single_locates",
+        "label": "Source single-name locates for the gap",
+        "cost_minutes": 8,
+        "available_after": 0
+      }
+    ],
+    "impacts": [
+      {
+        "at_minute": 15,
+        "headline": "Short orders will fail pre-trade checks",
+        "detail": "Uncovered names will be blocked at the open, and the strategy will run half-dressed.",
+        "severity": "serious"
+      },
+      {
+        "at_minute": 28,
+        "headline": "Reg SHO exposure",
+        "detail": "If an uncovered short reaches the market the firm has a compliance problem, not just a trading one.",
+        "severity": "critical"
+      },
+      {
+        "at_minute": 35,
+        "headline": "Broker B still rejecting",
+        "detail": "Working the locate problem alone means the second incident has gone unworked for half an hour.",
+        "severity": "serious"
+      }
+    ],
+    "required": [
+      {
+        "id": "declare_two",
+        "label": "Treat these as two separate incidents",
+        "by_minute": 20
+      },
+      {
+        "id": "notify_pm",
+        "label": "Tell the PMs which names are uncovered",
+        "by_minute": 25
+      }
+    ],
+    "candidates": [
+      "fix_gw_broker_b",
+      "ingest_borrow_loader",
+      "svc_locate",
+      "vendor_borrow"
+    ]
+  }
+]

@@ -1,0 +1,255 @@
+{
+  "scenario": "two_independent",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "vendor_borrow",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 340.107,
+      "last_minute": 340.107,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0000"
+      ]
+    },
+    {
+      "service": "ingest_borrow_loader",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 341.291,
+      "last_minute": 341.291,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0002"
+      ]
+    },
+    {
+      "service": "ingest_borrow_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 341.644,
+      "last_minute": 341.644,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0001"
+      ]
+    },
+    {
+      "service": "svc_locate",
+      "alert_type": "STALE_DATA",
+      "entity": "USDCHF",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 342.637,
+      "last_minute": 342.637,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0004"
+      ]
+    },
+    {
+      "service": "svc_locate",
+      "alert_type": "STALE_DATA",
+      "entity": "AAPL.O",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 342.66,
+      "last_minute": 342.66,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0006"
+      ]
+    },
+    {
+      "service": "svc_locate",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 342.703,
+      "last_minute": 342.703,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0003"
+      ]
+    },
+    {
+      "service": "svc_locate",
+      "alert_type": "STALE_DATA",
+      "entity": "NQZ6",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 342.818,
+      "last_minute": 342.818,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0005"
+      ]
+    },
+    {
+      "service": "fix_gw_broker_b",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 347.172,
+      "last_minute": 347.172,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0007"
+      ]
+    },
+    {
+      "service": "svc_ems",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 347.716,
+      "last_minute": 347.716,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0008"
+      ]
+    },
+    {
+      "service": "svc_trade_capture",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 348.212,
+      "last_minute": 348.212,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0010"
+      ]
+    },
+    {
+      "service": "svc_trade_capture",
+      "alert_type": "QUEUE_DEPTH",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 348.509,
+      "last_minute": 348.509,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0011"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 348.624,
+      "last_minute": 348.624,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0009"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "CLF7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 348.906,
+      "last_minute": 348.906,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0013"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 348.949,
+      "last_minute": 348.949,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0012"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "RECON_BREAK",
+      "entity": "BROKER_A",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 349.288,
+      "last_minute": 349.288,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0014"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 349.757,
+      "last_minute": 349.757,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0016"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "JPM.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 349.838,
+      "last_minute": 349.838,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0015"
+      ]
+    },
+    {
+      "service": "db_primary",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 400.717,
+      "last_minute": 400.717,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0017"
+      ]
+    },
+    {
+      "service": "scheduler_airflow",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 419.233,
+      "last_minute": 419.233,
+      "flapping": false,
+      "alert_ids": [
+        "two_independent-A0018"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

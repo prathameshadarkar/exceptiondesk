@@ -1,0 +1,1001 @@
+:root {
+    color-scheme: light;
+    --plane:      #f9f9f7;
+    --surface:    #fcfcfb;
+    --ink:        #0b0b0b;
+    --ink-2:      #52514e;
+    --muted:      #898781;
+    --grid:       #e1e0d9;
+    --axis:       #c3c2b7;
+    --border:     rgba(11,11,11,0.10);
+    --series-1:   #2a78d6;
+    --critical:   #d03b3b;
+    --serious:    #ec835a;
+    --warning:    #fab219;
+    --good:       #0ca30c;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --plane: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+      --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+      --border: rgba(255,255,255,0.10); --series-1: #3987e5;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --plane: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+    --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+    --border: rgba(255,255,255,0.10); --series-1: #3987e5;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--plane); color: var(--ink);
+    font: 15px/1.5 var(--sans);
+    padding: 0 16px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 0 64px; }
+
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline;
+           justify-content: space-between; margin-bottom: 6px; }
+  h1 { font-size: 1.35rem; margin: 0; letter-spacing: -0.01em; }
+  .tagline { color: var(--ink-2); font-size: 14px; margin: 0 0 14px; }
+  .chip {
+    font: 600 10px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase;
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 9px;
+    color: var(--muted); white-space: nowrap;
+  }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 18px; }
+  select, button {
+    font: inherit; font-size: 14px; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px;
+    cursor: pointer;
+  }
+  button:hover, select:hover { border-color: var(--axis); }
+  button[aria-pressed="true"] { border-color: var(--series-1); color: var(--series-1); }
+  .spacer { flex: 1 1 auto; }
+
+  .tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .tab {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    border-radius: 0; padding: 9px 14px; color: var(--ink-2); font-size: 14px;
+  }
+  .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--series-1); font-weight: 600; }
+
+  .panel { background: var(--surface); border: 1px solid var(--border);
+           border-radius: 12px; padding: 18px; margin-bottom: 18px; }
+  .panel h2 { font-size: 13px; margin: 0 0 2px; letter-spacing: .01em; }
+  .panel .hint { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 1px;
+          background: var(--border); border: 1px solid var(--border);
+          border-radius: 12px; overflow: hidden; margin-bottom: 18px; }
+  .kpi { background: var(--surface); padding: 14px 16px; }
+  .kpi .label { font: 600 10px/1.3 var(--mono); letter-spacing: .07em;
+                text-transform: uppercase; color: var(--muted); }
+  .kpi .value { font-size: 1.65rem; font-variant-numeric: tabular-nums;
+                letter-spacing: -0.02em; margin-top: 5px; line-height: 1.1; }
+  .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .kpi .value.pending { font-size: 1rem; color: var(--muted); letter-spacing: 0; }
+
+  svg { display: block; width: 100%; overflow: visible; }
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .axisline { stroke: var(--axis); stroke-width: 1; }
+  .axistext { fill: var(--muted); font: 11px var(--mono); }
+  .lanetext { fill: var(--ink-2); font: 11px var(--mono); }
+  .mark { fill: var(--series-1); }
+  .mark.p1 { fill: var(--critical); }
+  .bar { fill: var(--series-1); }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 0;
+            font-size: 12px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+  .scrub { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+  input[type=range] { flex: 1; accent-color: var(--series-1); }
+  .clock { font: 600 13px var(--mono); font-variant-numeric: tabular-nums;
+           color: var(--ink-2); min-width: 54px; }
+
+  .cols { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th { font: 600 10px/1.3 var(--mono); letter-spacing: .07em; text-transform: uppercase;
+       color: var(--muted); position: sticky; top: 0; background: var(--surface); }
+  td.mono { font-family: var(--mono); font-size: 12px; }
+  td.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .scrolly { max-height: 380px; overflow: auto; }
+
+  .sev { display: inline-flex; align-items: center; gap: 5px; font: 600 11px var(--mono); }
+  .sev .dot { width: 8px; height: 8px; }
+  .sev-P1 { color: var(--critical); }
+  .sev-P1 .dot { background: var(--critical); }
+  .sev-P2 .dot { background: var(--serious); }
+  .sev-P3 .dot { background: var(--warning); }
+  .sev-P4 .dot { background: var(--good); }
+  .sev-P2, .sev-P3, .sev-P4 { color: var(--ink-2); }
+
+  .empty { border: 1px dashed var(--axis); border-radius: 10px; padding: 20px;
+           color: var(--ink-2); font-size: 14px; }
+  .empty code { font-family: var(--mono); font-size: 12px; background: var(--plane);
+                padding: 1px 5px; border-radius: 4px; }
+  .empty strong { color: var(--ink); }
+
+  #tip {
+    position: fixed; pointer-events: none; opacity: 0; transition: opacity .1s;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 10px; font-size: 12px; max-width: 300px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12); z-index: 20;
+  }
+  #tip .t { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .hidden { display: none !important; }
+  .err { color: var(--critical); font-family: var(--mono); font-size: 13px; }
+  footer { color: var(--muted); font-size: 12px; margin-top: 28px; }
+
+/* ===================== shift console ===================== */
+.hero { display:grid; grid-template-columns: repeat(auto-fit,minmax(270px,1fr)); gap:14px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px;
+        padding:18px; text-align:left; cursor:pointer; display:flex; flex-direction:column; gap:8px; }
+.card:hover { border-color:var(--series-1); }
+.card h3 { margin:0; font-size:15px; }
+.card .when { font:600 10px/1 var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--muted); }
+.card p { margin:0; font-size:13px; color:var(--ink-2); }
+.card .meta { margin-top:auto; font:11px var(--mono); color:var(--muted); }
+
+.hud { display:grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap:1px;
+       background:var(--border); border:1px solid var(--border); border-radius:12px;
+       overflow:hidden; margin-bottom:16px; position:sticky; top:0; z-index:5; }
+.hud .cell { background:var(--surface); padding:11px 14px; }
+.hud .k { font:600 10px/1.3 var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--muted); }
+.hud .v { font-size:1.2rem; font-variant-numeric:tabular-nums; margin-top:3px; letter-spacing:-.01em; }
+.hud .v.warn { color:var(--warning); }
+.hud .v.bad  { color:var(--critical); }
+
+.console { display:grid; grid-template-columns: 1fr 1.05fr 1.15fr; gap:14px; align-items:start; }
+@media (max-width: 1080px) { .console { grid-template-columns:1fr 1fr; } .console > :last-child { grid-column:1/-1; } }
+@media (max-width: 720px)  { .console { grid-template-columns:1fr; } }
+
+.act { display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;
+       text-align:left; padding:10px 12px; margin-bottom:7px; background:var(--surface);
+       border:1px solid var(--border); border-radius:9px; font-size:13px; line-height:1.35; }
+.act:hover:not(:disabled) { border-color:var(--series-1); }
+.act:disabled { opacity:.45; cursor:default; }
+.act .cost { font:600 11px var(--mono); color:var(--muted); white-space:nowrap; }
+.act.done { border-color:var(--good); opacity:.75; }
+.act.done .cost { color:var(--good); }
+
+.log { max-height:300px; overflow:auto; font-size:13px; }
+.log .entry { padding:9px 0; border-bottom:1px solid var(--grid); }
+.log .when { font:600 11px var(--mono); color:var(--muted); }
+.log .what { margin-top:2px; }
+.log .found { margin-top:4px; color:var(--ink-2); border-left:2px solid var(--series-1);
+              padding-left:9px; }
+.log .impact { border-left:2px solid var(--critical); padding-left:9px; margin-top:4px; color:var(--ink-2); }
+
+.agentout { background:var(--plane); border:1px solid var(--border); border-radius:10px;
+            padding:13px; margin-top:10px; font-size:13px; white-space:pre-wrap;
+            line-height:1.5; max-height:420px; overflow:auto; }
+.agentout h4 { margin:0 0 7px; font-size:12px; font-family:var(--mono); letter-spacing:.04em;
+               text-transform:uppercase; color:var(--muted); display:flex; justify-content:space-between; }
+.tagline-sm { font-size:12px; color:var(--muted); margin:0 0 10px; }
+.src { font:600 10px var(--mono); letter-spacing:.06em; text-transform:uppercase;
+       border:1px solid var(--border); border-radius:999px; padding:3px 7px; color:var(--muted); }
+.src.live { color:var(--good); border-color:var(--good); }
+
+textarea { width:100%; min-height:190px; font:13px/1.5 var(--mono); color:var(--ink);
+           background:var(--surface); border:1px solid var(--border); border-radius:9px;
+           padding:11px; resize:vertical; }
+.scorerow { display:flex; justify-content:space-between; gap:12px; padding:11px 0;
+            border-bottom:1px solid var(--grid); font-size:14px; }
+.scorerow .n { font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.scorerow .note { font-size:12px; color:var(--muted); margin-top:3px; }
+.grade { font-size:2.1rem; letter-spacing:-.02em; margin:4px 0 2px; }
+.spin { display:inline-block; width:11px; height:11px; border:2px solid var(--border);
+        border-top-color:var(--series-1); border-radius:50%; animation:sp .7s linear infinite; }
+@keyframes sp { to { transform:rotate(360deg); } }
+
+/* ===================== the desk ===================== */
+/* The workstation sits in a bright modern trading floor at mid-morning. The
+   contrast the scene runs on is LIT ROOM against DARK TERMINALS: every surface
+   in the room is daylit, every screen stays dark-mode. */
+.desk-root {
+  --scr:      #0e1113;   /* screen glass — stays dark on purpose */
+  --scr-2:    #141819;
+  --scr-ink:  #dfe5e4;
+  --scr-dim:  #7f8a89;
+  --scr-line: #232a2b;
+  --bezel:    #2f363c;
+  --bezel-hi: #434b52;
+  --wood-1:   #8a5a36;   /* walnut, lit face   */
+  --wood-2:   #6f4426;   /* walnut, mid tone    */
+  --wood-3:   #53321b;   /* walnut, shadow side */
+  --wood-edge:#3f2614;   /* front edge / lip    */
+  --wall:     #e8edf1;
+  --wall-2:   #d4dce2;
+  --carpet:   #98a2aa;
+  --led:      #4ade80;
+  --ink-room: #495560;
+}
+
+.workstation { margin: 18px 0 0; }
+
+.monitors {
+  display: grid; grid-template-columns: 1fr 1.35fr 1fr; gap: 14px; align-items: end;
+}
+@media (max-width: 1000px) { .monitors { grid-template-columns: 1fr; } }
+
+.monitor { display: flex; flex-direction: column; }
+.monitor .bezel {
+  background: linear-gradient(180deg, var(--bezel-hi), var(--bezel));
+  border-radius: 10px 10px 4px 4px; padding: 9px 9px 16px;
+  box-shadow: 0 16px 34px rgba(60,78,96,.30), inset 0 1px 0 rgba(255,255,255,.22);
+  position: relative;
+}
+.monitor .bezel::after {
+  content: ''; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--led);
+  box-shadow: 0 0 7px var(--led); opacity: .85;
+}
+/* Screen height tracks the viewport, not a fixed pixel count. A three-monitor
+   rig plus a desk plus a room does not fit a 900px laptop at fixed sizes, and
+   what fell off the bottom was the desk — every control in the game. The clamp
+   keeps the generous size on tall displays and gives the working surface room
+   on short ones. */
+.monitor .glass {
+  background: var(--scr); border-radius: 5px; overflow: hidden;
+  display: flex; flex-direction: column; position: relative;
+  height: clamp(190px, 30vh, 330px);
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 44px rgba(0,0,0,.5);
+}
+/* daylight reflection on the glass — the cue that a dark screen sits in a lit room */
+.monitor .glass::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background:
+    linear-gradient(112deg, rgba(255,250,236,.20) 0%, rgba(240,246,255,.06) 16%, transparent 33%),
+    linear-gradient(112deg, transparent 54%, rgba(255,250,236,.08) 62%, transparent 74%);
+}
+.monitor.tall .glass { height: clamp(220px, 36vh, 392px); }
+.monitor .titlebar {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  background: var(--scr-2); border-bottom: 1px solid var(--scr-line);
+  padding: 6px 10px; font: 600 10px/1.4 var(--mono); letter-spacing: .1em;
+  text-transform: uppercase; color: var(--scr-dim); flex: 0 0 auto;
+}
+.monitor .titlebar .cnt { color: var(--scr-ink); }
+.monitor .screen { flex: 1 1 auto; overflow: auto; padding: 9px 10px;
+  font: 12px/1.5 var(--mono); color: var(--scr-ink); }
+/* A monitor arm rather than a moulded foot: a column on a clamped base, the way
+   a real multi-screen desk is set up. */
+.monitor .stand {
+  width: 15px; height: 34px; margin: 0 auto;
+  background: linear-gradient(90deg, #333b42, #59636c 38%, #2b3238);
+  box-shadow: 0 5px 10px rgba(40,24,12,.35);
+}
+.monitor .foot {
+  width: 104px; height: 9px; margin: 0 auto; border-radius: 3px;
+  background: linear-gradient(180deg, #4b555e, #2b3238);
+  box-shadow: 0 6px 14px rgba(40,24,12,.45), inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+/* Rows inside screens.
+   Severity is carried by a persistent rail on the left, not by the arrival
+   flash. Flashing every new alert red — which is what this did — trains the eye
+   to read a P4 "reporting is a bit stale" exactly like a P1 page, and on the
+   first paint after accepting the shift the entire board went red at once. The
+   rail stays; the flash is now a neutral "this just landed". */
+.srow { display: grid; grid-template-columns: 44px 26px 1fr; gap: 7px;
+        padding: 3px 0 3px 8px; border-bottom: 1px solid var(--scr-line);
+        border-left: 2px solid transparent; }
+.srow .s-t { color: var(--scr-dim); }
+.srow .s-m { color: var(--scr-ink); word-break: break-word; }
+.srow .s-m b { color: #fff; font-weight: 600; }
+.srow.new { animation: arrived 1.4s ease-out; }
+@keyframes arrived {
+  from { background: rgba(110,168,232,.22); }
+  to   { background: transparent; }
+}
+/* P1 is the only one that pages a human at 3am, so it is the only one that
+   gets a filled rail and a tinted row. The rest step down quietly. */
+.srow.sev-P1 { border-left-color: #ff6b6b; background: rgba(255,107,107,.07); }
+.srow.sev-P2 { border-left-color: #ffa24d; }
+.srow.sev-P3 { border-left-color: rgba(255,209,102,.5); }
+.srow.sev-P4 { border-left-color: var(--scr-line); }
+.srow.sev-P4 .s-m { color: #9aa5a4; }
+.srow.sev-P4 .s-m b { color: #c3cccb; }
+@media (prefers-reduced-motion: reduce) { .srow.new { animation: none; } }
+.s-P1 { color: #ff6b6b; font-weight: 700; } .s-P2 { color: #ffa24d; }
+.s-P3 { color: #ffd166; } .s-P4 { color: #7f8a89; }
+.scr-dim { color: var(--scr-dim); }
+.scr-ok  { color: var(--led); }
+.scr-bad { color: #ff6b6b; }
+.finding { border-left: 2px solid #3987e5; padding-left: 8px; margin: 5px 0 9px; color: #b9c4c3; }
+.impactline { border-left: 2px solid #ff6b6b; padding-left: 8px; margin: 5px 0 9px; }
+
+/* ---------------- the room ---------------- */
+.room {
+  position: relative; border-radius: 14px; overflow: hidden;
+  background: linear-gradient(180deg, var(--wall) 0%, var(--wall-2) 38%,
+                                      #c2ccd3 46%, var(--carpet) 47%, #8a949c 100%);
+  padding: 0 0 2px;
+}
+.wall { position: relative; height: clamp(150px, 26vh, 300px); overflow: hidden;
+         transition: height .5s cubic-bezier(.4,0,.2,1); }
+@media (max-width: 760px) { .wall { height: clamp(120px, 20vh, 196px); } }
+
+/* Once the shift is live the room stops being the subject. It set the scene
+   during the arrival and the brief; from here the working surface is what
+   matters, so the room compresses to a band of daylight and the desk comes up
+   into view. Without this the entire desk — every control in the game — sits
+   below the fold on a 900px laptop at the exact moment the user is told to
+   start working. */
+.room.compact .wall { height: clamp(104px, 14vh, 156px); }
+.room.compact .clocks { transform: scale(.82); transform-origin: top right; }
+/* Compacted, the band should read as daylight, not as the tops of other
+   people's monitors. Drop the floor furniture and keep the window. */
+.room.compact .floorline,
+.room.compact .roomshafts { opacity: 0; }
+.room.compact .window { top: 18px; height: calc(100% - 34px); }
+.room.compact .ceilplane { height: 16px; }
+.room.compact .ceilplane i { top: 5px; height: 4px; }
+.room.compact .column { opacity: .35; }
+@media (prefers-reduced-motion: reduce) { .wall { transition: none; } }
+
+/* ceiling: light plane with recessed fixtures */
+.ceilplane {
+  position: absolute; left: 0; right: 0; top: 0; height: 46px;
+  background: linear-gradient(180deg, #f6f9fb, #e4ebf0);
+  border-bottom: 1px solid rgba(90,110,130,.12);
+}
+.ceilplane i {
+  position: absolute; top: 15px; height: 7px; width: 13%; border-radius: 4px;
+  background: linear-gradient(90deg, rgba(255,255,255,.5), #fff, rgba(255,255,255,.5));
+  box-shadow: 0 0 22px rgba(255,255,255,.95), 0 10px 30px rgba(226,240,252,.6);
+}
+.ceilplane i:nth-child(1) { left: 7%; }
+.ceilplane i:nth-child(2) { left: 30%; }
+.ceilplane i:nth-child(3) { left: 55%; }
+.ceilplane i:nth-child(4) { left: 79%; }
+
+.window {
+  position: absolute; left: 50%; transform: translateX(-50%); top: 56px;
+  width: min(780px, 76%); height: 198px; border-radius: 3px; overflow: hidden;
+  box-shadow: 0 0 0 7px #c3ccd3, 0 0 0 9px #aeb8c0,
+              0 0 70px rgba(236,247,255,.9), 0 18px 40px rgba(70,90,110,.2);
+}
+@media (max-width: 760px) { .window { height: 118px; top: 44px; width: 88%; } }
+.window .sky { position: absolute; inset: 0; transition: background 1.2s ease; }
+.window .mullion-v { position: absolute; top: 0; bottom: 0; left: 50%; width: 5px;
+                     background: #c3ccd3; transform: translateX(-50%); }
+.window .mullion-h { position: absolute; left: 0; right: 0; top: 52%; height: 5px;
+                     background: #c3ccd3; transform: translateY(-50%); }
+.window .glare { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.22) 0%, transparent 42%); }
+/* The sun, high and small — a clear working morning, not golden hour. */
+.window .sun {
+  position: absolute; right: 16%; top: 13%; width: 46px; height: 46px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, #fffdf6 0%, #fff6dc 34%, rgba(255,241,205,.5) 56%,
+              rgba(255,238,198,0) 72%);
+  box-shadow: 0 0 70px 34px rgba(255,246,222,.55), 0 0 140px 70px rgba(255,244,214,.26);
+}
+.window svg { position: absolute; bottom: 0; left: 0; width: 100%; height: 66%; }
+
+/* daylight bounce into the room */
+.roomlight {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    /* warm spill from the window itself */
+    radial-gradient(52% 62% at 62% 30%, rgba(255,248,230,.60), transparent 64%),
+    radial-gradient(74% 60% at 50% 34%, rgba(255,255,255,.44), transparent 68%),
+    radial-gradient(120% 70% at 50% 0%, rgba(226,240,252,.42), transparent 62%);
+}
+/* soft shafts across the floor, business-hours diffuse */
+/* Daylight landing on the floor: warm, wide, soft-edged — business hours, not
+   a spotlight. */
+.roomshafts {
+  position: absolute; left: 6%; right: 6%; top: 52%; height: 34%;
+  pointer-events: none; opacity: .55; filter: blur(11px);
+  background:
+    repeating-linear-gradient(97deg,
+      rgba(255,250,236,.62) 0 58px, transparent 58px 150px);
+}
+/* the pool of sun on the carpet in front of the desk */
+.sunpatch {
+  position: absolute; left: 34%; right: 12%; bottom: 0; height: 46%;
+  pointer-events: none; filter: blur(16px); opacity: .5;
+  background: linear-gradient(101deg, transparent 0%, rgba(255,248,228,.75) 26%,
+              rgba(255,248,228,.3) 58%, transparent 78%);
+}
+
+/* wall clocks for the major centres */
+.clocks { position: absolute; right: 2.5%; top: 66px; display: flex; gap: 12px; }
+@media (max-width: 1180px) { .clocks { display: none; } }
+.clk { text-align: center; }
+.clk .face {
+  width: 34px; height: 34px; border-radius: 50%; background: #fbfdfe;
+  box-shadow: 0 0 0 2px #b6c0c8, 0 3px 8px rgba(70,90,110,.25);
+  position: relative; margin: 0 auto 4px;
+}
+.clk .face i, .clk .face b {
+  position: absolute; left: 50%; bottom: 50%; transform-origin: bottom center;
+  background: #47535e; border-radius: 1px;
+}
+.clk .face i { width: 2px; height: 11px; margin-left: -1px; }
+.clk .face b { width: 1.5px; height: 14px; margin-left: -.75px; opacity: .65; }
+.clk span { font: 600 8px/1 var(--mono); letter-spacing: .1em; color: var(--ink-room); }
+
+/* glass meeting room + column on the left */
+.glassroom {
+  position: absolute; left: 2%; top: 58px; width: 14%; height: 140px;
+  border-radius: 3px; border: 2px solid rgba(120,140,160,.4);
+  background: linear-gradient(160deg, rgba(226,240,252,.55), rgba(198,216,232,.3));
+  box-shadow: inset 0 0 22px rgba(255,255,255,.55);
+}
+.glassroom::after {
+  content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+  background: rgba(120,140,160,.35);
+}
+.glassroom .sil {
+  position: absolute; bottom: 8px; width: 12px; height: 26px; border-radius: 6px 6px 2px 2px;
+  background: rgba(88,104,120,.42);
+}
+.glassroom .sil::before {
+  content: ''; position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+  width: 9px; height: 9px; border-radius: 50%; background: rgba(88,104,120,.42);
+}
+.sign {
+  position: absolute; left: 2%; top: 208px; font: 600 8px/1 var(--mono);
+  letter-spacing: .14em; color: var(--ink-room); opacity: .7;
+}
+.column {
+  position: absolute; right: 26%; top: 46px; width: 26px; bottom: 0;
+  background: linear-gradient(90deg, #dfe6ec, #eef3f6 40%, #ccd5dc);
+  box-shadow: 2px 0 10px rgba(70,90,110,.12);
+}
+@media (max-width: 900px) { .glassroom, .column, .sign { display: none; } }
+
+/* other workstations on the floor */
+.floorline { position: absolute; left: 0; right: 0; bottom: 0; height: 96px; }
+.fdesk { position: absolute; bottom: 0; }
+.fdesk .fmon {
+  height: 22px; border-radius: 2px; margin: 0 auto 3px;
+  background: linear-gradient(180deg, #3d454c 0%, #232a30 26%, #1b2126 100%);
+  box-shadow: 0 3px 7px rgba(60,78,96,.28), inset 0 0 0 1px #10151a;
+}
+.fdesk .ftop {
+  height: 8px; border-radius: 2px;
+  background: linear-gradient(180deg, #dfe6ec, #bcc6ce);
+  box-shadow: 0 5px 9px rgba(60,78,96,.26);
+}
+.fdesk .fchair {
+  width: 38%; height: 13px; margin: 2px auto 0; border-radius: 4px 4px 7px 7px;
+  background: linear-gradient(180deg, #56616b, #39424a);
+}
+.fdesk .fperson {
+  position: absolute; left: 50%; transform: translateX(-50%); bottom: 12px;
+  width: 15px; height: 20px; border-radius: 7px 7px 3px 3px;
+  background: rgba(78,92,106,.5);
+}
+.fdesk .fperson::before {
+  content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+  width: 8px; height: 8px; border-radius: 50%; background: rgba(78,92,106,.5);
+}
+@media (max-width: 760px) { .floorline { display: none; } }
+
+/* ---------------- the desk itself ---------------- */
+/* Solid walnut. Grain is four stacked repeating gradients at slightly different
+   periods — irregular enough not to read as stripes, cheap enough to cost
+   nothing. The warm timber is also what stops the room feeling clinical against
+   the dark terminals. */
+.desk {
+  margin-top: -4px;
+  background:
+    /* long grain streaks */
+    repeating-linear-gradient(91deg,
+      rgba(43,25,12,.16) 0 2px, rgba(43,25,12,0) 2px 9px,
+      rgba(255,222,180,.06) 9px 11px, rgba(43,25,12,0) 11px 23px),
+    repeating-linear-gradient(89.4deg,
+      rgba(30,17,8,.13) 0 1px, rgba(30,17,8,0) 1px 17px),
+    repeating-linear-gradient(90.6deg,
+      rgba(255,228,190,.05) 0 3px, rgba(255,228,190,0) 3px 31px),
+    /* cathedral figure, very soft */
+    radial-gradient(160% 70% at 22% 40%, rgba(255,214,164,.10), transparent 62%),
+    radial-gradient(140% 60% at 78% 70%, rgba(40,22,10,.16), transparent 58%),
+    /* base timber */
+    linear-gradient(177deg, var(--wood-1) 0%, var(--wood-2) 52%, var(--wood-3) 100%);
+  border-radius: 3px 3px 5px 5px;
+  padding: 24px 20px 26px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,214,164,.32),
+    inset 0 -2px 0 rgba(28,15,6,.45),
+    0 22px 44px rgba(46,28,14,.42);
+  display: grid; grid-template-columns: 1.6fr 1fr; gap: 18px; position: relative;
+}
+/* the front lip: gives the slab real thickness */
+.desk::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -13px; height: 15px;
+  border-radius: 0 0 5px 5px;
+  background: linear-gradient(180deg, var(--wood-edge) 0%, #33200f 55%, #24160a 100%);
+  box-shadow: 0 16px 26px rgba(40,24,12,.4), inset 0 1px 0 rgba(255,214,164,.16);
+}
+/* sunlight falling across the timber, warm but not golden-hour */
+.desk::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background:
+    linear-gradient(102deg, rgba(255,246,228,.30) 0%, rgba(255,246,228,.11) 15%,
+                    transparent 32%),
+    linear-gradient(102deg, transparent 46%, rgba(255,246,228,.09) 55%,
+                    rgba(255,246,228,.02) 63%, transparent 72%);
+}
+@media (max-width: 820px) { .desk { grid-template-columns: 1fr; } }
+
+.deskplate {
+  font: 600 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase;
+  color: #e3c9a6; opacity: .85; margin-bottom: 12px;
+}
+.keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(178px,1fr)); gap: 8px; }
+.key {
+  background: linear-gradient(180deg,#39424a,#252c33); color: #e2e8ec;
+  border: 1px solid #1a2026; border-radius: 7px; padding: 9px 11px; cursor: pointer;
+  box-shadow: 0 3px 0 #1a2026, inset 0 1px 0 rgba(255,255,255,.14);
+  font: 11px/1.35 var(--mono); text-align: left; display: flex;
+  justify-content: space-between; gap: 8px; align-items: center;
+}
+.key:hover:not(:disabled) { background: linear-gradient(180deg,#465059,#2c343b); }
+.key:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 #1a2026; }
+.key:disabled { opacity: .42; cursor: default; box-shadow: 0 3px 0 #1a2026; }
+.key .c { color: #9aa6b0; font-size: 10px; white-space: nowrap; }
+.key.done { border-color: #2f6b4f; }
+.key.done .c { color: var(--led); }
+
+.gadgets { display: flex; flex-direction: column; gap: 12px; }
+.phone {
+  background: linear-gradient(180deg,#39424a,#242b31); border: 1px solid #1a2026;
+  border-radius: 9px; padding: 12px; cursor: pointer; box-shadow: 0 3px 0 #1a2026;
+}
+.phone:disabled { cursor: default; opacity: .55; }
+.phone .lbl { font: 600 10px/1 var(--mono); letter-spacing: .12em;
+              text-transform: uppercase; color: #9aa6b0; }
+.phone .st { font: 12px var(--mono); color: #e2e8ec; margin-top: 6px;
+             display: flex; align-items: center; gap: 7px; }
+.phone .bulb { width: 9px; height: 9px; border-radius: 50%; background: #4a545d; }
+.phone.ringing { border-color: #d03b3b; }
+.phone.ringing .bulb { background: #ff6b6b; box-shadow: 0 0 9px #ff6b6b;
+                       animation: ring .9s steps(1) infinite; }
+.phone.answered .bulb { background: var(--led); box-shadow: 0 0 8px var(--led); }
+@keyframes ring { 50% { opacity: .25; } }
+
+.notepad {
+  background: linear-gradient(180deg,#fdfaf0,#f0e9d6); border-radius: 7px; padding: 11px 13px;
+  box-shadow: 0 3px 8px rgba(60,78,96,.24); cursor: pointer; color: #40372a;
+  font: 12px/1.5 var(--mono); border-top: 12px solid #d8c7a4;
+}
+.notepad strong { display: block; font-size: 11px; letter-spacing: .1em;
+                  text-transform: uppercase; color: #6b5c45; margin-bottom: 4px; }
+
+.dial { background: linear-gradient(180deg,#39424a,#242b31); border: 1px solid #1a2026;
+        border-radius: 9px; padding: 11px 12px; box-shadow: 0 3px 0 #1a2026; }
+.dial .lbl { font: 600 10px/1 var(--mono); letter-spacing: .12em;
+             text-transform: uppercase; color: #9aa6b0; margin-bottom: 7px; }
+.dial select { width: 100%; background: #0e1113; color: #e2e8ec; border: 1px solid #1a2026;
+               font: 12px var(--mono); border-radius: 6px; padding: 7px 8px; }
+.dial button { width: 100%; margin-top: 7px; background: #0e1113; color: #e2e8ec;
+               border: 1px solid #3d464e; font: 11px var(--mono); border-radius: 6px;
+               padding: 8px; letter-spacing: .08em; text-transform: uppercase; }
+.dial button:hover:not(:disabled) { border-color: #3987e5; color: #8cc0ff; }
+.dial button:disabled, .dial select:disabled { opacity: .4; cursor: default; }
+.dial .declared {
+  margin-top: 8px; padding: 8px 10px; border-radius: 6px;
+  border: 1px solid #2f6b4f; background: rgba(47,107,79,.18);
+  font: 12px var(--mono); color: #6fd39a; display: flex; gap: 7px; align-items: center;
+}
+
+/* personal desk objects — enough to feel lived in, not enough to clutter */
+.deskobjects {
+  grid-column: 1 / -1; display: flex; align-items: flex-end; gap: 16px;
+  padding-top: 4px; opacity: .95;
+}
+.obj-keyboard {
+  flex: 0 0 34%; height: 26px; border-radius: 4px;
+  background: linear-gradient(180deg,#39424a,#222930);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14),
+              0 4px 10px rgba(28,15,6,.5), 0 1px 2px rgba(28,15,6,.6);
+  position: relative; overflow: hidden;
+}
+.obj-keyboard::after {
+  content: ''; position: absolute; inset: 4px; border-radius: 2px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 5px, transparent 5px 8px),
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.07) 0 5px, transparent 5px 8px);
+}
+.obj-mouse { width: 19px; height: 28px; border-radius: 10px 10px 8px 8px;
+  background: linear-gradient(180deg,#39424a,#242b31);
+  box-shadow: 0 3px 8px rgba(28,15,6,.5), 0 1px 2px rgba(28,15,6,.6); }
+.obj-headset {
+  width: 30px; height: 22px; border-radius: 15px 15px 0 0;
+  border: 3px solid #39424a; border-bottom: none; position: relative;
+}
+.obj-headset::before, .obj-headset::after {
+  content: ''; position: absolute; bottom: -5px; width: 8px; height: 12px; border-radius: 3px;
+  background: #39424a;
+}
+.obj-headset::before { left: -4px; } .obj-headset::after { right: -4px; }
+.obj-cup {
+  width: 20px; height: 22px; border-radius: 3px 3px 7px 7px; position: relative;
+  background: linear-gradient(180deg,#fdfaf0,#dfd6c4); box-shadow: 0 2px 6px rgba(60,78,96,.28);
+}
+.obj-cup::after { content:''; position:absolute; right:-6px; top:5px; width:7px; height:8px;
+  border:2px solid #dfd6c4; border-left:none; border-radius:0 6px 6px 0; }
+.obj-bottle {
+  width: 12px; height: 32px; border-radius: 3px 3px 4px 4px;
+  background: linear-gradient(180deg, rgba(200,224,240,.85), rgba(168,198,220,.9));
+  box-shadow: 0 2px 6px rgba(60,78,96,.24);
+  position: relative;
+}
+.obj-bottle::before { content:''; position:absolute; top:-5px; left:3px; width:6px; height:5px;
+  background:#5b7f96; border-radius:2px; }
+.obj-plant {
+  width: 24px; height: 18px; border-radius: 3px 3px 5px 5px; position: relative;
+  background: linear-gradient(180deg,#c8a184,#a8825f);
+}
+.obj-plant::before, .obj-plant::after {
+  content: ''; position: absolute; bottom: 14px; width: 9px; height: 16px; border-radius: 50% 50% 40% 40%;
+  background: #6d9d6a;
+}
+.obj-plant::before { left: 1px; transform: rotate(-22deg); }
+.obj-plant::after  { right: 1px; transform: rotate(22deg); }
+.obj-cables {
+  flex: 1 1 auto; height: 5px; border-radius: 3px; align-self: flex-end; margin-bottom: 3px;
+  background: repeating-linear-gradient(90deg, #5a646d 0 16px, #46505a 16px 26px);
+  opacity: .5;
+}
+@media (max-width: 820px) { .obj-headset, .obj-plant, .obj-bottle, .obj-cables { display: none; } }
+
+.deskclock { background:#0e1113; border:1px solid #1a2026; border-radius:9px;
+             padding:11px 12px; box-shadow: 0 3px 0 #1a2026; }
+.deskclock .lbl { font:600 10px/1 var(--mono); letter-spacing:.12em;
+                  text-transform:uppercase; color:#9aa6b0; }
+.deskclock .big { font:1.7rem/1.1 var(--mono); color:#e2e8ec;
+                  font-variant-numeric:tabular-nums; margin-top:5px; }
+.deskclock .big.warn { color:#ffd166; } .deskclock .big.bad { color:#ff6b6b; }
+.deskclock .sub { font:11px var(--mono); color:#9aa6b0; margin-top:3px; }
+
+.deskhint { text-align: center; color: #6d7a85; font: 11px var(--mono);
+            letter-spacing: .1em; text-transform: uppercase; padding: 16px 0 4px; }
+/* The desk is genuinely inert until the shift is live. It used to merely stop
+   accepting clicks, so twelve buttons sat there looking perfectly pressable and
+   silently did nothing — the exact "click this, nothing happens" failure the
+   tutorial had. Now it reads as switched off. */
+.desk.locked { filter: grayscale(.55) brightness(.88); pointer-events: none; }
+.desk.locked .key, .desk.locked .phone, .desk.locked .dial,
+.desk.locked .notepad, .desk.locked .deskclock { opacity: .5; }
+.desk.locked .key, .desk.locked .phone { cursor: not-allowed; }
+/* A label on the surface itself, so the reason is where the controls are and
+   not only in the hint above the desk. */
+.desk.locked::before {
+  content: attr(data-locked-reason);
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  z-index: 3; pointer-events: none;
+  font: 600 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  color: #f3f6f9; background: rgba(28,20,12,.82);
+  border: 1px solid rgba(255,255,255,.16); border-radius: 999px;
+  padding: 9px 16px; box-shadow: 0 10px 26px rgba(30,18,8,.4);
+  white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* screens are physically off before power-on */
+.monitor .glass.off { background: #1b2126; }
+.monitor .glass.off .titlebar { color: #3c4750; background: #1f262b; }
+.monitor .bezel.off::after { background: #5b666f; box-shadow: none; }
+.offglass {
+  height: 100%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(112deg, rgba(232,244,255,.12) 0%, transparent 38%);
+}
+.powerbtn {
+  display: flex; align-items: center; gap: 11px; margin: 0 auto;
+  background: linear-gradient(180deg,#39424a,#242b31); border: 1px solid #1a2026;
+  border-radius: 10px; padding: 13px 20px; color: #e2e8ec; cursor: pointer;
+  box-shadow: 0 3px 0 #1a2026, inset 0 1px 0 rgba(255,255,255,.14);
+  font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+}
+.powerbtn:hover { border-color: #3987e5; color: #9cc6f2; }
+.powerbtn .ring { width: 15px; height: 15px; border-radius: 50%;
+  border: 2px solid #8a959e; position: relative; transition: border-color .2s; }
+.powerbtn .ring::after { content:''; position:absolute; left:50%; top:-3px; width:2px;
+  height:8px; background:#8a959e; transform:translateX(-50%); }
+.powerbtn:hover .ring { border-color:#4ade80; }
+.powerbtn:hover .ring::after { background:#4ade80; }
+
+.boot { font: 12px/1.75 var(--mono); color: #7f8a89; white-space: pre-wrap; }
+.boot .ok { color: #4ade80; }
+.boot .cur::after { content:'▋'; color:#4ade80; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ===================== agent briefing modal ===================== */
+/* Clicking an agent opens this first. No model call happens until the primary
+   action is pressed, which is both an honest affordance and the thing that
+   tells a first-time viewer why there are several specialised agents rather
+   than one chat box. */
+.sheetwrap {
+  position: fixed; inset: 0; z-index: 70; display: flex;
+  align-items: center; justify-content: center; padding: 22px;
+  background: rgba(8, 11, 14, .62); backdrop-filter: blur(3px);
+  opacity: 0; transition: opacity .18s ease;
+}
+.sheetwrap.in { opacity: 1; }
+.sheet {
+  width: min(560px, 100%); max-height: 88vh; overflow: auto;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  transform: translateY(8px) scale(.985); transition: transform .18s ease;
+}
+.sheetwrap.in .sheet { transform: none; }
+
+.sheet header {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 14px;
+  padding: 20px 22px 0; border: 0;
+}
+.sheet .eyebrow {
+  font: 600 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+}
+.sheet h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+.sheet .role { margin: 6px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+.sheet .body { padding: 18px 22px 0; }
+
+.sheet .tierbadge {
+  font: 600 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px;
+  color: var(--muted); white-space: nowrap;
+}
+.sheet .tierbadge.reason { color: var(--series-1); border-color: var(--series-1); }
+
+.sheet h4 {
+  font: 600 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 10px;
+}
+.sheet ul { margin: 0 0 18px; padding: 0; list-style: none; }
+.sheet ul li {
+  position: relative; padding: 0 0 9px 20px; font-size: 14px; line-height: 1.5;
+  color: var(--ink);
+}
+.sheet ul li::before {
+  content: ''; position: absolute; left: 3px; top: 8px; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--series-1);
+}
+.sheet .limit {
+  border-left: 2px solid var(--axis); padding: 2px 0 2px 12px; margin: 0 0 18px;
+  font-size: 13px; line-height: 1.55; color: var(--ink-2);
+}
+.sheet .meta {
+  display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 14px 0 0;
+  border-top: 1px solid var(--grid); font: 11px/1.5 var(--mono); color: var(--muted);
+}
+.sheet footer {
+  display: flex; justify-content: flex-end; gap: 9px; padding: 18px 22px 20px;
+}
+.sheet footer button { font-size: 14px; padding: 9px 16px; }
+.sheet footer .go {
+  background: var(--series-1); border-color: var(--series-1); color: #fff; font-weight: 600;
+}
+.sheet footer .go:hover { filter: brightness(1.08); }
+@media (max-width: 520px) {
+  .sheet footer { flex-direction: column-reverse; }
+  .sheet footer button { width: 100%; }
+}
+
+/* ===================== onboarding ===================== */
+/* Entirely local — no model call is involved in teaching someone a button. */
+.tour-root { position: fixed; inset: 0; z-index: 80; pointer-events: none;
+             opacity: 0; visibility: hidden; transition: opacity .2s ease; }
+.tour-root.on { opacity: 1; visibility: visible; }
+/* Only the card takes clicks. Everything else, including the spotlighted
+   control, stays live. */
+.tour-card { pointer-events: auto; }
+/* While the card is sliding from one step to the next its path can cross the
+   control it is pointing at. It takes no clicks until it has landed. */
+.tour-card.moving { pointer-events: none; }
+.tour-veil { display: none; }
+.tour-ring {
+  position: absolute; border-radius: 10px; pointer-events: none;
+  box-shadow: 0 0 0 9999px rgba(8,11,14,.5), 0 0 0 2px var(--series-1),
+              0 0 22px rgba(42,120,214,.55);
+  transition: top .28s cubic-bezier(.3,0,.2,1), left .28s cubic-bezier(.3,0,.2,1),
+              width .28s cubic-bezier(.3,0,.2,1), height .28s cubic-bezier(.3,0,.2,1);
+}
+
+.tour-card {
+  position: absolute; width: min(340px, calc(100vw - 32px));
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.4);
+  transition: top .28s cubic-bezier(.3,0,.2,1), left .28s cubic-bezier(.3,0,.2,1);
+}
+.tour-step {
+  font: 600 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+.tour-card h4 { margin: 0 0 6px; font-size: 15px; letter-spacing: -.01em; }
+.tour-card p { margin: 0 0 14px; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+.tour-actions { display: flex; align-items: center; gap: 8px; }
+.tour-gap { flex: 1 1 auto; }
+.tour-actions button { font-size: 13px; padding: 7px 13px; }
+.tour-actions .ghost { border-color: transparent; color: var(--muted); padding-left: 0; }
+.tour-actions .ghost:hover { color: var(--ink); }
+.tour-actions .primary {
+  background: var(--series-1); border-color: var(--series-1); color: #fff; font-weight: 600;
+}
+.tour-actions button:disabled { opacity: .4; cursor: default; }
+
+.tour-hint {
+  position: fixed; z-index: 75; width: min(300px, calc(100vw - 24px));
+  background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  border-left: 3px solid var(--series-1); border-radius: 10px; padding: 13px 15px 11px;
+  box-shadow: 0 18px 44px rgba(0,0,0,.34);
+  opacity: 0; transform: translateY(6px); transition: opacity .2s ease, transform .2s ease;
+}
+.tour-hint.on { opacity: 1; transform: none; }
+.tour-hint p { margin: 0 0 10px; font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+.tour-hint button {
+  font: 600 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  padding: 7px 11px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-ring, .tour-card, .tour-hint, .tour-root { transition: none; }
+}
+
+/* ===================== responsive refinements ===================== */
+/* Laptop and desktop are covered by the base layout (the page is capped at
+   1180px). These trim the workstation for narrower screens, where the three
+   stacked monitors otherwise make the page several viewports tall. */
+
+@media (max-width: 1100px) {
+  .monitor .glass { height: clamp(180px, 27vh, 286px); }
+  .monitor.tall .glass { height: clamp(210px, 32vh, 330px); }
+}
+
+@media (max-width: 1000px) {
+  /* Monitors stack here, so three panes are three screenfuls. Cap them hard —
+     the vh clamp above is sized for a row, not a column. */
+  .monitor .glass, .monitor.tall .glass { height: clamp(170px, 24vh, 250px); }
+  .monitors { gap: 10px; }
+  .monitor .stand { height: 22px; }
+}
+
+@media (max-width: 760px) {
+  .monitor .glass, .monitor.tall .glass { height: clamp(160px, 22vh, 212px); }
+  .monitor .screen { padding: 8px 9px; font-size: 11.5px; }
+  .srow { grid-template-columns: 40px 24px 1fr; gap: 5px; }
+  .desk { padding: 16px 14px 18px; }
+  .desk::after { bottom: -10px; height: 12px; }
+  .keys { grid-template-columns: 1fr; }
+  .deskobjects { gap: 10px; }
+  .obj-keyboard { flex-basis: 46%; }
+  .room { border-radius: 10px; }
+  .wrap { padding: 20px 0 48px; }
+  h1 { font-size: 1.2rem; }
+  .hero { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 420px) {
+  .monitor .glass, .monitor.tall .glass { height: clamp(150px, 21vh, 190px); }
+  .obj-mouse, .obj-cup { display: none; }
+  .sheet footer { padding: 14px 16px 16px; }
+  .sheet header, .sheet .body { padding-left: 16px; padding-right: 16px; }
+  .tour-card { width: calc(100vw - 24px); }
+}
+
+/* Wide desktops: the page is capped, so give the room a little more presence
+   rather than leaving it floating in a sea of background. */
+@media (min-width: 1500px) {
+  .wrap { max-width: 1320px; }
+  .monitor .glass { height: clamp(220px, 32vh, 356px); }
+  .monitor.tall .glass { height: clamp(250px, 38vh, 420px); }
+}
+
+/* agent modal: systems read + example tasks */
+.sheet .reads { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+.sheet .reads span {
+  font: 11px/1.4 var(--mono); color: var(--ink-2);
+  border: 1px solid var(--grid); border-radius: 6px; padding: 5px 8px;
+  background: var(--plane);
+}
+.sheet .examples { margin: 0 0 18px; }
+.sheet .examples p {
+  margin: 0 0 6px; padding: 8px 11px; border-radius: 8px;
+  background: var(--plane); border: 1px solid var(--grid);
+  font-size: 13px; line-height: 1.5; color: var(--ink-2); font-style: italic;
+}
+.sheet .meta { display: block; font-style: normal; }
+.sheet .meta span { font: 12px/1.55 var(--mono); color: var(--muted); }
+
+/* tutorial: welcome card + interactive gate */
+.tour-root.centred .tour-card {
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(430px, calc(100vw - 32px)); padding: 22px 24px 18px;
+}
+.tour-root.centred .tour-ring { opacity: 0; box-shadow: 0 0 0 9999px rgba(8,11,14,.55); }
+.tour-root.centred .tour-card h4 { font-size: 17px; }
+.tour-wait {
+  margin: 0 0 12px; font: 600 11px/1.4 var(--mono); letter-spacing: .06em;
+  color: var(--series-1); display: flex; align-items: center; gap: 7px;
+}
+.tour-wait::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--series-1);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 50% { opacity: .25; transform: scale(.7); } }
+@media (prefers-reduced-motion: reduce) { .tour-wait::before { animation: none; } }
+.chip.is-static { cursor: default; opacity: .72; }
+.chip.navchip { color: var(--ink); border-color: var(--axis); }
+.chip.navchip:hover { border-color: var(--series-1); color: var(--series-1); }
+
+/* tutorial: gated step affordance */
+.tour-wait {
+  background: rgba(42,120,214,.08); border: 1px solid rgba(42,120,214,.28);
+  border-radius: 8px; padding: 9px 11px; font-size: 12.5px; letter-spacing: 0;
+  text-transform: none; font-family: inherit; font-weight: 600;
+}
+.tour-actions .primary.waiting {
+  background: transparent; color: var(--muted); border-color: var(--grid);
+  font-weight: 500;
+}
+.tour-escape {
+  display: block; margin: -6px 0 12px; padding: 0; border: none; background: none;
+  color: var(--muted); font-size: 12px; text-decoration: underline;
+  text-underline-offset: 3px; cursor: pointer;
+}
+.tour-escape:hover { color: var(--ink); }
+
+
+/* ===================== panel headers, truth box ===================== */
+/* A heading with an escape hatch or a context chip on the right. Used on the
+   handover pad (which had no way back to the desk) and the debrief. */
+.panelhead {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; margin-bottom: 4px;
+}
+.panelhead h2 { margin: 0; }
+.panelhead .hint { margin: 6px 0 0; }
+.panelhead .chip { flex: 0 0 auto; }
+button.chip { cursor: pointer; }
+button.chip:hover { border-color: var(--series-1); color: var(--series-1); }
+
+/* The answer, always shown. A debrief that scores the root cause and then does
+   not say what it was is a grade, not a debrief. */
+.truth {
+  margin-top: 18px; padding: 14px 16px; border-radius: 10px;
+  border: 1px solid var(--grid); background: var(--plane);
+  border-left: 3px solid var(--muted);
+}
+.truth.right { border-left-color: var(--ok, #2e9e6b); }
+.truth.wrong { border-left-color: var(--critical, #d64545); }
+.truth .lbl {
+  font: 600 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+}
+.truth .val { font: 600 16px/1.3 var(--mono); color: var(--ink); }
+.truth .said { margin-top: 6px; font-size: 13px; color: var(--ink-2); }
+
+/* Pipeline status inside an empty state: which stages run today and which do
+   not. Replaces a paragraph of build instructions with something a reader can
+   scan in two seconds. */
+.stepline { margin: 12px 0 0; display: grid; gap: 7px; }
+.stepline > div {
+  display: grid; grid-template-columns: 16px 1fr auto; gap: 4px 9px;
+  align-items: baseline; padding: 8px 11px; border-radius: 8px;
+  border: 1px solid var(--grid); background: var(--plane); font-size: 13px;
+}
+.stepline > div > span { font-weight: 700; }
+.stepline > div.on > span { color: var(--ok, #2e9e6b); }
+.stepline > div.off { opacity: .68; border-style: dashed; }
+.stepline > div.off > span { color: var(--muted); }
+.stepline b { font: 600 11px/1.4 var(--mono); color: var(--ink); white-space: nowrap; }
+.stepline i { grid-column: 2 / -1; font-style: normal; font-size: 12px; color: var(--muted); }

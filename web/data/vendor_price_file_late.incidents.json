@@ -1,0 +1,346 @@
+{
+  "scenario": "vendor_price_file_late",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "vendor_px_equity",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 310.079,
+      "last_minute": 310.079,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0001"
+      ]
+    },
+    {
+      "service": "vendor_px_equity",
+      "alert_type": "CONN_LOST",
+      "entity": null,
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 310.353,
+      "last_minute": 310.353,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0000"
+      ]
+    },
+    {
+      "service": "ingest_px_loader",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 312.11,
+      "last_minute": 312.11,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0002"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "GBPUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.413,
+      "last_minute": 315.413,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0006"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "RISK_BREACH",
+      "entity": "EQ_STAT_ARB",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 315.579,
+      "last_minute": 315.579,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0004"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "UNH.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.617,
+      "last_minute": 315.617,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0007"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "BRKb.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.63,
+      "last_minute": 315.63,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0010"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "MSFT.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.68,
+      "last_minute": 315.68,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0011"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "STALE_DATA",
+      "entity": "AAPL.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.749,
+      "last_minute": 315.749,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0012"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "STALE_DATA",
+      "entity": "UNH.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.792,
+      "last_minute": 315.792,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0009"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "XOM.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.817,
+      "last_minute": 315.817,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0015"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "USDCHF",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.852,
+      "last_minute": 315.852,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0008"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "RISK_BREACH",
+      "entity": "EQ_MKT_NEUTRAL",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 315.873,
+      "last_minute": 315.873,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0005"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.884,
+      "last_minute": 315.884,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0003"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.984,
+      "last_minute": 315.984,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0013"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "STALE_DATA",
+      "entity": "JPM.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 315.986,
+      "last_minute": 315.986,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0014"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "STALE_DATA",
+      "entity": "ESZ6",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 317.225,
+      "last_minute": 317.225,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0019"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 317.4,
+      "last_minute": 317.4,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0020"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "STALE_DATA",
+      "entity": "XOM.N",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 317.414,
+      "last_minute": 317.414,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0021"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 317.57,
+      "last_minute": 317.57,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0016"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "QUEUE_DEPTH",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 317.585,
+      "last_minute": 317.585,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0018"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "STALE_DATA",
+      "entity": "NQZ6",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 317.594,
+      "last_minute": 317.594,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0022"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 317.854,
+      "last_minute": 317.854,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0017"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 371.025,
+      "last_minute": 371.025,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0023"
+      ]
+    },
+    {
+      "service": "vendor_refdata",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 405.108,
+      "last_minute": 405.108,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0024"
+      ]
+    },
+    {
+      "service": "svc_security_master",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 408.509,
+      "last_minute": 408.509,
+      "flapping": false,
+      "alert_ids": [
+        "vendor_price_file_late-A0025"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

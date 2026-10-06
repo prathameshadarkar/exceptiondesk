@@ -1,0 +1,69 @@
+{
+  "scenario": "missed_corporate_action",
+  "teaches": "Tiny incident in a noisy window. Tests noise rejection, not clustering.",
+  "incidents": [
+    {
+      "incident_id": "missed_corporate_action-INC1",
+      "true_root": "vendor_corpactions",
+      "label": "Corporate action missing",
+      "kind": "data_wrong",
+      "start_minute": 284,
+      "member_alert_ids": [
+        "missed_corporate_action-A0000",
+        "missed_corporate_action-A0001",
+        "missed_corporate_action-A0002",
+        "missed_corporate_action-A0003"
+      ],
+      "affected_services": [
+        "vendor_corpactions",
+        "ingest_corpaction_proc",
+        "svc_risk",
+        "svc_pnl"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "missed_corporate_action-A0000",
+      "incident_id": "missed_corporate_action-INC1",
+      "true_root": "vendor_corpactions",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "missed_corporate_action-A0001",
+      "incident_id": "missed_corporate_action-INC1",
+      "true_root": "vendor_corpactions",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "missed_corporate_action-A0002",
+      "incident_id": "missed_corporate_action-INC1",
+      "true_root": "vendor_corpactions",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "missed_corporate_action-A0003",
+      "incident_id": "missed_corporate_action-INC1",
+      "true_root": "vendor_corpactions",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "missed_corporate_action-A0004",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "missed_corporate_action-A0005",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

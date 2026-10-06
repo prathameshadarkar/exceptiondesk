@@ -1,0 +1,203 @@
+{
+  "scenario": "fix_session_drop",
+  "title": "FIX session to broker A drops mid-session",
+  "summary": "The FIX gateway to executing broker A loses its session. Orders reject, the drop copy stops mirroring execution reports, fills go missing from trade capture and the blotter diverges from reality while portfolio managers are still trading.",
+  "window": [
+    600,
+    700
+  ],
+  "alerts": [
+    {
+      "alert_id": "fix_session_drop-A0000",
+      "ts": "2026-03-12T10:22:09.543405+00:00",
+      "ts_minute": 622.159,
+      "service": "fix_gw_broker_a",
+      "tier": "trading",
+      "alert_type": "SEQ_GAP",
+      "severity": "P1",
+      "message": "fix_gw_broker_a: sequence gap detected, 850 messages missing",
+      "host": "fix-gw-broker-a-01.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0002",
+      "ts": "2026-03-12T10:22:26.107884+00:00",
+      "ts_minute": 622.435,
+      "service": "fix_gw_broker_a",
+      "tier": "trading",
+      "alert_type": "REJECT_RATE",
+      "severity": "P2",
+      "message": "fix_gw_broker_a: order reject rate 37.1% over threshold",
+      "host": "fix-gw-broker-a-04.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0001",
+      "ts": "2026-03-12T10:22:28.063160+00:00",
+      "ts_minute": 622.468,
+      "service": "fix_gw_broker_a",
+      "tier": "trading",
+      "alert_type": "CONN_LOST",
+      "severity": "P1",
+      "message": "fix_gw_broker_a: session disconnected (Broker A FIX session down)",
+      "host": "fix-gw-broker-a-02.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0003",
+      "ts": "2026-03-12T10:22:52.051415+00:00",
+      "ts_minute": 622.868,
+      "service": "svc_ems",
+      "tier": "trading",
+      "alert_type": "REJECT_RATE",
+      "severity": "P2",
+      "message": "svc_ems: order reject rate 18.2% over threshold",
+      "host": "svc-ems-03.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0004",
+      "ts": "2026-03-12T10:22:53.495526+00:00",
+      "ts_minute": 622.892,
+      "service": "svc_dropcopy",
+      "tier": "trading",
+      "alert_type": "SEQ_GAP",
+      "severity": "P1",
+      "message": "svc_dropcopy: sequence gap detected, 296 messages missing",
+      "host": "svc-dropcopy-02.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0005",
+      "ts": "2026-03-12T10:22:55.843889+00:00",
+      "ts_minute": 622.931,
+      "service": "svc_dropcopy",
+      "tier": "trading",
+      "alert_type": "CONN_LOST",
+      "severity": "P1",
+      "message": "svc_dropcopy: session disconnected (Broker A FIX session down)",
+      "host": "svc-dropcopy-02.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0007",
+      "ts": "2026-03-12T10:23:20.491491+00:00",
+      "ts_minute": 623.342,
+      "service": "svc_trade_capture",
+      "tier": "post_trade",
+      "alert_type": "QUEUE_DEPTH",
+      "severity": "P2",
+      "message": "svc_trade_capture: queue depth 5000 over threshold",
+      "host": "svc-trade-capture-04.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0006",
+      "ts": "2026-03-12T10:23:37.322934+00:00",
+      "ts_minute": 623.622,
+      "service": "svc_trade_capture",
+      "tier": "post_trade",
+      "alert_type": "ERROR_RATE",
+      "severity": "P2",
+      "message": "svc_trade_capture: error rate 35.4% over threshold",
+      "host": "svc-trade-capture-02.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0008",
+      "ts": "2026-03-12T10:23:49.378694+00:00",
+      "ts_minute": 623.823,
+      "service": "svc_position",
+      "tier": "compute",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "svc_position: serving data older than threshold (Broker A FIX session down) [GBPUSD]",
+      "host": "svc-position-01.ny.eglp.internal",
+      "entity": "GBPUSD"
+    },
+    {
+      "alert_id": "fix_session_drop-A0010",
+      "ts": "2026-03-12T10:23:50.713765+00:00",
+      "ts_minute": 623.845,
+      "service": "svc_position",
+      "tier": "compute",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "svc_position: serving data older than threshold (Broker A FIX session down) [CLF7]",
+      "host": "svc-position-01.ny.eglp.internal",
+      "entity": "CLF7"
+    },
+    {
+      "alert_id": "fix_session_drop-A0012",
+      "ts": "2026-03-12T10:23:52.807121+00:00",
+      "ts_minute": 623.88,
+      "service": "svc_position",
+      "tier": "compute",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "svc_position: serving data older than threshold (Broker A FIX session down) [UNH.N]",
+      "host": "svc-position-02.ny.eglp.internal",
+      "entity": "UNH.N"
+    },
+    {
+      "alert_id": "fix_session_drop-A0013",
+      "ts": "2026-03-12T10:23:53.176003+00:00",
+      "ts_minute": 623.886,
+      "service": "svc_blotter",
+      "tier": "post_trade",
+      "alert_type": "ERROR_RATE",
+      "severity": "P2",
+      "message": "svc_blotter: error rate 9.8% over threshold",
+      "host": "svc-blotter-04.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "fix_session_drop-A0009",
+      "ts": "2026-03-12T10:24:01.515496+00:00",
+      "ts_minute": 624.025,
+      "service": "svc_position",
+      "tier": "compute",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "svc_position: serving data older than threshold (Broker A FIX session down) [ESZ6]",
+      "host": "svc-position-03.ny.eglp.internal",
+      "entity": "ESZ6"
+    },
+    {
+      "alert_id": "fix_session_drop-A0011",
+      "ts": "2026-03-12T10:24:09.571800+00:00",
+      "ts_minute": 624.16,
+      "service": "svc_position",
+      "tier": "compute",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "svc_position: serving data older than threshold (Broker A FIX session down) [GCG7]",
+      "host": "svc-position-02.ny.eglp.internal",
+      "entity": "GCG7"
+    },
+    {
+      "alert_id": "fix_session_drop-A0015",
+      "ts": "2026-03-12T10:48:29.765180+00:00",
+      "ts_minute": 648.496,
+      "service": "db_replica",
+      "tier": "infra",
+      "alert_type": "STALE_DATA",
+      "severity": "P4",
+      "message": "db_replica: serving data older than threshold (routine threshold crossing) [ESZ6]",
+      "host": "db-replica-03.ny.eglp.internal",
+      "entity": "ESZ6"
+    },
+    {
+      "alert_id": "fix_session_drop-A0014",
+      "ts": "2026-03-12T10:54:03.794987+00:00",
+      "ts_minute": 654.063,
+      "service": "ingest_corpaction_proc",
+      "tier": "ingest",
+      "alert_type": "DQ_OUTLIER",
+      "severity": "P3",
+      "message": "ingest_corpaction_proc: 23 instruments outside expected return band [ESZ6]",
+      "host": "ingest-corpaction-proc-01.ny.eglp.internal",
+      "entity": "ESZ6"
+    }
+  ]
+}

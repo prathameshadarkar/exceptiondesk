@@ -1,0 +1,203 @@
+{
+  "scenario": "stale_fx_feed",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 303.722,
+      "last_minute": 303.722,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0006"
+      ]
+    },
+    {
+      "service": "svc_pricing",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "AAPL.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 305.367,
+      "last_minute": 305.367,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0007"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "CLF7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 307.147,
+      "last_minute": 307.147,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0008"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "STALE_DATA",
+      "entity": "UNH.N",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 308.383,
+      "last_minute": 308.383,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0011"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "STALE_DATA",
+      "entity": "GBPUSD",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 308.554,
+      "last_minute": 308.554,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0010"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "STALE_DATA",
+      "entity": "BRKb.N",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 308.611,
+      "last_minute": 308.611,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0012"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "STALE_DATA",
+      "entity": "CLF7",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 308.615,
+      "last_minute": 308.615,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0009"
+      ]
+    },
+    {
+      "service": "vendor_fx",
+      "alert_type": "STALE_DATA",
+      "entity": "BRKb.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 308.911,
+      "last_minute": 308.911,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0005"
+      ]
+    },
+    {
+      "service": "vendor_fx",
+      "alert_type": "STALE_DATA",
+      "entity": "AAPL.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 308.925,
+      "last_minute": 308.925,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0002"
+      ]
+    },
+    {
+      "service": "vendor_fx",
+      "alert_type": "STALE_DATA",
+      "entity": "EURUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 308.985,
+      "last_minute": 308.985,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0001"
+      ]
+    },
+    {
+      "service": "vendor_fx",
+      "alert_type": "STALE_DATA",
+      "entity": "JPM.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 309.075,
+      "last_minute": 309.075,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0003"
+      ]
+    },
+    {
+      "service": "vendor_fx",
+      "alert_type": "STALE_DATA",
+      "entity": "ESZ6",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 309.079,
+      "last_minute": 309.079,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0004"
+      ]
+    },
+    {
+      "service": "vendor_fx",
+      "alert_type": "STALE_DATA",
+      "entity": "CLF7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 309.263,
+      "last_minute": 309.263,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0000"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "STALE_DATA",
+      "entity": "USDCHF",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 365.347,
+      "last_minute": 365.347,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0013"
+      ]
+    },
+    {
+      "service": "vendor_px_equity",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 429.483,
+      "last_minute": 429.483,
+      "flapping": false,
+      "alert_ids": [
+        "stale_fx_feed-A0014"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

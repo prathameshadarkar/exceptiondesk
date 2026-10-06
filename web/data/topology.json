@@ -1,0 +1,449 @@
+{
+  "convention": "edge from->to means 'from depends on to'; to is UPSTREAM",
+  "services": [
+    {
+      "name": "vendor_px_equity",
+      "tier": "vendor",
+      "criticality": 1,
+      "description": "Equity price and returns file from primary market data vendor",
+      "blast_radius": 7
+    },
+    {
+      "name": "vendor_px_futures",
+      "tier": "vendor",
+      "criticality": 2,
+      "description": "Futures settlement price file",
+      "blast_radius": 7
+    },
+    {
+      "name": "vendor_fx",
+      "tier": "vendor",
+      "criticality": 1,
+      "description": "FX spot and forward rates",
+      "blast_radius": 7
+    },
+    {
+      "name": "vendor_corpactions",
+      "tier": "vendor",
+      "criticality": 2,
+      "description": "Corporate actions: splits, dividends, spin-offs",
+      "blast_radius": 7
+    },
+    {
+      "name": "vendor_refdata",
+      "tier": "vendor",
+      "criticality": 2,
+      "description": "Security reference data and identifier mappings",
+      "blast_radius": 10
+    },
+    {
+      "name": "vendor_borrow",
+      "tier": "vendor",
+      "criticality": 2,
+      "description": "Prime broker locate availability and borrow rate file",
+      "blast_radius": 2
+    },
+    {
+      "name": "db_primary",
+      "tier": "infra",
+      "criticality": 1,
+      "description": "Primary transactional database",
+      "blast_radius": 16
+    },
+    {
+      "name": "db_replica",
+      "tier": "infra",
+      "criticality": 3,
+      "description": "Read replica serving reporting and research",
+      "blast_radius": 1
+    },
+    {
+      "name": "msg_bus",
+      "tier": "infra",
+      "criticality": 1,
+      "description": "Internal message bus carrying fills, positions and alerts",
+      "blast_radius": 10
+    },
+    {
+      "name": "scheduler_airflow",
+      "tier": "infra",
+      "criticality": 1,
+      "description": "Airflow scheduler running BOD/EOD DAGs",
+      "blast_radius": 15
+    },
+    {
+      "name": "ingest_px_loader",
+      "tier": "ingest",
+      "criticality": 1,
+      "description": "Loads vendor price files into the pricing store",
+      "blast_radius": 6
+    },
+    {
+      "name": "ingest_fx_loader",
+      "tier": "ingest",
+      "criticality": 1,
+      "description": "Loads FX rates",
+      "blast_radius": 6
+    },
+    {
+      "name": "ingest_corpaction_proc",
+      "tier": "ingest",
+      "criticality": 2,
+      "description": "Applies corporate actions to positions and historical prices",
+      "blast_radius": 6
+    },
+    {
+      "name": "ingest_refdata_loader",
+      "tier": "ingest",
+      "criticality": 2,
+      "description": "Loads security master reference data",
+      "blast_radius": 9
+    },
+    {
+      "name": "ingest_borrow_loader",
+      "tier": "ingest",
+      "criticality": 2,
+      "description": "Loads the daily locate file from prime brokers",
+      "blast_radius": 1
+    },
+    {
+      "name": "svc_security_master",
+      "tier": "compute",
+      "criticality": 1,
+      "description": "Canonical security identifiers and instrument terms",
+      "blast_radius": 8
+    },
+    {
+      "name": "svc_pricing",
+      "tier": "compute",
+      "criticality": 1,
+      "description": "Serves marks to risk, P&L and the blotter",
+      "blast_radius": 5
+    },
+    {
+      "name": "svc_position",
+      "tier": "compute",
+      "criticality": 1,
+      "description": "Real-time position keeping across strategies",
+      "blast_radius": 5
+    },
+    {
+      "name": "svc_risk",
+      "tier": "risk",
+      "criticality": 1,
+      "description": "Pre- and post-trade risk limits per strategy",
+      "blast_radius": 1
+    },
+    {
+      "name": "svc_pnl",
+      "tier": "risk",
+      "criticality": 1,
+      "description": "Intraday and end-of-day P&L attribution",
+      "blast_radius": 1
+    },
+    {
+      "name": "fix_gw_broker_a",
+      "tier": "trading",
+      "criticality": 1,
+      "description": "FIX gateway to executing broker A",
+      "blast_radius": 10
+    },
+    {
+      "name": "fix_gw_broker_b",
+      "tier": "trading",
+      "criticality": 1,
+      "description": "FIX gateway to executing broker B",
+      "blast_radius": 10
+    },
+    {
+      "name": "svc_dropcopy",
+      "tier": "trading",
+      "criticality": 1,
+      "description": "Drop copy session mirroring execution reports to ops and books",
+      "blast_radius": 8
+    },
+    {
+      "name": "svc_ems",
+      "tier": "trading",
+      "criticality": 1,
+      "description": "Execution management: algos, venue routing",
+      "blast_radius": 1
+    },
+    {
+      "name": "svc_oms",
+      "tier": "trading",
+      "criticality": 1,
+      "description": "Order management and book of record",
+      "blast_radius": 0
+    },
+    {
+      "name": "svc_trade_capture",
+      "tier": "post_trade",
+      "criticality": 1,
+      "description": "Captures fills into the trade database",
+      "blast_radius": 7
+    },
+    {
+      "name": "svc_blotter",
+      "tier": "post_trade",
+      "criticality": 1,
+      "description": "The blotter portfolio managers actually look at",
+      "blast_radius": 0
+    },
+    {
+      "name": "svc_recon",
+      "tier": "post_trade",
+      "criticality": 1,
+      "description": "Reconciles internal trades against executing broker files",
+      "blast_radius": 0
+    },
+    {
+      "name": "svc_locate",
+      "tier": "post_trade",
+      "criticality": 2,
+      "description": "Locate coverage checks for short sales (Reg SHO)",
+      "blast_radius": 0
+    },
+    {
+      "name": "svc_reporting",
+      "tier": "reporting",
+      "criticality": 3,
+      "description": "Internal and investor reporting pack",
+      "blast_radius": 0
+    }
+  ],
+  "edges": [
+    {
+      "from": "db_replica",
+      "to": "db_primary"
+    },
+    {
+      "from": "ingest_px_loader",
+      "to": "vendor_px_equity"
+    },
+    {
+      "from": "ingest_px_loader",
+      "to": "vendor_px_futures"
+    },
+    {
+      "from": "ingest_px_loader",
+      "to": "scheduler_airflow"
+    },
+    {
+      "from": "ingest_px_loader",
+      "to": "db_primary"
+    },
+    {
+      "from": "ingest_fx_loader",
+      "to": "vendor_fx"
+    },
+    {
+      "from": "ingest_fx_loader",
+      "to": "scheduler_airflow"
+    },
+    {
+      "from": "ingest_fx_loader",
+      "to": "db_primary"
+    },
+    {
+      "from": "ingest_corpaction_proc",
+      "to": "vendor_corpactions"
+    },
+    {
+      "from": "ingest_corpaction_proc",
+      "to": "scheduler_airflow"
+    },
+    {
+      "from": "ingest_corpaction_proc",
+      "to": "db_primary"
+    },
+    {
+      "from": "ingest_refdata_loader",
+      "to": "vendor_refdata"
+    },
+    {
+      "from": "ingest_refdata_loader",
+      "to": "scheduler_airflow"
+    },
+    {
+      "from": "ingest_refdata_loader",
+      "to": "db_primary"
+    },
+    {
+      "from": "ingest_borrow_loader",
+      "to": "vendor_borrow"
+    },
+    {
+      "from": "ingest_borrow_loader",
+      "to": "scheduler_airflow"
+    },
+    {
+      "from": "svc_security_master",
+      "to": "ingest_refdata_loader"
+    },
+    {
+      "from": "svc_security_master",
+      "to": "db_primary"
+    },
+    {
+      "from": "svc_pricing",
+      "to": "ingest_px_loader"
+    },
+    {
+      "from": "svc_pricing",
+      "to": "ingest_fx_loader"
+    },
+    {
+      "from": "svc_pricing",
+      "to": "ingest_corpaction_proc"
+    },
+    {
+      "from": "svc_pricing",
+      "to": "svc_security_master"
+    },
+    {
+      "from": "svc_pricing",
+      "to": "db_primary"
+    },
+    {
+      "from": "svc_position",
+      "to": "svc_trade_capture"
+    },
+    {
+      "from": "svc_position",
+      "to": "svc_security_master"
+    },
+    {
+      "from": "svc_position",
+      "to": "db_primary"
+    },
+    {
+      "from": "svc_position",
+      "to": "msg_bus"
+    },
+    {
+      "from": "svc_risk",
+      "to": "svc_pricing"
+    },
+    {
+      "from": "svc_risk",
+      "to": "svc_position"
+    },
+    {
+      "from": "svc_risk",
+      "to": "msg_bus"
+    },
+    {
+      "from": "svc_pnl",
+      "to": "svc_pricing"
+    },
+    {
+      "from": "svc_pnl",
+      "to": "svc_position"
+    },
+    {
+      "from": "svc_pnl",
+      "to": "db_primary"
+    },
+    {
+      "from": "svc_dropcopy",
+      "to": "fix_gw_broker_a"
+    },
+    {
+      "from": "svc_dropcopy",
+      "to": "fix_gw_broker_b"
+    },
+    {
+      "from": "svc_dropcopy",
+      "to": "msg_bus"
+    },
+    {
+      "from": "svc_ems",
+      "to": "fix_gw_broker_a"
+    },
+    {
+      "from": "svc_ems",
+      "to": "fix_gw_broker_b"
+    },
+    {
+      "from": "svc_ems",
+      "to": "msg_bus"
+    },
+    {
+      "from": "svc_oms",
+      "to": "svc_ems"
+    },
+    {
+      "from": "svc_oms",
+      "to": "svc_risk"
+    },
+    {
+      "from": "svc_oms",
+      "to": "svc_security_master"
+    },
+    {
+      "from": "svc_oms",
+      "to": "db_primary"
+    },
+    {
+      "from": "svc_trade_capture",
+      "to": "svc_dropcopy"
+    },
+    {
+      "from": "svc_trade_capture",
+      "to": "msg_bus"
+    },
+    {
+      "from": "svc_trade_capture",
+      "to": "db_primary"
+    },
+    {
+      "from": "svc_blotter",
+      "to": "svc_trade_capture"
+    },
+    {
+      "from": "svc_blotter",
+      "to": "svc_pricing"
+    },
+    {
+      "from": "svc_blotter",
+      "to": "svc_position"
+    },
+    {
+      "from": "svc_recon",
+      "to": "svc_trade_capture"
+    },
+    {
+      "from": "svc_recon",
+      "to": "scheduler_airflow"
+    },
+    {
+      "from": "svc_recon",
+      "to": "db_primary"
+    },
+    {
+      "from": "svc_locate",
+      "to": "ingest_borrow_loader"
+    },
+    {
+      "from": "svc_locate",
+      "to": "svc_security_master"
+    },
+    {
+      "from": "svc_reporting",
+      "to": "svc_pnl"
+    },
+    {
+      "from": "svc_reporting",
+      "to": "svc_position"
+    },
+    {
+      "from": "svc_reporting",
+      "to": "db_replica"
+    },
+    {
+      "from": "svc_reporting",
+      "to": "scheduler_airflow"
+    }
+  ]
+}

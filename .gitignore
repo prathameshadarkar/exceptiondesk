@@ -1,0 +1,17 @@
+# Generated scenario data: regenerable with `make data`, so not committed.
+data/*.json
+
+# web/data/ IS committed -- Vercel deploys what is in the repo and runs no
+# Python at deploy time. Regenerate it with `make site` and commit the diff.
+!web/data/
+
+# Secrets. If you add a serverless function for live narration, the key goes in
+# Vercel's env vars, never here.
+.env
+.env.*
+.vercel
+
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/

@@ -1,0 +1,287 @@
+{
+  "scenario": "db_pool_exhaustion",
+  "teaches": "HARD. Propagation is nearly instantaneous, so temporal ordering carries almost no signal. Topology has to do the work.",
+  "incidents": [
+    {
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "label": "DB connection pool exhausted",
+      "kind": "saturation",
+      "start_minute": 548,
+      "member_alert_ids": [
+        "db_pool_exhaustion-A0000",
+        "db_pool_exhaustion-A0001",
+        "db_pool_exhaustion-A0002",
+        "db_pool_exhaustion-A0003",
+        "db_pool_exhaustion-A0004",
+        "db_pool_exhaustion-A0005",
+        "db_pool_exhaustion-A0006",
+        "db_pool_exhaustion-A0007",
+        "db_pool_exhaustion-A0008",
+        "db_pool_exhaustion-A0009",
+        "db_pool_exhaustion-A0010",
+        "db_pool_exhaustion-A0011",
+        "db_pool_exhaustion-A0012",
+        "db_pool_exhaustion-A0013",
+        "db_pool_exhaustion-A0014",
+        "db_pool_exhaustion-A0015",
+        "db_pool_exhaustion-A0016",
+        "db_pool_exhaustion-A0017",
+        "db_pool_exhaustion-A0018",
+        "db_pool_exhaustion-A0019",
+        "db_pool_exhaustion-A0020",
+        "db_pool_exhaustion-A0021",
+        "db_pool_exhaustion-A0022",
+        "db_pool_exhaustion-A0023",
+        "db_pool_exhaustion-A0024",
+        "db_pool_exhaustion-A0025",
+        "db_pool_exhaustion-A0026",
+        "db_pool_exhaustion-A0027",
+        "db_pool_exhaustion-A0028"
+      ],
+      "affected_services": [
+        "db_primary",
+        "ingest_fx_loader",
+        "ingest_refdata_loader",
+        "svc_security_master",
+        "svc_pricing",
+        "svc_position",
+        "svc_pnl",
+        "svc_oms",
+        "svc_trade_capture",
+        "svc_recon",
+        "db_replica",
+        "svc_locate",
+        "svc_risk",
+        "svc_blotter",
+        "svc_reporting"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "db_pool_exhaustion-A0016",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0013",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0019",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0015",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0003",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0027",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0007",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0020",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0002",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0011",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0023",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0026",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0004",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0009",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0005",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0021",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0028",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0012",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0024",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0001",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0010",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0000",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0017",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0025",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0014",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0022",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0008",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0018",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0006",
+      "incident_id": "db_pool_exhaustion-INC1",
+      "true_root": "db_primary",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0031",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0029",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "db_pool_exhaustion-A0030",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

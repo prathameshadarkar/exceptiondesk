@@ -1,0 +1,753 @@
+{
+  "scenario": "flapping_latency",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "fix_gw_broker_b",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 582.176,
+      "last_minute": 582.176,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0099"
+      ]
+    },
+    {
+      "service": "msg_bus",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 6,
+      "first_minute": 584.811,
+      "last_minute": 617.958,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0001",
+        "flapping_latency-A0003",
+        "flapping_latency-A0005",
+        "flapping_latency-A0006",
+        "flapping_latency-A0009",
+        "flapping_latency-A0010"
+      ]
+    },
+    {
+      "service": "msg_bus",
+      "alert_type": "QUEUE_DEPTH",
+      "entity": null,
+      "severity": "P2",
+      "count": 6,
+      "first_minute": 584.908,
+      "last_minute": 618.154,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0000",
+        "flapping_latency-A0002",
+        "flapping_latency-A0004",
+        "flapping_latency-A0007",
+        "flapping_latency-A0008",
+        "flapping_latency-A0011"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 7,
+      "first_minute": 585.532,
+      "last_minute": 618.481,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0012",
+        "flapping_latency-A0013",
+        "flapping_latency-A0014",
+        "flapping_latency-A0015",
+        "flapping_latency-A0016",
+        "flapping_latency-A0017",
+        "flapping_latency-A0018"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "RECON_BREAK",
+      "entity": "BROKER_B",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 585.581,
+      "last_minute": 585.581,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0089"
+      ]
+    },
+    {
+      "service": "svc_ems",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 6,
+      "first_minute": 585.681,
+      "last_minute": 618.85,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0030",
+        "flapping_latency-A0031",
+        "flapping_latency-A0034",
+        "flapping_latency-A0036",
+        "flapping_latency-A0039",
+        "flapping_latency-A0041"
+      ]
+    },
+    {
+      "service": "svc_ems",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 7,
+      "first_minute": 585.686,
+      "last_minute": 618.545,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0029",
+        "flapping_latency-A0032",
+        "flapping_latency-A0033",
+        "flapping_latency-A0035",
+        "flapping_latency-A0037",
+        "flapping_latency-A0038",
+        "flapping_latency-A0040"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "TSLA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 585.691,
+      "last_minute": 585.691,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0019"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 6,
+      "first_minute": 585.699,
+      "last_minute": 618.795,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0080",
+        "flapping_latency-A0081",
+        "flapping_latency-A0083",
+        "flapping_latency-A0084",
+        "flapping_latency-A0086",
+        "flapping_latency-A0088"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "SEQ_GAP",
+      "entity": null,
+      "severity": "P1",
+      "count": 2,
+      "first_minute": 585.828,
+      "last_minute": 591.377,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0042",
+        "flapping_latency-A0044"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "CONN_LOST",
+      "entity": null,
+      "severity": "P1",
+      "count": 4,
+      "first_minute": 585.839,
+      "last_minute": 602.243,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0043",
+        "flapping_latency-A0045",
+        "flapping_latency-A0046",
+        "flapping_latency-A0047"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "PNL_SPIKE",
+      "entity": "MULTI_ASSET",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 585.885,
+      "last_minute": 585.885,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0054"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "STALE_DATA",
+      "entity": "NQZ6",
+      "severity": "P2",
+      "count": 2,
+      "first_minute": 585.937,
+      "last_minute": 591.103,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0064",
+        "flapping_latency-A0065"
+      ]
+    },
+    {
+      "service": "svc_reporting",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P4",
+      "count": 7,
+      "first_minute": 586.013,
+      "last_minute": 619.228,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0073",
+        "flapping_latency-A0074",
+        "flapping_latency-A0075",
+        "flapping_latency-A0076",
+        "flapping_latency-A0077",
+        "flapping_latency-A0078",
+        "flapping_latency-A0079"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 590.981,
+      "last_minute": 590.981,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0020"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 3,
+      "first_minute": 591.246,
+      "last_minute": 602.253,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0066",
+        "flapping_latency-A0067",
+        "flapping_latency-A0068"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 2,
+      "first_minute": 591.266,
+      "last_minute": 596.762,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0090",
+        "flapping_latency-A0091"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 591.267,
+      "last_minute": 591.267,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0082"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 3,
+      "first_minute": 591.387,
+      "last_minute": 607.745,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0056",
+        "flapping_latency-A0058",
+        "flapping_latency-A0060"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "AAPL.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 591.453,
+      "last_minute": 591.453,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0055"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "RISK_BREACH",
+      "entity": "CREDIT_RV",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 596.453,
+      "last_minute": 596.453,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0021"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 4,
+      "first_minute": 596.976,
+      "last_minute": 613.24,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0092",
+        "flapping_latency-A0093",
+        "flapping_latency-A0094",
+        "flapping_latency-A0096"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "TSLA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 597.053,
+      "last_minute": 597.053,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0057"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "AAPL.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 602.054,
+      "last_minute": 602.054,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0023"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 3,
+      "first_minute": 602.184,
+      "last_minute": 618.68,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0022",
+        "flapping_latency-A0025",
+        "flapping_latency-A0027"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "STALE_DATA",
+      "entity": "CLF7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 602.324,
+      "last_minute": 602.324,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0048"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 602.452,
+      "last_minute": 602.452,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0059"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "RISK_BREACH",
+      "entity": "EQ_STAT_ARB",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 607.398,
+      "last_minute": 607.398,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0024"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "SEQ_GAP",
+      "entity": null,
+      "severity": "P1",
+      "count": 3,
+      "first_minute": 607.642,
+      "last_minute": 618.68,
+      "flapping": true,
+      "alert_ids": [
+        "flapping_latency-A0049",
+        "flapping_latency-A0051",
+        "flapping_latency-A0052"
+      ]
+    },
+    {
+      "service": "svc_oms",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 2,
+      "first_minute": 607.659,
+      "last_minute": 613.304,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0085",
+        "flapping_latency-A0087"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "CLF7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 607.704,
+      "last_minute": 607.704,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0069"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "RECON_BREAK",
+      "entity": "BROKER_C",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 607.746,
+      "last_minute": 607.746,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0095"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "STALE_DATA",
+      "entity": "TSLA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 607.756,
+      "last_minute": 607.756,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0050"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "STALE_DATA",
+      "entity": "EURUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 607.768,
+      "last_minute": 607.768,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0070"
+      ]
+    },
+    {
+      "service": "ingest_px_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 611.752,
+      "last_minute": 611.752,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0108"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "GCG7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 613.066,
+      "last_minute": 613.066,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0026"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "PNL_SPIKE",
+      "entity": "EQ_STAT_ARB",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 613.4,
+      "last_minute": 613.4,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0061"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "GCG7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 613.473,
+      "last_minute": 613.473,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0071"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "CONN_LOST",
+      "entity": null,
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 618.61,
+      "last_minute": 618.61,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0053"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "STALE_DATA",
+      "entity": "AAPL.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 618.681,
+      "last_minute": 618.681,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0028"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 618.692,
+      "last_minute": 618.692,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0072"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 618.73,
+      "last_minute": 618.73,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0062"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "PNL_SPIKE",
+      "entity": "FX_CARRY",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 618.874,
+      "last_minute": 618.874,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0063"
+      ]
+    },
+    {
+      "service": "svc_recon",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 618.967,
+      "last_minute": 618.967,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0097"
+      ]
+    },
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "JOB_FAILED",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 619.333,
+      "last_minute": 619.333,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0106"
+      ]
+    },
+    {
+      "service": "db_replica",
+      "alert_type": "STALE_DATA",
+      "entity": "MSFT.O",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 622.379,
+      "last_minute": 622.379,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0104"
+      ]
+    },
+    {
+      "service": "ingest_px_loader",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 628.206,
+      "last_minute": 628.206,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0107"
+      ]
+    },
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 631.267,
+      "last_minute": 631.267,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0105"
+      ]
+    },
+    {
+      "service": "vendor_borrow",
+      "alert_type": "JOB_LATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 632.532,
+      "last_minute": 632.532,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0098"
+      ]
+    },
+    {
+      "service": "svc_security_master",
+      "alert_type": "STALE_DATA",
+      "entity": "NVDA.O",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 650.729,
+      "last_minute": 650.729,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0103"
+      ]
+    },
+    {
+      "service": "fix_gw_broker_b",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 659.42,
+      "last_minute": 659.42,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0100"
+      ]
+    },
+    {
+      "service": "fix_gw_broker_b",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 661.456,
+      "last_minute": 661.456,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0101"
+      ]
+    },
+    {
+      "service": "ingest_fx_loader",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 665.968,
+      "last_minute": 665.968,
+      "flapping": false,
+      "alert_ids": [
+        "flapping_latency-A0102"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

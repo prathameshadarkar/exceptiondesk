@@ -1,0 +1,231 @@
+{
+  "scenario": "vendor_price_file_late",
+  "teaches": "The baseline storm. Every engine should get this one.",
+  "incidents": [
+    {
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "label": "Equity price file late",
+      "kind": "data_missing",
+      "start_minute": 310,
+      "member_alert_ids": [
+        "vendor_price_file_late-A0000",
+        "vendor_price_file_late-A0001",
+        "vendor_price_file_late-A0002",
+        "vendor_price_file_late-A0003",
+        "vendor_price_file_late-A0004",
+        "vendor_price_file_late-A0005",
+        "vendor_price_file_late-A0006",
+        "vendor_price_file_late-A0007",
+        "vendor_price_file_late-A0008",
+        "vendor_price_file_late-A0009",
+        "vendor_price_file_late-A0010",
+        "vendor_price_file_late-A0011",
+        "vendor_price_file_late-A0012",
+        "vendor_price_file_late-A0013",
+        "vendor_price_file_late-A0014",
+        "vendor_price_file_late-A0015",
+        "vendor_price_file_late-A0016",
+        "vendor_price_file_late-A0017",
+        "vendor_price_file_late-A0018",
+        "vendor_price_file_late-A0019",
+        "vendor_price_file_late-A0020",
+        "vendor_price_file_late-A0021",
+        "vendor_price_file_late-A0022"
+      ],
+      "affected_services": [
+        "vendor_px_equity",
+        "ingest_px_loader",
+        "svc_risk",
+        "svc_pnl",
+        "svc_blotter",
+        "svc_oms",
+        "svc_reporting"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "vendor_price_file_late-A0001",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0000",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0002",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0006",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0004",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0007",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0010",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0011",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0012",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0009",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0015",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0008",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0005",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0003",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0013",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0014",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0019",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0020",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0021",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0016",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0018",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0022",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0017",
+      "incident_id": "vendor_price_file_late-INC1",
+      "true_root": "vendor_px_equity",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0023",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0024",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "vendor_price_file_late-A0025",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

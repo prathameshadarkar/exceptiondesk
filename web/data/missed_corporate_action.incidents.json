@@ -1,0 +1,86 @@
+{
+  "scenario": "missed_corporate_action",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "vendor_corpactions",
+      "alert_type": "STALE_DATA",
+      "entity": "USDJPY",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 284.235,
+      "last_minute": 284.235,
+      "flapping": false,
+      "alert_ids": [
+        "missed_corporate_action-A0000"
+      ]
+    },
+    {
+      "service": "ingest_corpaction_proc",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 286.411,
+      "last_minute": 286.411,
+      "flapping": false,
+      "alert_ids": [
+        "missed_corporate_action-A0001"
+      ]
+    },
+    {
+      "service": "svc_risk",
+      "alert_type": "RISK_BREACH",
+      "entity": "FUT_TREND",
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 290.523,
+      "last_minute": 290.523,
+      "flapping": false,
+      "alert_ids": [
+        "missed_corporate_action-A0002"
+      ]
+    },
+    {
+      "service": "svc_pnl",
+      "alert_type": "PNL_SPIKE",
+      "entity": "EQ_MKT_NEUTRAL",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 290.79,
+      "last_minute": 290.79,
+      "flapping": false,
+      "alert_ids": [
+        "missed_corporate_action-A0003"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 386.774,
+      "last_minute": 386.774,
+      "flapping": false,
+      "alert_ids": [
+        "missed_corporate_action-A0004"
+      ]
+    },
+    {
+      "service": "msg_bus",
+      "alert_type": "HIGH_LATENCY",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 393.954,
+      "last_minute": 393.954,
+      "flapping": false,
+      "alert_ids": [
+        "missed_corporate_action-A0005"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

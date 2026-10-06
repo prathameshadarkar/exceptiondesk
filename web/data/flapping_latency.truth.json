@@ -1,0 +1,890 @@
+{
+  "scenario": "flapping_latency",
+  "teaches": "HARD. One incident, many repeats. A naive engine reports seven incidents; a correct one reports one with a flap count.",
+  "incidents": [
+    {
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "label": "Message bus latency flapping",
+      "kind": "degradation",
+      "start_minute": 585,
+      "member_alert_ids": [
+        "flapping_latency-A0000",
+        "flapping_latency-A0001",
+        "flapping_latency-A0002",
+        "flapping_latency-A0003",
+        "flapping_latency-A0004",
+        "flapping_latency-A0005",
+        "flapping_latency-A0006",
+        "flapping_latency-A0007",
+        "flapping_latency-A0008",
+        "flapping_latency-A0009",
+        "flapping_latency-A0010",
+        "flapping_latency-A0011",
+        "flapping_latency-A0012",
+        "flapping_latency-A0013",
+        "flapping_latency-A0014",
+        "flapping_latency-A0015",
+        "flapping_latency-A0016",
+        "flapping_latency-A0017",
+        "flapping_latency-A0018",
+        "flapping_latency-A0019",
+        "flapping_latency-A0020",
+        "flapping_latency-A0021",
+        "flapping_latency-A0022",
+        "flapping_latency-A0023",
+        "flapping_latency-A0024",
+        "flapping_latency-A0025",
+        "flapping_latency-A0026",
+        "flapping_latency-A0027",
+        "flapping_latency-A0028",
+        "flapping_latency-A0029",
+        "flapping_latency-A0030",
+        "flapping_latency-A0031",
+        "flapping_latency-A0032",
+        "flapping_latency-A0033",
+        "flapping_latency-A0034",
+        "flapping_latency-A0035",
+        "flapping_latency-A0036",
+        "flapping_latency-A0037",
+        "flapping_latency-A0038",
+        "flapping_latency-A0039",
+        "flapping_latency-A0040",
+        "flapping_latency-A0041",
+        "flapping_latency-A0042",
+        "flapping_latency-A0043",
+        "flapping_latency-A0044",
+        "flapping_latency-A0045",
+        "flapping_latency-A0046",
+        "flapping_latency-A0047",
+        "flapping_latency-A0048",
+        "flapping_latency-A0049",
+        "flapping_latency-A0050",
+        "flapping_latency-A0051",
+        "flapping_latency-A0052",
+        "flapping_latency-A0053",
+        "flapping_latency-A0054",
+        "flapping_latency-A0055",
+        "flapping_latency-A0056",
+        "flapping_latency-A0057",
+        "flapping_latency-A0058",
+        "flapping_latency-A0059",
+        "flapping_latency-A0060",
+        "flapping_latency-A0061",
+        "flapping_latency-A0062",
+        "flapping_latency-A0063",
+        "flapping_latency-A0064",
+        "flapping_latency-A0065",
+        "flapping_latency-A0066",
+        "flapping_latency-A0067",
+        "flapping_latency-A0068",
+        "flapping_latency-A0069",
+        "flapping_latency-A0070",
+        "flapping_latency-A0071",
+        "flapping_latency-A0072",
+        "flapping_latency-A0073",
+        "flapping_latency-A0074",
+        "flapping_latency-A0075",
+        "flapping_latency-A0076",
+        "flapping_latency-A0077",
+        "flapping_latency-A0078",
+        "flapping_latency-A0079",
+        "flapping_latency-A0080",
+        "flapping_latency-A0081",
+        "flapping_latency-A0082",
+        "flapping_latency-A0083",
+        "flapping_latency-A0084",
+        "flapping_latency-A0085",
+        "flapping_latency-A0086",
+        "flapping_latency-A0087",
+        "flapping_latency-A0088",
+        "flapping_latency-A0089",
+        "flapping_latency-A0090",
+        "flapping_latency-A0091",
+        "flapping_latency-A0092",
+        "flapping_latency-A0093",
+        "flapping_latency-A0094",
+        "flapping_latency-A0095",
+        "flapping_latency-A0096",
+        "flapping_latency-A0097"
+      ],
+      "affected_services": [
+        "msg_bus",
+        "svc_position",
+        "svc_risk",
+        "svc_ems",
+        "svc_dropcopy",
+        "svc_pnl",
+        "svc_blotter",
+        "svc_reporting",
+        "svc_oms",
+        "svc_recon"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "flapping_latency-A0099",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0001",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0000",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0012",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0089",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0030",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0029",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0019",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0080",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0042",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0043",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0054",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0064",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0073",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0002",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0020",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0013",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0031",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0065",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0081",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0066",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0032",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0090",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0082",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0045",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0044",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0056",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0055",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0074",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0003",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0021",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0046",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0014",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0067",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0091",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0033",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0083",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0075",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0092",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0057",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0004",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0005",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0023",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0035",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0015",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0084",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0022",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0047",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0068",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0034",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0048",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0058",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0093",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0059",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0076",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0006",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0007",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0024",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0025",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0016",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0036",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0049",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0085",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0069",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0060",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0095",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0050",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0070",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0086",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0094",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0077",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0037",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0108",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0008",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0009",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0051",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0026",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0038",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0017",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0096",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0087",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0039",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0061",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0071",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0078",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0010",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0011",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0018",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0040",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0053",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0027",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0052",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0028",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0072",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0062",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0088",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0041",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0063",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0097",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0079",
+      "incident_id": "flapping_latency-INC1",
+      "true_root": "msg_bus",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "flapping_latency-A0106",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0104",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0107",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0105",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0098",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0103",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0100",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0101",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "flapping_latency-A0102",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

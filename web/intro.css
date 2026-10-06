@@ -1,0 +1,557 @@
+/* ==========================================================================
+   Arrival sequence
+   --------------------------------------------------------------------------
+   A full-viewport overlay that sits ON TOP of the already-rendered app and
+   dissolves into it. Nothing navigates; the app is underneath the whole time,
+   which is what makes the last beat read as "the screens were running this all
+   along" rather than as a landing page handing off to a different site.
+
+   The camera is one transform on .stage, moved through four states by class.
+   Everything else — monitor wake, surroundings fading back — hangs off those
+   states with transition-delay, so the whole sequence is declarative and there
+   is no animation loop to drift or leak.
+
+   Tokens are the app's own (app.css); the office adds only what the app has no
+   opinion about: daylight, room surfaces, and desk materials.
+   ========================================================================== */
+
+#intro {
+  position: fixed; inset: 0; z-index: 60; overflow: hidden;
+  /* Base is daylight. The dark ending is produced by the monitor takeover
+     below — a screen grows to fill the frame — rather than by dimming the room,
+     which is what made this read as night. */
+  background: linear-gradient(180deg, #e7edf1 0%, #dbe3e9 46%, #c9d2d9 100%);
+  perspective: 2200px; perspective-origin: 50% 50%;
+  opacity: 1; transition: opacity .5s ease;
+}
+#intro.gone { opacity: 0; pointer-events: none; }
+
+#intro .stage {
+  position: absolute; inset: 0; transform-style: preserve-3d;
+  transform: translate3d(0, 3.5%, -260px) rotateX(5deg) scale(.93);
+  transition: transform 1.35s cubic-bezier(.33,.05,.2,1);
+  will-change: transform;
+}
+#intro.s1 .stage { transform: translate3d(0, .5%, -40px) rotateX(2deg) scale(1); }
+#intro.s2 .stage { transform: translate3d(0, 0, 0) rotateX(1deg) scale(1.015); }
+#intro.s3 .stage {
+  transform: translate3d(0, -9%, 0) rotateX(0deg) scale(1.22);
+  transition-duration: 1.15s; transition-timing-function: cubic-bezier(.5,0,.35,1);
+}
+
+/* ---------------------------------------------------------------- the room */
+
+/* Full-bleed room base, behind everything. The stage does not fill the frame at
+   every camera position, and without this the overlay's dark background showed
+   as black bands top and bottom — which is the night-time look we removed. */
+.roombase {
+  position: absolute; inset: -30%; transform: translateZ(-620px);
+  background: linear-gradient(180deg, #f4f8fa 0%, #e6edf2 32%, #ced7de 50%,
+                                      #98a1a9 51%, #6d757d 100%);
+}
+.office { position: absolute; inset: 0; transform-style: preserve-3d; }
+.vignette {
+  position: absolute; inset: 0; pointer-events: none; transform: translateZ(-20px);
+  background: radial-gradient(135% 105% at 50% 40%, transparent 62%, rgba(96,112,128,.16) 100%);
+}
+
+/* Back wall + window run. The room is a bright working office at mid-morning;
+   the contrast the scene is built on is DAYLIT ROOM against DARK TERMINALS, so
+   every surface here is light and every screen stays dark. */
+.backwall {
+  position: absolute; left: -12%; right: -12%; top: 0; height: 52%;
+  background: linear-gradient(180deg, #eef2f5 0%, #d8dfe5 54%, #b4bec6 100%);
+  transform: translateZ(-560px);
+}
+.glazing {
+  position: absolute; left: 7%; right: 7%; top: 11%; height: 28%;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 9px;
+}
+.glazing .pane {
+  position: relative; overflow: hidden; border-radius: 2px;
+  background: linear-gradient(180deg, #4d95d8 0%, #7db9e8 30%, #b6d9f2 62%, #e9f3fa 100%);
+  box-shadow: inset 0 0 0 3px #aeb8bf, 0 0 60px rgba(236,247,255,.95),
+              0 0 120px rgba(214,236,255,.55);
+}
+.glazing .pane::after {         /* soft city mass, deliberately almost featureless */
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 34%;
+  background: linear-gradient(180deg, rgba(162,184,203,.42), rgba(132,155,175,.6));
+}
+.daylight {
+  position: absolute; left: 0; right: 0; top: 0; height: 78%;
+  background: radial-gradient(120% 92% at 50% 8%, rgba(255,255,255,.58),
+              rgba(232,244,253,.3) 32%, rgba(214,232,246,.1) 56%, transparent 72%);
+  transform: translateZ(-430px); pointer-events: none;
+}
+
+/* ceiling light bars, in a light ceiling plane */
+.ceiling { position: absolute; left: -10%; right: -10%; top: 0; height: 16%;
+           background: linear-gradient(180deg, #eef1f4, rgba(238,241,244,0));
+           transform: translateZ(-300px) rotateX(46deg); transform-origin: top center; }
+.ceiling i {
+  position: absolute; top: 34%; height: 6px; width: 17%; border-radius: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,.35), #ffffff, rgba(255,255,255,.35));
+  box-shadow: 0 0 16px rgba(255,255,255,.55);
+  filter: blur(.3px);
+}
+.ceiling i:nth-child(1) { left: 8%; }
+.ceiling i:nth-child(2) { left: 41.5%; }
+.ceiling i:nth-child(3) { left: 75%; }
+
+/* Office carpet. Mid-grey so the dark workstation reads against it. */
+.floor {
+  position: absolute; left: -14%; right: -14%; bottom: 0; height: 50%;
+  background: linear-gradient(180deg, #98a1a9 0%, #828b93 44%, #6d757d 100%);
+  box-shadow: inset 0 3px 10px rgba(40,50,60,.22);
+  transform: translateZ(-360px);
+}
+/* Other desks live in their own band between the window line and the
+   workstation, and are drawn small, dim and slightly out of focus. Depth here
+   is composition, not translateZ: pushing them back in 3D put them behind the
+   floor plane at one perspective and on top of the main monitors at another. */
+.neighbours { position: absolute; left: -4%; right: -4%; top: 33%; height: 19%;
+              opacity: .9; filter: blur(.7px); }
+.nbdesk { position: absolute; bottom: 0; }
+.nbdesk .chair {
+  width: 34%; margin: 2px auto 0; border-radius: 3px 3px 5px 5px;
+  background: linear-gradient(180deg, #4b545c, #343c43);
+  box-shadow: 0 3px 6px rgba(40,54,68,.3);
+}
+.nbdesk .top { height: 9px; border-radius: 2px;
+               background: linear-gradient(180deg, #c9d1d7, #a7b0b8);
+               box-shadow: 0 6px 10px rgba(40,50,60,.34); }
+.nbdesk .scr {
+  height: 26px; margin: 0 auto 3px; border-radius: 2px;
+  background: linear-gradient(180deg, #333b42 0%, #1b2126 22%, #161b20 100%);
+  box-shadow: inset 0 0 0 1px #0a0e12, 0 3px 6px rgba(40,50,60,.26);
+  position: relative; overflow: hidden;
+}
+.nbdesk .scr::after {
+  content: ''; position: absolute; inset: 2px;
+  background: linear-gradient(180deg, rgba(74,122,170,.30), rgba(74,122,170,.05));
+  opacity: 0; transition: opacity .9s ease;
+}
+#intro.s1 .nbdesk .scr::after, #intro.s2 .nbdesk .scr::after { opacity: 1; }
+#intro.s1 .nbdesk:nth-child(2n) .scr::after { transition-delay: .25s; }
+#intro.s1 .nbdesk:nth-child(3n) .scr::after { transition-delay: .45s; }
+
+/* surroundings recede on the final push so the screens carry the frame */
+.office { transition: opacity .9s ease, filter .9s ease; }
+#intro.s3 .office { opacity: 1; filter: none; }
+
+/* ---------------------------------------------------------------- the desk */
+
+.deskglow {
+  position: absolute; left: 50%; bottom: 2%; width: min(1320px, 102vw); height: 46%;
+  transform: translateX(-50%) translateZ(-40px); pointer-events: none;
+  background: radial-gradient(64% 74% at 50% 54%, rgba(255,255,255,.5), transparent 70%);
+}
+/* Daylight falling through the window run onto the carpet. Cheap, and it is the
+   detail that makes the room read as lit rather than merely pale. */
+.shafts {
+  position: absolute; left: 6%; right: 6%; top: 40%; height: 34%;
+  transform: translateZ(-330px); pointer-events: none; opacity: .5;
+  background: repeating-linear-gradient(97deg,
+    rgba(255,255,255,.34) 0 42px, transparent 42px 118px);
+  filter: blur(7px);
+}
+.workdesk {
+  position: absolute; left: 50%; bottom: 4%; width: min(1180px, 94vw);
+  transform: translateX(-50%); transform-style: preserve-3d;
+}
+.rig { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+       align-items: end; transform-style: preserve-3d; }
+
+.mon { transform-style: preserve-3d; }
+.mon:nth-child(1) { transform: rotateY(9deg)  translateZ(-26px); }
+.mon:nth-child(2) { transform: rotateY(3deg); }
+.mon:nth-child(3) { transform: rotateY(-3deg); }
+.mon:nth-child(4) { transform: rotateY(-9deg) translateZ(-26px); }
+
+.mon .case {
+  background: linear-gradient(180deg, #3a4148, #23292e);
+  border-radius: 7px 7px 3px 3px; padding: 7px 7px 13px;
+  box-shadow: 0 18px 40px rgba(50,66,82,.34), inset 0 1px 0 rgba(255,255,255,.22);
+  position: relative;
+}
+.mon .case::after {
+  content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: #39424a;
+  transition: background .4s ease, box-shadow .4s ease;
+}
+.mon.on .case::after { background: #6fd39a; box-shadow: 0 0 6px #6fd39a; }
+
+.mon .pane {
+  position: relative; height: 178px; border-radius: 3px; overflow: hidden;
+  background: #0b0e11; box-shadow: inset 0 0 0 1px #000, inset 0 0 36px rgba(0,0,0,.6);
+  transition: background .5s ease, box-shadow .5s ease;
+}
+.mon.on .pane {
+  background: #10161c;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 30px rgba(70,110,150,.16),
+              0 0 26px rgba(90,135,180,.10);
+}
+@media (max-width: 1080px) { .mon .pane { height: 138px; } }
+.mon .content {
+  position: absolute; inset: 0; padding: 7px 8px; opacity: 0;
+  transition: opacity .55s ease;
+  font: 9.5px/1.35 var(--mono, ui-monospace, Menlo, monospace); color: #ccd8e4;
+}
+.mon.on .content { opacity: 1; }
+.mon .wake {          /* the brief bloom as a panel lights */
+  position: absolute; inset: 0; background: #cfe0ef; opacity: 0;
+  transition: opacity .12s ease;
+}
+.mon.flash .wake { opacity: .5; }
+.mon .reflect {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(112deg, rgba(232,244,255,.30) 0%, rgba(232,244,255,.10) 17%,
+                    transparent 34%),
+    linear-gradient(112deg, transparent 52%, rgba(232,244,255,.11) 60%,
+                    rgba(232,244,255,.03) 68%, transparent 76%);
+}
+
+.mon .stand { width: 34%; height: 11px; margin: 0 auto;
+              background: linear-gradient(180deg, #23282c, #16191c); }
+.mon .base { width: 62%; height: 6px; margin: 0 auto; border-radius: 0 0 4px 4px;
+             background: linear-gradient(180deg, #1b1f22, #111417);
+             box-shadow: 0 6px 14px rgba(40,50,60,.35); }
+
+.desksurface {
+  margin-top: 14px; height: 74px; border-radius: 5px;
+  background: linear-gradient(180deg, #e2e7eb 0%, #c8d0d7 46%, #aab3bb 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 26px 50px rgba(40,54,68,.32);
+  position: relative; transform: rotateX(52deg); transform-origin: top center;
+}
+.keyboard {
+  position: absolute; left: 50%; top: 16px; transform: translateX(-50%);
+  width: 27%; height: 28px; border-radius: 4px;
+  background: linear-gradient(180deg, #1c2024, #101316);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 3px 7px rgba(0,0,0,.5);
+  overflow: hidden;
+}
+.keyboard::after {
+  content: ''; position: absolute; inset: 4px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 5px, transparent 5px 8px),
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.05) 0 5px, transparent 5px 8px);
+  border-radius: 2px;
+}
+.mouse {
+  position: absolute; left: calc(50% + 25%); top: 20px; width: 20px; height: 30px;
+  border-radius: 10px 10px 8px 8px;
+  background: linear-gradient(180deg, #22262a, #14181b);
+  box-shadow: 0 3px 7px rgba(0,0,0,.5);
+}
+.mug2 {
+  position: absolute; left: calc(50% - 31%); top: 18px; width: 22px; height: 20px;
+  border-radius: 3px 3px 8px 8px; background: linear-gradient(180deg,#2f3439,#1c2023);
+}
+.mug2::after { content:''; position:absolute; right:-7px; top:5px; width:8px; height:9px;
+  border:2px solid #2f3439; border-left:none; border-radius:0 7px 7px 0; }
+
+/* ---------------------------------------------------------------- the analyst */
+/* A figure, not a character. Seen from behind for the entire shot — they enter
+   through the doors and walk away from camera toward the desk — so there is no
+   face to render badly and nothing to pose. Business casual: shirt, dark
+   trousers, no jacket, no branding.
+
+   Positioned inside .workdesk so the seated pose is measured against the desk
+   rather than the viewport: the head clears the chair back and sits just under
+   the monitors at any window height. translateZ keeps them in front of the
+   desk surface, which rotates 52deg toward the camera inside preserve-3d. */
+
+.trader {
+  position: absolute; left: 50%; bottom: 0; width: 84px; height: 200px;
+  transform-origin: 50% 100%; z-index: 2;
+  /* far down the floor, in the doorway */
+  transform: translate(-50%, -420px) translateZ(70px) scale(.26);
+  transition: transform 1.15s cubic-bezier(.36,.06,.24,1), opacity .45s ease;
+  will-change: transform;
+}
+#intro.s1 .trader  { transform: translate(-50%, -270px) translateZ(70px) scale(.50); }
+/* standing at the chair; from here the head is briefly up over the screens,
+   which is what someone who has not sat down yet looks like */
+#intro.s2 .trader  { transform: translate(-50%,   40px) translateZ(70px) scale(1.2); }
+/* the settle: the head drops ~65px, from over the screens to just under them */
+#intro.sit .trader { transform: translate(-50%,  148px) translateZ(70px) scale(1.34);
+                     transition-duration: .85s;
+                     transition-timing-function: cubic-bezier(.3,.7,.2,1); }
+/* the camera moves past their shoulder into the screen */
+#intro.s3 .trader  { transform: translate(-50%,  158px) translateZ(70px) scale(1.38);
+                     opacity: 0; transition-delay: 0s, .3s; }
+
+.trader .figure { position: absolute; inset: 0; transition: transform .8s ease; }
+#intro.sit .trader .figure, #intro.s3 .trader .figure { transform: translateY(6px); }
+
+.trader .head {
+  position: absolute; left: 50%; top: 0; width: 30px; height: 36px;
+  margin-left: -15px; border-radius: 15px 15px 12px 12px;
+  background: linear-gradient(180deg, #c8a184 68%, #b98f70 100%);   /* neck below */
+}
+.trader .head .hair {
+  position: absolute; inset: 0 0 26% 0; border-radius: 15px 15px 9px 9px;
+  background: linear-gradient(180deg, #4a3f38 0%, #322a25 55%, #272120 100%);
+  box-shadow: inset 0 -3px 5px rgba(0,0,0,.25);
+}
+
+.trader .torso {
+  position: absolute; left: 50%; top: 31px; width: 66px; height: 82px;
+  margin-left: -33px; border-radius: 24px 24px 7px 7px;
+  background: linear-gradient(180deg, #a8c4de 0%, #8db0d0 44%, #7b9ec0 100%);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.28), inset -6px 0 10px rgba(40,64,90,.14);
+}
+.trader .torso .arm {
+  position: absolute; top: 11px; width: 16px; height: 68px; border-radius: 8px;
+  background: linear-gradient(180deg, #9ab9d6, #7c9dbe);
+}
+.trader .torso .arm.l { left: -9px;  transform-origin: 50% 8%; }
+.trader .torso .arm.r { right: -9px; transform-origin: 50% 8%; }
+.trader .torso .hem {          /* shirt tucked in: a shadow line, not a belt buckle */
+  position: absolute; left: 6%; right: 6%; bottom: 0; height: 7px;
+  background: rgba(46,66,88,.28); border-radius: 0 0 6px 6px;
+}
+
+.trader .legs { position: absolute; left: 50%; bottom: 0; width: 46px; height: 92px;
+                margin-left: -23px; }
+.trader .leg {
+  position: absolute; top: 0; width: 20px; height: 100%; border-radius: 7px 7px 4px 4px;
+  background: linear-gradient(180deg, #454f5c 0%, #363f4a 62%, #24292f 100%);
+  transform-origin: 50% 4%;
+}
+.trader .leg.l { left: 0; }
+.trader .leg.r { right: 0; }
+
+.trader .tshadow {
+  position: absolute; left: 50%; bottom: -7px; width: 104px; height: 20px;
+  margin-left: -52px; border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(38,50,62,.42), transparent 72%);
+  filter: blur(3px); transition: opacity .5s ease;
+}
+#intro.sit .trader .tshadow, #intro.s3 .trader .tshadow { opacity: 0; }
+
+/* The walk. A stride and a small vertical bob — enough to read as walking at
+   this size, and it stops the moment they reach the chair. */
+@keyframes ed-stride-a { 0%,100% { transform: rotate(13deg);  } 50% { transform: rotate(-13deg); } }
+@keyframes ed-stride-b { 0%,100% { transform: rotate(-13deg); } 50% { transform: rotate(13deg);  } }
+@keyframes ed-swing-a  { 0%,100% { transform: rotate(-9deg);  } 50% { transform: rotate(9deg);   } }
+@keyframes ed-swing-b  { 0%,100% { transform: rotate(9deg);   } 50% { transform: rotate(-9deg);  } }
+@keyframes ed-bob      { 0%,100% { transform: translateY(0);  } 50% { transform: translateY(-3px); } }
+
+.trader .leg.l { animation: ed-stride-a .62s ease-in-out infinite; }
+.trader .leg.r { animation: ed-stride-b .62s ease-in-out infinite; }
+.trader .arm.l { animation: ed-swing-b .62s ease-in-out infinite; }
+.trader .arm.r { animation: ed-swing-a .62s ease-in-out infinite; }
+.trader .head  { animation: ed-bob .31s ease-in-out infinite; }
+/* seated: nothing is walking any more, and the legs are behind the chair */
+#intro.sit .trader .leg, #intro.sit .trader .arm, #intro.sit .trader .head,
+#intro.s3  .trader .leg, #intro.s3  .trader .arm, #intro.s3  .trader .head {
+  animation: none;
+}
+#intro.sit .trader .legs, #intro.s3 .trader .legs { opacity: 0; transition: opacity .4s ease; }
+
+/* The chair. Pulled out and angled while the desk is empty, tucked in on the
+   sit. Kept low enough that the monitors and the keyboard stay in frame. */
+.chair {
+  position: absolute; left: 50%; bottom: -62px; width: 186px; height: 106px;
+  transform-origin: 50% 100%; z-index: 3; opacity: 0;
+  transform: translate(-34%, 0) translateZ(96px) rotate(-7deg) scale(.96);
+  transition: transform 1.05s cubic-bezier(.3,.7,.2,1), opacity .7s ease;
+}
+#intro.s1 .chair, #intro.s2 .chair { opacity: 1; }
+#intro.sit .chair, #intro.s3 .chair {
+  opacity: 1; transform: translate(-50%, 4px) translateZ(96px) rotate(0deg) scale(1);
+}
+.chair .back {
+  position: absolute; left: 6%; right: 6%; top: 0; height: 74%;
+  border-radius: 16px 16px 8px 8px;
+  background: linear-gradient(180deg, #3f474f 0%, #2f363d 58%, #242a30 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 -8px 22px rgba(30,42,54,.3);
+}
+.chair .back::after {          /* mesh, and a lumbar seam so it is legibly a chair */
+  content: ''; position: absolute; inset: 7px 9px 12px;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 3px, transparent 3px 6px),
+              repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 3px, transparent 3px 6px);
+  border-radius: 10px;
+}
+.chair .post {
+  position: absolute; left: 50%; bottom: 0; width: 16px; height: 30%;
+  margin-left: -8px; border-radius: 3px;
+  background: linear-gradient(180deg, #2b3238, #1b2026);
+}
+
+/* ---------------------------------------------------------------- on-screen content */
+
+.tick { display: flex; gap: 9px; border-bottom: 1px solid #1b2229; padding-bottom: 3px;
+        margin-bottom: 5px; color: #8d9aa6; white-space: nowrap; overflow: hidden; }
+.tick b { color: #d3dde6; font-weight: 600; }
+.tick .u { color: #6ea8e8; } .tick .d { color: #d08a5a; }
+
+.mrow { display: grid; grid-template-columns: 1fr auto; gap: 6px; padding: 1.5px 0;
+        border-bottom: 1px solid #141a20; color: #94a2af; }
+.mrow .v { color: #cdd8e2; font-variant-numeric: tabular-nums; }
+
+.ladder { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; }
+.ladder span { display: block; font-variant-numeric: tabular-nums; }
+.ladder .bid { color: #6ea8e8; text-align: right; }
+.ladder .ask { color: #d08a5a; }
+.ladder .bar { height: 7px; border-radius: 1px; }
+.ladder .bar.b { background: rgba(110,168,232,.35); margin-left: auto; }
+.ladder .bar.a { background: rgba(208,138,90,.32); }
+
+.lbl { color: #6f7d89; letter-spacing: .1em; text-transform: uppercase;
+       font-size: 8px; margin-bottom: 4px; }
+
+/* ---------------------------------------------------------------- chrome */
+
+.introbar {
+  position: absolute; z-index: 5; left: 0; right: 28px; bottom: 22px;
+  display: flex; justify-content: flex-end; gap: 10px; align-items: center;
+}
+.introbar button {
+  background: rgba(255,255,255,.78); color: #2d3740; border: 1px solid rgba(40,52,62,.22);
+  border-radius: 999px; padding: 8px 16px; cursor: pointer; backdrop-filter: blur(6px);
+  font: 600 11px/1 var(--mono, ui-monospace, Menlo, monospace);
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.introbar button:hover { border-color: #2a78d6; color: #1b5cab; }
+.introcap {
+  position: absolute; z-index: 3; left: 0; right: 0; top: 30px; text-align: center;
+  color: #3b4650; font: 600 11px/1.6 var(--mono, ui-monospace, Menlo, monospace);
+  letter-spacing: .2em; text-transform: uppercase;
+  opacity: 0; transition: opacity .7s ease;
+}
+#intro.s1 .introcap, #intro.s2 .introcap { opacity: .85; }
+#intro.s3 .introcap { opacity: 0; }
+#intro.s3 .introbar button { background: rgba(16,20,24,.72); color: #c6d2dc;
+                             border-color: rgba(255,255,255,.14); }
+
+/* ---------------------------------------------------------------- small screens */
+/* Phones get the scene as a still frame with a short fade: the 3D push is both
+   expensive and illegible at that width, and the point is atmosphere, not depth. */
+@media (max-width: 760px) {
+  #intro { perspective: none; }
+  #intro .stage, #intro.s1 .stage, #intro.s2 .stage, #intro.s3 .stage {
+    transform: none; transition: opacity .5s ease;
+  }
+  .ceiling, .neighbours { display: none; }
+  .mon:nth-child(n) { transform: none; }
+  .rig { grid-template-columns: repeat(2, 1fr); }
+  .mon .pane { height: 96px; }
+  .desksurface { transform: none; height: 46px; }
+  #intro.s3 .office { opacity: .3; filter: none; }
+
+  /* No camera move at this width, so no walk to follow. The analyst is simply
+     at the desk — smaller, and without the chair, which at phone width would
+     cover most of the workstation. */
+  .chair { display: none; }
+  .trader, #intro.s1 .trader, #intro.s2 .trader, #intro.sit .trader {
+    transform: translate(-50%, 54px) scale(.52); transition: opacity .45s ease;
+  }
+  #intro.s3 .trader { transform: translate(-50%, 54px) scale(.52); opacity: 0; }
+  .trader .tshadow { opacity: 0; }
+}
+
+/* ---------------------------------------------------------------- reduced motion */
+/* Not "no animation" — a single short cross-fade, so the scene is still seen. */
+@media (prefers-reduced-motion: reduce) {
+  #intro .stage, #intro.s1 .stage, #intro.s2 .stage, #intro.s3 .stage {
+    transform: none; transition: none;
+  }
+  .office, .mon .content, .mon .wake, .introcap { transition: opacity .25s linear; }
+  #intro { transition: opacity .3s linear; }
+
+  /* No walk and no stride: the analyst is already at the desk. The scene is
+     still shown — the point of this mode is no motion, not no picture. */
+  .trader, .chair, .trader .figure { transition: none; }
+  .trader .leg, .trader .arm, .trader .head { animation: none; }
+  .trader, #intro.s1 .trader, #intro.s2 .trader {
+    transform: translate(-50%, 118px) translateZ(70px) scale(.94);
+  }
+  .chair, #intro.s1 .chair, #intro.s2 .chair {
+    opacity: 1; transform: translate(-50%, 4px) translateZ(96px) rotate(0deg) scale(1);
+  }
+  .trader .legs, .trader .tshadow { opacity: 0; }
+  #intro.s3 .trader { opacity: 0; transition: opacity .25s linear; }
+}
+
+/* The screen takeover: at the last beat a panel grows from the centre monitor's
+   glass to fill the viewport. That is what makes the frame end dark — a screen,
+   not a sunset — so the room can stay daylit right to the handoff and the app's
+   dark UI arrives without a flash. */
+.takeover {
+  position: fixed; z-index: 4; background: #0b0e11; border-radius: 3px;
+  box-shadow: inset 0 0 0 1px #000, 0 0 60px rgba(10,14,18,.5);
+  transition: top .95s cubic-bezier(.5,0,.35,1), left .95s cubic-bezier(.5,0,.35,1),
+              width .95s cubic-bezier(.5,0,.35,1), height .95s cubic-bezier(.5,0,.35,1),
+              border-radius .95s ease;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .takeover { transition: opacity .25s linear; } }
+
+/* ===================== office entrance ===================== */
+/* The first beat: you are outside the floor, the doors part, and the camera
+   carries you in. Sits in front of the existing sequence rather than replacing
+   any of it. */
+/* Viewport-sized, not oversized: the aperture is a fraction of the SCREEN, and
+   the lobby wall is the jamb's own spread shadow. The office renders behind
+   this layer and shows through the gap as the leaves part. */
+.entrance { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+
+.entrance .jamb {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 52%; height: 74%; border-radius: 2px;
+  box-shadow: 0 0 0 100vmax #cdd5dc, inset 0 0 0 5px #aab4bd,
+              inset 0 0 40px rgba(60,80,100,.12);
+}
+.entrance .leaf {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 26%; height: 74%;
+  background:
+    linear-gradient(112deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,.10) 22%, transparent 44%),
+    linear-gradient(180deg, rgba(196,216,232,.42), rgba(160,186,206,.5));
+  box-shadow: inset 0 0 0 3px #97a4ae, 0 0 34px rgba(60,80,100,.28);
+  transition: transform 1.25s cubic-bezier(.4,0,.2,1);
+  /* Promote the leaves before the beat that moves them. Without this the
+     compositor layer is built at the moment the class flips, on top of the
+     scene's own first paint, and the doors sit shut through half their beat. */
+  will-change: transform;
+}
+.entrance .leaf.l { left: 50%; margin-left: -26%; transform: translateY(-50%); }
+.entrance .leaf.r { left: 50%; transform: translateY(-50%); }
+.entrance .leaf::after {          /* push bar */
+  content: ''; position: absolute; top: 46%; width: 7px; height: 68px;
+  border-radius: 4px; background: linear-gradient(180deg, #d7dee4, #9aa5af);
+}
+.entrance .leaf.l::after { right: 13px; }
+.entrance .leaf.r::after { left: 13px; }
+
+.entrance .sign {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  margin-top: -25%; text-align: center;
+  font: 600 11px/1.7 var(--mono, ui-monospace, Menlo, monospace);
+  letter-spacing: .34em; text-transform: uppercase; color: #5b6772;
+  transition: opacity .5s ease;
+}
+
+/* doors part, then the whole entrance layer lifts away */
+#intro.s0open .entrance .leaf.l { transform: translateY(-50%) translateX(-102%); }
+#intro.s0open .entrance .leaf.r { transform: translateY(-50%) translateX(102%); }
+#intro.s0open .entrance .sign { opacity: 0; }
+.entrance { transition: opacity .7s ease, transform 1.1s cubic-bezier(.4,0,.2,1); }
+#intro.s1 .entrance, #intro.s2 .entrance, #intro.s3 .entrance {
+  opacity: 0; transform: scale(1.5);
+}
+
+@media (max-width: 760px) {
+  .entrance .jamb, .entrance .leaf { height: 58%; }
+  .entrance .jamb { width: 76%; }
+  .entrance .leaf { width: 38%; }
+  .entrance .leaf.l { margin-left: -38%; }
+  .entrance .leaf::after { height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .entrance .leaf, .entrance { transition: opacity .25s linear; }
+  #intro.s0open .entrance .leaf.l, #intro.s0open .entrance .leaf.r { transform: translateY(-50%); }
+}

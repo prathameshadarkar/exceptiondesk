@@ -1,0 +1,216 @@
+{
+  "scenario": "fix_session_drop",
+  "incidents": [],
+  "engine_ready": false,
+  "groups": [
+    {
+      "service": "fix_gw_broker_a",
+      "alert_type": "SEQ_GAP",
+      "entity": null,
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 622.159,
+      "last_minute": 622.159,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0000"
+      ]
+    },
+    {
+      "service": "fix_gw_broker_a",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 622.435,
+      "last_minute": 622.435,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0002"
+      ]
+    },
+    {
+      "service": "fix_gw_broker_a",
+      "alert_type": "CONN_LOST",
+      "entity": null,
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 622.468,
+      "last_minute": 622.468,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0001"
+      ]
+    },
+    {
+      "service": "svc_ems",
+      "alert_type": "REJECT_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 622.868,
+      "last_minute": 622.868,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0003"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "SEQ_GAP",
+      "entity": null,
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 622.892,
+      "last_minute": 622.892,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0004"
+      ]
+    },
+    {
+      "service": "svc_dropcopy",
+      "alert_type": "CONN_LOST",
+      "entity": null,
+      "severity": "P1",
+      "count": 1,
+      "first_minute": 622.931,
+      "last_minute": 622.931,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0005"
+      ]
+    },
+    {
+      "service": "svc_trade_capture",
+      "alert_type": "QUEUE_DEPTH",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 623.342,
+      "last_minute": 623.342,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0007"
+      ]
+    },
+    {
+      "service": "svc_trade_capture",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 623.622,
+      "last_minute": 623.622,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0006"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "GBPUSD",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 623.823,
+      "last_minute": 623.823,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0008"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "CLF7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 623.845,
+      "last_minute": 623.845,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0010"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "UNH.N",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 623.88,
+      "last_minute": 623.88,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0012"
+      ]
+    },
+    {
+      "service": "svc_blotter",
+      "alert_type": "ERROR_RATE",
+      "entity": null,
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 623.886,
+      "last_minute": 623.886,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0013"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "ESZ6",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 624.025,
+      "last_minute": 624.025,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0009"
+      ]
+    },
+    {
+      "service": "svc_position",
+      "alert_type": "STALE_DATA",
+      "entity": "GCG7",
+      "severity": "P2",
+      "count": 1,
+      "first_minute": 624.16,
+      "last_minute": 624.16,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0011"
+      ]
+    },
+    {
+      "service": "db_replica",
+      "alert_type": "STALE_DATA",
+      "entity": "ESZ6",
+      "severity": "P4",
+      "count": 1,
+      "first_minute": 648.496,
+      "last_minute": 648.496,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0015"
+      ]
+    },
+    {
+      "service": "ingest_corpaction_proc",
+      "alert_type": "DQ_OUTLIER",
+      "entity": "ESZ6",
+      "severity": "P3",
+      "count": 1,
+      "first_minute": 654.063,
+      "last_minute": 654.063,
+      "flapping": false,
+      "alert_ids": [
+        "fix_session_drop-A0014"
+      ]
+    }
+  ],
+  "reason": "you write this -- see docs/BUILD.md step 3"
+}

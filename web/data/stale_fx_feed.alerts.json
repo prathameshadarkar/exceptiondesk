@@ -1,0 +1,191 @@
+{
+  "scenario": "stale_fx_feed",
+  "title": "FX rates go stale, P&L spikes on non-USD book",
+  "summary": "The FX feed stops updating. Non-USD positions are marked at yesterday's rates. The loudest alert on the board is a P&L spike, which is three hops from the actual cause.",
+  "window": [
+    290,
+    430
+  ],
+  "alerts": [
+    {
+      "alert_id": "stale_fx_feed-A0006",
+      "ts": "2026-03-12T05:03:43.314780+00:00",
+      "ts_minute": 303.722,
+      "service": "ingest_fx_loader",
+      "tier": "ingest",
+      "alert_type": "ERROR_RATE",
+      "severity": "P2",
+      "message": "ingest_fx_loader: error rate 38.1% over threshold",
+      "host": "ingest-fx-loader-04.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "stale_fx_feed-A0007",
+      "ts": "2026-03-12T05:05:22.043701+00:00",
+      "ts_minute": 305.367,
+      "service": "svc_pricing",
+      "tier": "compute",
+      "alert_type": "DQ_OUTLIER",
+      "severity": "P2",
+      "message": "svc_pricing: 42 instruments outside expected return band [AAPL.O]",
+      "host": "svc-pricing-03.ny.eglp.internal",
+      "entity": "AAPL.O"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0008",
+      "ts": "2026-03-12T05:07:08.847992+00:00",
+      "ts_minute": 307.147,
+      "service": "svc_blotter",
+      "tier": "post_trade",
+      "alert_type": "DQ_OUTLIER",
+      "severity": "P2",
+      "message": "svc_blotter: 22 instruments outside expected return band [CLF7]",
+      "host": "svc-blotter-04.ny.eglp.internal",
+      "entity": "CLF7"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0011",
+      "ts": "2026-03-12T05:08:22.984563+00:00",
+      "ts_minute": 308.383,
+      "service": "svc_reporting",
+      "tier": "reporting",
+      "alert_type": "STALE_DATA",
+      "severity": "P4",
+      "message": "svc_reporting: serving data older than threshold (FX rates stale) [UNH.N]",
+      "host": "svc-reporting-01.ny.eglp.internal",
+      "entity": "UNH.N"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0010",
+      "ts": "2026-03-12T05:08:33.250146+00:00",
+      "ts_minute": 308.554,
+      "service": "svc_reporting",
+      "tier": "reporting",
+      "alert_type": "STALE_DATA",
+      "severity": "P4",
+      "message": "svc_reporting: serving data older than threshold (FX rates stale) [GBPUSD]",
+      "host": "svc-reporting-03.ny.eglp.internal",
+      "entity": "GBPUSD"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0012",
+      "ts": "2026-03-12T05:08:36.636886+00:00",
+      "ts_minute": 308.611,
+      "service": "svc_reporting",
+      "tier": "reporting",
+      "alert_type": "STALE_DATA",
+      "severity": "P4",
+      "message": "svc_reporting: serving data older than threshold (FX rates stale) [BRKb.N]",
+      "host": "svc-reporting-04.ny.eglp.internal",
+      "entity": "BRKb.N"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0009",
+      "ts": "2026-03-12T05:08:36.883324+00:00",
+      "ts_minute": 308.615,
+      "service": "svc_reporting",
+      "tier": "reporting",
+      "alert_type": "STALE_DATA",
+      "severity": "P4",
+      "message": "svc_reporting: serving data older than threshold (FX rates stale) [CLF7]",
+      "host": "svc-reporting-01.ny.eglp.internal",
+      "entity": "CLF7"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0005",
+      "ts": "2026-03-12T05:08:54.630001+00:00",
+      "ts_minute": 308.911,
+      "service": "vendor_fx",
+      "tier": "vendor",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "vendor_fx: serving data older than threshold (FX rates stale) [BRKb.N]",
+      "host": "vendor-fx-01.ny.eglp.internal",
+      "entity": "BRKb.N"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0002",
+      "ts": "2026-03-12T05:08:55.519347+00:00",
+      "ts_minute": 308.925,
+      "service": "vendor_fx",
+      "tier": "vendor",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "vendor_fx: serving data older than threshold (FX rates stale) [AAPL.O]",
+      "host": "vendor-fx-03.ny.eglp.internal",
+      "entity": "AAPL.O"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0001",
+      "ts": "2026-03-12T05:08:59.083250+00:00",
+      "ts_minute": 308.985,
+      "service": "vendor_fx",
+      "tier": "vendor",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "vendor_fx: serving data older than threshold (FX rates stale) [EURUSD]",
+      "host": "vendor-fx-03.ny.eglp.internal",
+      "entity": "EURUSD"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0003",
+      "ts": "2026-03-12T05:09:04.512101+00:00",
+      "ts_minute": 309.075,
+      "service": "vendor_fx",
+      "tier": "vendor",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "vendor_fx: serving data older than threshold (FX rates stale) [JPM.N]",
+      "host": "vendor-fx-04.ny.eglp.internal",
+      "entity": "JPM.N"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0004",
+      "ts": "2026-03-12T05:09:04.732844+00:00",
+      "ts_minute": 309.079,
+      "service": "vendor_fx",
+      "tier": "vendor",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "vendor_fx: serving data older than threshold (FX rates stale) [ESZ6]",
+      "host": "vendor-fx-04.ny.eglp.internal",
+      "entity": "ESZ6"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0000",
+      "ts": "2026-03-12T05:09:15.791636+00:00",
+      "ts_minute": 309.263,
+      "service": "vendor_fx",
+      "tier": "vendor",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "vendor_fx: serving data older than threshold (FX rates stale) [CLF7]",
+      "host": "vendor-fx-03.ny.eglp.internal",
+      "entity": "CLF7"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0013",
+      "ts": "2026-03-12T06:05:20.819103+00:00",
+      "ts_minute": 365.347,
+      "service": "svc_dropcopy",
+      "tier": "trading",
+      "alert_type": "STALE_DATA",
+      "severity": "P2",
+      "message": "svc_dropcopy: serving data older than threshold (routine threshold crossing) [USDCHF]",
+      "host": "svc-dropcopy-01.ny.eglp.internal",
+      "entity": "USDCHF"
+    },
+    {
+      "alert_id": "stale_fx_feed-A0014",
+      "ts": "2026-03-12T07:09:28.980335+00:00",
+      "ts_minute": 429.483,
+      "service": "vendor_px_equity",
+      "tier": "vendor",
+      "alert_type": "JOB_LATE",
+      "severity": "P2",
+      "message": "vendor_px_equity: expected completion missed by 11m (routine threshold crossing)",
+      "host": "vendor-px-equity-01.ny.eglp.internal",
+      "entity": null
+    }
+  ]
+}

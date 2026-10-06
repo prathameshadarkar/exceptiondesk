@@ -1,0 +1,83 @@
+{
+  "scenario": "missed_corporate_action",
+  "title": "Split not applied to a single name",
+  "summary": "A 4-for-1 split is missing from the corporate actions file. One instrument shows an impossible overnight return. Two alerts total, sitting inside a day with ordinary background noise.",
+  "window": [
+    270,
+    430
+  ],
+  "alerts": [
+    {
+      "alert_id": "missed_corporate_action-A0000",
+      "ts": "2026-03-12T04:44:14.093661+00:00",
+      "ts_minute": 284.235,
+      "service": "vendor_corpactions",
+      "tier": "vendor",
+      "alert_type": "STALE_DATA",
+      "severity": "P3",
+      "message": "vendor_corpactions: serving data older than threshold (Corporate action missing) [USDJPY]",
+      "host": "vendor-corpactions-02.ny.eglp.internal",
+      "entity": "USDJPY"
+    },
+    {
+      "alert_id": "missed_corporate_action-A0001",
+      "ts": "2026-03-12T04:46:24.643588+00:00",
+      "ts_minute": 286.411,
+      "service": "ingest_corpaction_proc",
+      "tier": "ingest",
+      "alert_type": "ERROR_RATE",
+      "severity": "P3",
+      "message": "ingest_corpaction_proc: error rate 27.0% over threshold",
+      "host": "ingest-corpaction-proc-04.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "missed_corporate_action-A0002",
+      "ts": "2026-03-12T04:50:31.358106+00:00",
+      "ts_minute": 290.523,
+      "service": "svc_risk",
+      "tier": "risk",
+      "alert_type": "RISK_BREACH",
+      "severity": "P1",
+      "message": "svc_risk: limit breach on FUT_TREND (Corporate action missing)",
+      "host": "svc-risk-03.ny.eglp.internal",
+      "entity": "FUT_TREND"
+    },
+    {
+      "alert_id": "missed_corporate_action-A0003",
+      "ts": "2026-03-12T04:50:47.404780+00:00",
+      "ts_minute": 290.79,
+      "service": "svc_pnl",
+      "tier": "risk",
+      "alert_type": "PNL_SPIKE",
+      "severity": "P2",
+      "message": "svc_pnl: intraday P&L move 6.5s on EQ_MKT_NEUTRAL",
+      "host": "svc-pnl-01.ny.eglp.internal",
+      "entity": "EQ_MKT_NEUTRAL"
+    },
+    {
+      "alert_id": "missed_corporate_action-A0004",
+      "ts": "2026-03-12T06:26:46.434131+00:00",
+      "ts_minute": 386.774,
+      "service": "svc_position",
+      "tier": "compute",
+      "alert_type": "ERROR_RATE",
+      "severity": "P2",
+      "message": "svc_position: error rate 16.1% over threshold",
+      "host": "svc-position-03.ny.eglp.internal",
+      "entity": null
+    },
+    {
+      "alert_id": "missed_corporate_action-A0005",
+      "ts": "2026-03-12T06:33:57.250593+00:00",
+      "ts_minute": 393.954,
+      "service": "msg_bus",
+      "tier": "infra",
+      "alert_type": "HIGH_LATENCY",
+      "severity": "P2",
+      "message": "msg_bus: p99 latency 2300ms over threshold",
+      "host": "msg-bus-02.ny.eglp.internal",
+      "entity": null
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "scenario": "two_independent",
+  "teaches": "HARD. Overlapping in time, disjoint in topology. A time-window engine merges these and is wrong.",
+  "incidents": [
+    {
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "label": "Locate file late",
+      "kind": "data_missing",
+      "start_minute": 340,
+      "member_alert_ids": [
+        "two_independent-A0000",
+        "two_independent-A0001",
+        "two_independent-A0002",
+        "two_independent-A0003",
+        "two_independent-A0004",
+        "two_independent-A0005",
+        "two_independent-A0006"
+      ],
+      "affected_services": [
+        "vendor_borrow",
+        "ingest_borrow_loader",
+        "svc_locate"
+      ]
+    },
+    {
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "label": "Broker B rejecting orders",
+      "kind": "connectivity",
+      "start_minute": 347,
+      "member_alert_ids": [
+        "two_independent-A0007",
+        "two_independent-A0008",
+        "two_independent-A0009",
+        "two_independent-A0010",
+        "two_independent-A0011",
+        "two_independent-A0012",
+        "two_independent-A0013",
+        "two_independent-A0014",
+        "two_independent-A0015",
+        "two_independent-A0016"
+      ],
+      "affected_services": [
+        "fix_gw_broker_b",
+        "svc_ems",
+        "svc_oms",
+        "svc_trade_capture",
+        "svc_position",
+        "svc_recon",
+        "svc_pnl",
+        "svc_reporting"
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "two_independent-A0000",
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0002",
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0001",
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0004",
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0006",
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0003",
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0005",
+      "incident_id": "two_independent-INC1",
+      "true_root": "vendor_borrow",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0007",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 0,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0008",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 1,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0010",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0011",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0009",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 2,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0013",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0012",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0014",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 3,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0016",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0015",
+      "incident_id": "two_independent-INC2",
+      "true_root": "fix_gw_broker_b",
+      "hops_from_root": 4,
+      "is_noise": false
+    },
+    {
+      "alert_id": "two_independent-A0017",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    },
+    {
+      "alert_id": "two_independent-A0018",
+      "incident_id": null,
+      "true_root": null,
+      "hops_from_root": null,
+      "is_noise": true
+    }
+  ]
+}

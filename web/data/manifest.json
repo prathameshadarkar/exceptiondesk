@@ -1,0 +1,104 @@
+{
+  "generated_by": "make site",
+  "synthetic": true,
+  "has_scorecard": false,
+  "n_correlated": 0,
+  "scenarios": [
+    {
+      "key": "vendor_price_file_late",
+      "title": "Equity price file misses its window",
+      "summary": "The primary equity price file does not land by 05:10. The price loader fails, pricing serves stale marks, risk limits evaluate against those marks and P&L flags a spike that is not real.",
+      "window": [
+        290,
+        420
+      ],
+      "n_alerts": 26,
+      "alerts_file": "data/vendor_price_file_late.alerts.json",
+      "truth_file": "data/vendor_price_file_late.truth.json"
+    },
+    {
+      "key": "fix_session_drop",
+      "title": "FIX session to broker A drops mid-session",
+      "summary": "The FIX gateway to executing broker A loses its session. Orders reject, the drop copy stops mirroring execution reports, fills go missing from trade capture and the blotter diverges from reality while portfolio managers are still trading.",
+      "window": [
+        600,
+        700
+      ],
+      "n_alerts": 16,
+      "alerts_file": "data/fix_session_drop.alerts.json",
+      "truth_file": "data/fix_session_drop.truth.json"
+    },
+    {
+      "key": "db_pool_exhaustion",
+      "title": "Primary database connection pool exhausted",
+      "summary": "The primary database runs out of connections. Eight services fail within the same few seconds. Every one of them looks like a root cause on a timeline; only the dependency graph shows that they all sit on the same node.",
+      "window": [
+        530,
+        620
+      ],
+      "n_alerts": 32,
+      "alerts_file": "data/db_pool_exhaustion.alerts.json",
+      "truth_file": "data/db_pool_exhaustion.truth.json"
+    },
+    {
+      "key": "airflow_dag_cascade",
+      "title": "Scheduler fault stalls the morning DAG",
+      "summary": "The Airflow scheduler stops dispatching. Every scheduled loader misses its window at once, so the symptoms look like four independent vendor problems rather than one infrastructure fault.",
+      "window": [
+        250,
+        400
+      ],
+      "n_alerts": 35,
+      "alerts_file": "data/airflow_dag_cascade.alerts.json",
+      "truth_file": "data/airflow_dag_cascade.truth.json"
+    },
+    {
+      "key": "stale_fx_feed",
+      "title": "FX rates go stale, P&L spikes on non-USD book",
+      "summary": "The FX feed stops updating. Non-USD positions are marked at yesterday's rates. The loudest alert on the board is a P&L spike, which is three hops from the actual cause.",
+      "window": [
+        290,
+        430
+      ],
+      "n_alerts": 15,
+      "alerts_file": "data/stale_fx_feed.alerts.json",
+      "truth_file": "data/stale_fx_feed.truth.json"
+    },
+    {
+      "key": "missed_corporate_action",
+      "title": "Split not applied to a single name",
+      "summary": "A 4-for-1 split is missing from the corporate actions file. One instrument shows an impossible overnight return. Two alerts total, sitting inside a day with ordinary background noise.",
+      "window": [
+        270,
+        430
+      ],
+      "n_alerts": 6,
+      "alerts_file": "data/missed_corporate_action.alerts.json",
+      "truth_file": "data/missed_corporate_action.truth.json"
+    },
+    {
+      "key": "flapping_latency",
+      "title": "Message bus degrades and flaps",
+      "summary": "The message bus degrades rather than fails. Latency crosses the threshold, recovers, and crosses again, seven times over forty minutes, while downstream services do the same.",
+      "window": [
+        575,
+        680
+      ],
+      "n_alerts": 109,
+      "alerts_file": "data/flapping_latency.alerts.json",
+      "truth_file": "data/flapping_latency.truth.json"
+    },
+    {
+      "key": "two_independent",
+      "title": "Two unrelated incidents overlap",
+      "summary": "The locate file from the prime brokers is late while, in the same twenty minutes, the FIX gateway to broker B starts rejecting. The two share no dependency path and must not be merged.",
+      "window": [
+        325,
+        430
+      ],
+      "n_alerts": 19,
+      "alerts_file": "data/two_independent.alerts.json",
+      "truth_file": "data/two_independent.truth.json"
+    }
+  ]
+}
